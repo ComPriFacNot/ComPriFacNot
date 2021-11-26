@@ -1,1 +1,3 @@
 # ComPriFacNot
+
+Siehe [Wiki](wiki)
