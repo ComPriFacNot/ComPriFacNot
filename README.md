@@ -1,3 +1,3 @@
 # ComPriFacNot
 
-Siehe [Wiki](wiki)
+Siehe [Wiki](../../wiki)
