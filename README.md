@@ -1,5 +1,5 @@
 # ComPriFacNot
 
-EN: See [Wiki](../../wiki)
+🇪🇳: See [Wiki](../../wiki)
 
-DE: Siehe [Wiki](../../wiki)
+🇩🇪: Siehe [Wiki](../../wiki)
