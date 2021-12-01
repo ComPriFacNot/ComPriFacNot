@@ -3,23 +3,27 @@
 <head>
 <meta charset="UTF-8"/>
 <!--
-    Testseite für JavaScript-Klassen PrimeFactoredIntegerTest, PrimeFactoredIntegerTestParser und PrimeFactoredIntegerFormatter
+    Testseite für JavaScript-Klassen PrimeFactoredIntegerTest, PrimeFactoredIntegerTestParser und
+    PrimeFactoredIntegerFormatter
 
     @author see git history
-    @version 1.2, 2021-12-01
+    @version 1.3, 2021-12-01
     @since 1.0, 2021-11-29
 -->
 <script src="PrimeFactoredInteger.js"></script>
 <script src="PrimeFactoredIntegerParser.js"></script>
 <script src="PrimeFactoredIntegerFormatter.js"></script>
+<script src="TestCase.js"></script>
+<script src="TestRun.js"></script>
+<script src="PrimeFactoredIntegerTestSuite.js"></script>
 <script src="PrimeFactoredIntegerTest.js" defer></script>
-<link rel="stylesheet" type="text/css" href="main.v10.css">
+<link rel="stylesheet" type="text/css" href="main.v11.css">
 </head>
 <body>
 <h1>PrimeFactoredIntegerTest</h1>
 <h2>Input</h2>
 <form action="PrimeFactoredIntegerTest.htm">
-<table>
+<table border="1">
 <tbody>
 <tr>
 <td><label for="inputComPriFacNotInteger">ComPriFacNot integer:</label></td>
@@ -50,14 +54,21 @@
 </form>
 <div id="divOutput">
 <h2>Output</h2>
-<table>
+<table border="1">
 <tbody>
 <tr>
-<td><label for="divPrimeFactoredInteger" class="monospace">PrimeFactoredInteger:</label></td>
-<td><div id="divPrimeFactoredInteger" class="monospace"/></td>
+<td><label for="divPrimeFactoredInteger_toSerialized" 
+    class="monospace">PrimeFactoredInteger.toSerialized:</label></td>
+<td><div id="divPrimeFactoredInteger_toSerialized" class="monospace"></div></td>
 </tr>
 <tr>
-<td><label for="divPrimeFactoredInteger_toNumber" class="monospace">PrimeFactoredInteger.toNumber:</label></td>
+<td><label for="divPrimeFactoredInteger_toString" 
+    class="monospace">PrimeFactoredInteger.toString:</label></td>
+<td><div id="divPrimeFactoredInteger_toString" class="monospace"></div></td>
+</tr>
+<tr>
+<td><label for="divPrimeFactoredInteger_toNumber" 
+    class="monospace">PrimeFactoredInteger.toNumber:</label></td>
 <td><div id="divPrimeFactoredInteger_toNumber" class="monospace"></div></td>
 </tr>
 <tr>
@@ -67,6 +78,28 @@
 </tbody>
 </table>
 </div>
+<h2>Test cases</h2>
+<form id="formTestCases" action="PrimeFactoredIntegerTest.htm">
+<table border="1">
+<thead>
+<tr>
+<th id="thInverse" class="cursor-pointer">◪</th>
+<th>ID</th>
+<th>Input</th>
+<th>Expected output (serialized)</th>
+<th>Actual output (serialized)</th>
+<th>Expected exception/error</th>
+<th>Actual exception/error</th>
+<th>Match</th>
+</tr>
+</thead>
+<tbody id="tbodyTestCases">
+</tbody>
+</table>
+<p>
+<input type="submit" value="Run selected test cases"></input>
+</p>
+</form>
 <p>
 <a href="../index.htm">🔙 Zurück/Back</a> 
 <a href="../togithub.htm?to=/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" 

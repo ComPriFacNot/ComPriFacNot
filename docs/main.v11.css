@@ -4,7 +4,7 @@
  * Haupt-Stylesheets.
  * 
  * @author see git history
- * @version 1.0, 2021-11-30
+ * @version 1.1, 2021-12-01
  * @since 1.0, 2021-11-30
  */
 
@@ -30,6 +30,14 @@ summary {
 
 tr {
     vertical-align: baseline;
+}
+
+.background-color-lime {
+	background-color: lime;
+}
+
+.background-color-red {
+    background-color: red;
 }
 
 .cursor-pointer {
