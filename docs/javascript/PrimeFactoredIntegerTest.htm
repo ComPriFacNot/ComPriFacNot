@@ -6,13 +6,14 @@
     Testseite für JavaScript-Klassen PrimeFactoredIntegerTest, PrimeFactoredIntegerTestParser und PrimeFactoredIntegerFormatter
 
     @author see git history
-    @version 1.1, 2021-11-30
+    @version 1.2, 2021-12-01
     @since 1.0, 2021-11-29
 -->
 <script src="PrimeFactoredInteger.js"></script>
 <script src="PrimeFactoredIntegerParser.js"></script>
 <script src="PrimeFactoredIntegerFormatter.js"></script>
 <script src="PrimeFactoredIntegerTest.js" defer></script>
+<link rel="stylesheet" type="text/css" href="main.v10.css">
 </head>
 <body>
 <h1>PrimeFactoredIntegerTest</h1>
@@ -22,7 +23,23 @@
 <tbody>
 <tr>
 <td><label for="inputComPriFacNotInteger">ComPriFacNot integer:</label></td>
-<td><input id="inputComPriFacNotInteger" type="text" name="Integer"/></td>
+<td><input id="inputComPriFacNotInteger" type="text" name="Integer" class="monospace"
+    size="30"/> <span title="Currently only basic numbers are supported, no extended numbers">🛈</span>
+<br/>
+<span class="monospace">
+<span id="spanMakron" class="cursor-pointer">¯</span>
+<span id="spanSuper0" class="cursor-pointer">⁰</span>
+<span id="spanSuper1" class="cursor-pointer">¹</span>
+<span id="spanSuper2" class="cursor-pointer">²</span>
+<span id="spanSuper3" class="cursor-pointer">³</span>
+<span id="spanSuper4" class="cursor-pointer">⁴</span>
+<span id="spanSuper5" class="cursor-pointer">⁵</span>
+<span id="spanSuper6" class="cursor-pointer">⁶</span>
+<span id="spanSuper7" class="cursor-pointer">⁷</span>
+<span id="spanSuper8" class="cursor-pointer">⁸</span>
+<span id="spanSuper9" class="cursor-pointer">⁹</span>
+</span>
+</td>
 </tr>
 <tr>
 <td><label for="inputSubmit">Action:</label></td>
@@ -36,24 +53,25 @@
 <table>
 <tbody>
 <tr>
-<td><label for="divPrimeFactoredInteger">PrimeFactoredInteger:</label></td>
-<td><div id="divPrimeFactoredInteger"/></td>
+<td><label for="divPrimeFactoredInteger" class="monospace">PrimeFactoredInteger:</label></td>
+<td><div id="divPrimeFactoredInteger" class="monospace"/></td>
 </tr>
 <tr>
-<td><label for="divPrimeFactoredInteger_toNumber">PrimeFactoredInteger.toNumber:</label></td>
-<td><div id="divPrimeFactoredInteger_toNumber"></div></td>
+<td><label for="divPrimeFactoredInteger_toNumber" class="monospace">PrimeFactoredInteger.toNumber:</label></td>
+<td><div id="divPrimeFactoredInteger_toNumber" class="monospace"></div></td>
 </tr>
 <tr>
 <td><label for="divThrowable">Exception/error:</label></td>
-<td><div id="divThrowable"></div></td>
+<td><div id="divThrowable" class="monospace"></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>
 <a href="../index.htm">🔙 Zurück/Back</a> 
-<a href="https://github.com/Stefan-Leder-net/ComPriFacNot/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" 
-    target="_blank">Source code</a>
+<a href="../togithub.htm?to=/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" 
+    target="_blank">&lt; &gt; Source code</a>
 </p>
+<div id="divStatusBar" class="footer monospace">&nbsp;</div>
 </body>
 </html>

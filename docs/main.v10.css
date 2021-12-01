@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+/**
+ * Haupt-Stylesheets.
+ * 
+ * @author see git history
+ * @version 1.0, 2021-11-30
+ * @since 1.0, 2021-11-30
+ */
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Arial Black";
+}
+    
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+summary {
+	cursor: pointer;
+}
+
+tr {
+    vertical-align: baseline;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.footer {
+    background-color: whitesmoke;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.monospace {
+    font-family: Consolas, 'Courier New', Courier, monospace;
+}
