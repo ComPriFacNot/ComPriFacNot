@@ -3,7 +3,7 @@
  * 🇪🇳 JavaScript for page PrimeFactoredIntegerTest.htm.
  * 
  * @author See git history
- * @version 1.2, 2021-12-01
+ * @version 1.3, 2021-12-02
  * @since 1.0, 2021-11-29
  */
 const FORM_TEST_CASES_ID = "formTestCases";
@@ -138,11 +138,13 @@ const TEST_CASES_ELEMENT = document.getElementById(TEST_CASES_ID);
 const TEST_CASE_ID_NAME = "TEST_CASE_ID";
 const QUERY_PARAM_TEST_CASE_ID = 
     (QUERY_PARAMS == null) ? null : QUERY_PARAMS.getAll(TEST_CASE_ID_NAME);
+const TEST_ALL = (QUERY_PARAM_TEST_CASE_ID == null) 
+    ? false : QUERY_PARAM_TEST_CASE_ID.includes("ALL");
 for (const lcEntry of TEST_CASES_ENTRIES) {
     const lcTestCaseId = lcEntry[0];
     const lcTestCase = lcEntry[1];
-    const lcChecked =  (QUERY_PARAM_TEST_CASE_ID == null) 
-        ? false : QUERY_PARAM_TEST_CASE_ID.includes(lcTestCaseId);
+    const lcChecked = (QUERY_PARAM_TEST_CASE_ID == null) 
+        ? false : (TEST_ALL || QUERY_PARAM_TEST_CASE_ID.includes(lcTestCaseId));
     const lcTrElement = document.createElement("tr");
     const lcTdSelectionElement = document.createElement("td");
     const lcInputElement = document.createElement("input");

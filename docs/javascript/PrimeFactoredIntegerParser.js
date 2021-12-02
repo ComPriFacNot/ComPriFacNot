@@ -1,9 +1,9 @@
 /**
- * 🇩🇪 Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
- * 🇪🇳 Class PrimeFactoredIntegerParser: Parses a ComPriFacNot string.
+ * de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
+ * en: Class PrimeFactoredIntegerParser: Parses a ComPriFacNot string.
  * 
  * @author See git history
- * @version 1.1, 2021-12-01
+ * @version 1.2, 2021-12-02
  * @since 1.0, 2021-11-29
  */
  class PrimeFactoredIntegerParser {
@@ -12,9 +12,9 @@
      * 🇩🇪 Basisziffern.
      * 🇪🇳 Basic digits.
      */
-    static #BASIC_DIGITS = "012357BDHJN";
+    static #BASIC_DIGITS = "012357BDHJNdVbfrlS";
 
-     /**
+    /**
      * 🇩🇪 Hochgestellte Zeichen.
      * 🇪🇳 Super scripted chars.
      */
@@ -24,7 +24,7 @@
      * 🇩🇪 Zuordnungsreihe Basisziffern zu Zahlen.
      * 🇪🇳 Array of numbers of basic digits.
      */
-    static #BASIC_DIGITS_ARRAY = [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23];
+    static #BASIC_DIGITS_ARRAY = [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53];
 
     /**
      * 🇩🇪 Konstruktor.

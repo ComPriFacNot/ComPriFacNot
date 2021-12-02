@@ -2,7 +2,7 @@
  * Testsuite für PrimeFactoredInteger.
  *
  * @author see git history
- * @version 1.0, 2021-12-01
+ * @version 1.1, 2021-12-02
  * @since 1.0, 2021-12-01
  */
 
@@ -27,14 +27,36 @@ class PrimeFactoredIntegerTestSuite {
         TestCase.addToMap(pvMap, pvId, pvInput, lcOutputExpected, pvThrowableExpected);
     }
     
+    /*
+    Prime factors:
+2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
+103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
+211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271
+    */
+
     /**
      * Erzeugt eine Testfallmappe.
      */
     static #createTestCasesMap() {
         const lcResult = new Map();
+        this.#addToMap(lcResult, "Good: -1", "-1", "-[[1,1]]");
         this.#addToMap(lcResult, "Good: 0", "0", "0[[0,1]]");
         this.#addToMap(lcResult, "Good: 1", "1", "[[1,1]]");
-        this.#addToMap(lcResult, "Good: -1", "-1", "-[[1,1]]");
+        this.#addToMap(lcResult, "Good: 2", "2", "[[2,1]]");
+        this.#addToMap(lcResult, "Good: 3", "3", "[[3,1]]");
+        this.#addToMap(lcResult, "Good: 5", "5", "[[5,1]]");
+        this.#addToMap(lcResult, "Good: B", "B", "[[11,1]]");
+        this.#addToMap(lcResult, "Good: D", "D", "[[13,1]]");
+        this.#addToMap(lcResult, "Good: H", "H", "[[17,1]]");
+        this.#addToMap(lcResult, "Good: J", "J", "[[19,1]]");
+        this.#addToMap(lcResult, "Good: N", "N", "[[23,1]]");
+        this.#addToMap(lcResult, "Good: d", "d", "[[29,1]]");
+        this.#addToMap(lcResult, "Good: V", "V", "[[31,1]]");
+        this.#addToMap(lcResult, "Good: b", "b", "[[37,1]]");
+        this.#addToMap(lcResult, "Good: f", "f", "[[41,1]]");
+        this.#addToMap(lcResult, "Good: r", "r", "[[43,1]]");
+        this.#addToMap(lcResult, "Good: l", "l", "[[47,1]]");
+        this.#addToMap(lcResult, "Good: S", "S", "[[53,1]]");
         this.#addToMap(lcResult, "Bad #1: -", "-", null, 
             "Parse error #1: The string \"-\" is no valid number");
         this.#addToMap(lcResult, "Bad #2: 00", "00", null, 
@@ -42,11 +64,14 @@ class PrimeFactoredIntegerTestSuite {
         this.#addToMap(lcResult, "Bad #2: 11", "11", null, 
             "Parse error #2: If the first digit is \"1\", this must be the one and only char.");
         this.#addToMap(lcResult, "Bad #3: -0", "-0", null,
-            "Parse error #3: The digit \"0\" may only used as solely digit, not together with others");
+            "Parse error #3: The digit \"0\" may only used as solely digit, " +
+                "not together with others");
         this.#addToMap(lcResult, "Bad #3: 20", "20", null,
-            "Parse error #3: The digit \"0\" may only used as solely digit, not together with others");
+            "Parse error #3: The digit \"0\" may only used as solely digit, " +
+                "not together with others");
         this.#addToMap(lcResult, "Bad #3: 21", "21", null,
-            "Parse error #3: The digit \"1\" may only used as solely digit, not together with others");
+            "Parse error #3: The digit \"1\" may only used as solely digit, " +
+                "not together with others");
         this.#addToMap(lcResult, "Bad #4: (", "(", null,
             "Parse error #4: Missing \")\" after \"(\"");
         this.#addToMap(lcResult, "Bad #5: ()", "()", null, 
