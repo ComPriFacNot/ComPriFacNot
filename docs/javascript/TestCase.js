@@ -2,20 +2,19 @@
  * Testfall.
  *
  * @author see git history
- * @version 1.0, 2021-12-01
+ * @version 1.1, 2021-12-03
  * @since 1.0, 2021-12-01
  */
- 
 class TestCase {
     
     /**
      * Erzeugt einen neuen TestCase und fügt ihn einer Mappe hinzu.
      *
-     * @param pvMap Map Testfallmappe
-     * @param pvId String Identifyer
-     * @param pvInput String Eingabe
-     * @param pvOutputExpected any Erwartete Ausgabe
-     * @param pvThrowableExpected any Erwartete Ausnahme/Fehler
+     * @param {Map<string, TestCase>} pvMap Map Testfallmappe
+     * @param {string} pvId Identifyer
+     * @param {string} pvInput Eingabe
+     * @param pvOutputExpected Erwartete Ausgabe
+     * @param pvThrowableExpected Erwartete Ausnahme/Fehler
      */
     static addToMap(pvMap, pvId, pvInput, pvOutputExpected, pvThrowableExpected) {
         const lcInstance = new TestCase(pvId, pvInput, pvOutputExpected, pvThrowableExpected);
@@ -23,41 +22,42 @@ class TestCase {
     }
     
     /**
-     * String Identifier.
+     * Identifier.
      *
-     * @see getId()
-     * @see #setId()
+     * @see getId
+     * @see setId
+     * @type {string}
      */
     #ivId;
     
     /**
-     * String Eingabe.
+     * Eingabe.
      *
-     * @see getInput()
-     * @see setInput()
+     * @see getInput
+     * @see #setInput
      */
     #ivInput;
 
     /**
-     * any Erwartete Ausgabe.
+     * Erwartete Ausgabe.
      *
-     * @see getOutputExpected()
-     * @see setOutputExpected()
+     * @see getOutputExpected
+     * @see #setOutputExpected
      */
     #ivOutputExpected;
     
     /**
-     * any Erwartete Ausnahme oder Fehler.
+     * Erwartete Ausnahme oder Fehler.
      *
-     * @see getThrowableExpected()
-     * @see setThrowableExpected()
+     * @see getThrowableExpected
+     * @see setThrowableExpected
      */
     #ivThrowableExpected;
 
     /**
      * Konstruktor.
      *
-     * @param pvId Identifyer
+     * @param {string} pvId Identifyer
      * @param pvInput Eingabe
      * @param pvOutputExpected Erwartete Ausgabe
      * @param pvThrowableExpected Erwartete Ausnahme/Fehler
@@ -70,74 +70,87 @@ class TestCase {
     }
 
     /**
-     * Getter für #ivId.
+     * Getter für {@link #ivId}.
      * 
      * @see #ivId
-     * @see #setId()
+     * @see #setId
      */
     getId() {
         return this.#ivId;
     }
 
     /**
-     * Getter für #ivInput.
+     * Getter für {@link #ivInput}.
      *
-     * @returns String #ivInput
+     * @returns {@link #ivInput}
+     * @see #ivInput
+     * @see #setInput
      */
     getInput() {
         return this.#ivInput;
     }
     
     /**
-     * Getter für #ivOutputExpected.
+     * Getter für {@link #ivOutputExpected}.
      *
-     * @returns any Erwartete Ausgabe
+     * @returns Erwartete Ausgabe
+     * @see #ivOutputExpected
+     * @see #setOutputExpected
      */
     getOutputExpected() {
         return this.#ivOutputExpected;
     }
     
     /**
-     * Getter für #ivThrowableExpected.
+     * Getter für {@link #ivThrowableExpected}.
      *
-     * @returns any Erwartete Ausnahme/Fehler
+     * @returns Erwartete Ausnahme/Fehler
+     * @see #ivThrowableExpected
+     * @see #setThrowableExpected
      */
     getThrowableExpected() {
         return this.#ivThrowableExpected;
     }
     
     /**
-     * Setter für #ivId.
+     * Setter für {@link #ivId}.
      *
+     * @param {string} pvId
      * @see #ivId
-     * @see #getId()
+     * @see getId
      */
     #setId(pvId) {
         this.#ivId = pvId;
     }
     
     /**
-     * Setter für #ivInput.
+     * Setter für {@link #ivInput}.
      *
-     * @param pvInput String Eingabe
+     * @param pvInput Eingabe
+     * @see #ivInput
+     * @see getInput
      */
     #setInput(pvInput) {
         this.#ivInput = pvInput;
     }
     
     /**
-     * Setter für #ivOutputExpected.
+     * Setter für {@link #ivOutputExpected}.
      *
-     * @param pvOutputExpected any Erwartete Ausgabe
+     * @param pvOutputExpected Erwartete Ausgabe
+     * @see #ivOutputExpected
+     * @see getOutputExpected
      */
     #setOutputExpected(pvOutputExpected) {
         this.#ivOutputExpected = pvOutputExpected;
     }
     
     /**
-     * Setter für #ivThrowableExpected.
+     * Setter für {@link #ivThrowableExpected}.
      *
      * @param pvThrowable Erwartete Ausnahme/Fehler
+     * @see #ivThrowableExpected
+     * @see getThrowableExpected
      */
     #setThrowableExpected(pvThrowable) {
         this.#ivThrowableExpected = pvThrowable;

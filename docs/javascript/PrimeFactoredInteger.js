@@ -1,9 +1,9 @@
 /**
- * 🇩🇪 Klasse PrimeFactoredInteger: In Primfaktoren zerlegte ganze Zahl.
- * 🇪🇳 Class PrimeFactoredInteger: Into prime factors split integer.
+ * en: Class PrimeFactoredInteger: Into prime factors split integer.
+ * de: Klasse PrimeFactoredInteger: In Primfaktoren zerlegte ganze Zahl.
  * 
  * @author See git history
- * @version 1.2, 2021-12-01
+ * @version 1.3, 2021-12-03
  * @since 1.0, 2021-11-29
  */
 class PrimeFactoredInteger {
@@ -11,9 +11,12 @@ class PrimeFactoredInteger {
     /**
      * Vergleicht zwei Instanzen.
      *
-     * @returns boolean Wahrheitswert, ob beide Instanzen gleich oder beide null sind
+     * @param {PrimeFactoredInteger} pvFirst Erste Instanz
+     * @param {PrimeFactoredInteger} pvSecond Zweite Instanz
+     * @returns {boolean} Wahrheitswert, ob beide Instanzen gleich oder beide null sind
      */
     static equals(pvFirst, pvSecond) {
+        /** @type {boolean} */
         let lvResult; // Rückgabewert
         if (pvFirst == null) {
             lvResult = pvSecond == null;
@@ -31,9 +34,11 @@ class PrimeFactoredInteger {
     /**
      * Factory-Methode zur Instanzerzeugung aus einer Serialisierung (toSerialized()).
      *
-     * @param pvSerialized String Serialisierung
+     * @param {string} pvSerialized Serialisierung
+     * @returns {PrimeFactoredInteger} Neue Instanz
      */
     static forSerialized(pvSerialized) {
+        /** @type {PrimeFactoredInteger} */
         let lvResult;
         if (pvSerialized == null) {
             lvResult = null;
@@ -43,7 +48,9 @@ class PrimeFactoredInteger {
                 throw "Deserialization error: Empty input";
             }
             const lcFirstChar = pvSerialized[0];
+            /** @type {number} */
             let lvSign;
+            /** @type {string} */
             let lvComponentsJson;
             switch (lcFirstChar) {
                 case "-":
@@ -59,6 +66,7 @@ class PrimeFactoredInteger {
                     lvComponentsJson = pvSerialized;
                     break;
             }
+            /** @type {Array<[number, number]>} */
             const lcComponentsEntriesArray = JSON.parse(lvComponentsJson);
             const lcComponentsMap = new Map(lcComponentsEntriesArray);
             lvResult = new PrimeFactoredInteger(lcComponentsMap, lvSign);
@@ -68,27 +76,30 @@ class PrimeFactoredInteger {
     }
 
     /**
-     * 🇩🇪 Komponentenmappe (Keys: 0, 1 oder Primfaktor; Values: Exponenten; bei Keys 0 oder 1
-     * immer 1).
-     * 🇪🇳 Components map (keys: 0, 1 or prime factor; values: exponent; on keys 0 or 1 always 1)
+     * en: Components map (keys: 0, 1 or prime factor; values: exponent; on keys 0 or 1 always 1).
+     * de: Komponentenmappe (Keys: 0, 1 oder Primfaktor; Values: Exponenten; bei Keys 0 oder 1
+     *     immer 1).
      * 
      * @see getComponentsMap
      * @see #setComponentsMap
+     * @type {Map<number, number>}
      */
     #ivComponentsMap;
 
     /**
-     * 🇩🇪 Vorzeichen: -1 (bei negativem Wert), 0 (bei 0) oder 1 (bei positivem Wert).
-     * 🇪🇳 Sign: -1 (negative value), 0 (value 0) or 1 (positive value)
+     * en: Sign: -1 (negative value), 0 (value 0) or 1 (positive value).
+     * de: Vorzeichen: -1 (bei negativem Wert), 0 (bei 0) oder 1 (bei positivem Wert).
+     * 
+     * @type {number}
      */
     #ivSign;
 
     /**
-     * 🇩🇪 Konstruktor.
-     * 🇪🇳 Constructor.
+     * en: Constructor.
+     * de: Konstruktor.
      * 
-     * @param Map pvComponentsMap 🇩🇪 Komponentenmappe 🇪🇳 Components map
-     * @param number pvSign 🇩🇪 Vorzeichen 🇪🇳 Sign
+     * @param {Map<number, number} pvComponentsMap en: Components map; de: Komponentenmappe
+     * @param {number} pvSign en: Sign; de: Vorzeichen
      */
     constructor(pvComponentsMap, pvSign = 1) {
         this.#setComponentsMap(pvComponentsMap);
@@ -103,6 +114,8 @@ class PrimeFactoredInteger {
     
     /**
      * Liefert die Komponenten als JSON.
+     * 
+     * @returns {string} Komponenten als JSON
      */
     getComponentsJson() {
         const lcComponentsMap = this.getComponentsMap();
@@ -116,7 +129,7 @@ class PrimeFactoredInteger {
     /**
      * Getter für #ivComponentsMap.
      * 
-     * @returns Map Primfaktorenmappe
+     * @returns {Map<number, number>} Primfaktorenmappe
      * @see #ivComponentsMap
      * @see #setComponentsMap
      */
@@ -127,7 +140,9 @@ class PrimeFactoredInteger {
     /**
      * Getter für #ivSign.
      * 
-     * @return 
+     * @return {number}
+     * @see #ivSign
+     * @see #setSign
      */
     getSign() {
         return this.#ivSign;
@@ -136,7 +151,7 @@ class PrimeFactoredInteger {
     /**
      * Setter für #ivComponentsMap.
      * 
-     * @returns Map Primfaktorenmappe
+     * @param {Map<number, number>} pvMap Komponentenmappe
      * @see #ivComponentsMap
      * @see getComponentsMap
      */
@@ -147,6 +162,7 @@ class PrimeFactoredInteger {
     /**
      * Setter für #ivSign.
      * 
+     * @param {number} pvSign Vorzeichen
      * @see #ivSign
      * @see getSign
      */
@@ -155,10 +171,10 @@ class PrimeFactoredInteger {
     }
     
     /**
-     * 🇩🇪 Liefert die Summe aller Potenzen.
-     * 🇪🇳 Returns the sum of all powers.
+     * en: Returns the sum of all powers.
+     * de: Liefert die Summe aller Potenzen.
      * 
-     * @returns string 🇩🇪 Summe aller Potenzen. 🇪🇳 Sum of all powers.
+     * @returns {number} en: Sum of all powers; de: Summe aller Potenzen.
      */
     toNumber() {
         const lcComponentsMap = this.getComponentsMap();
@@ -184,6 +200,8 @@ class PrimeFactoredInteger {
      * Liefert eine Serialisierung im Aufbau &lt;Vorzeichen&gt;&lt;Components&gt;.
      * &lt;Vorzeichen&gt;:  "-", "0" oder ""
      * &gt;Components&gt;: JSON-Stringify des Components-Map-Entries-Arrays
+     * 
+     * @returns {string} Serialisierung
      */
     toSerialized() {
         const lcSign = this.getSign();
@@ -194,10 +212,11 @@ class PrimeFactoredInteger {
     }
 
     /**
-     * 🇩🇪 Liefert eine Selbstbeschreibung dieser Instanz.
-     * 🇪🇳 Returns a self description of this instance.
+     * en: Returns a self description of this instance.
+     * de: Liefert eine Selbstbeschreibung dieser Instanz.
      * 
-     * @returns string 🇩🇪 Selbstbeschreibung dieser Instanz. 🇪🇳 Self description of this instance.
+     * @returns {string} en: Self description of this instance;
+     *                   de: Selbstbeschreibung dieser Instanz
      */
      toString() {
         const lcSign = this.getSign();

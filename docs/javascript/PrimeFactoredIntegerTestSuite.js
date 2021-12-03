@@ -2,10 +2,9 @@
  * Testsuite für PrimeFactoredInteger.
  *
  * @author see git history
- * @version 1.1, 2021-12-02
+ * @version 1.2, 2021-12-03
  * @since 1.0, 2021-12-01
  */
-
 class PrimeFactoredIntegerTestSuite {
     
     /**
@@ -16,10 +15,10 @@ class PrimeFactoredIntegerTestSuite {
     /**
      * Fügt einer Testfallmappe einen Testfall hinzu.
      *
-     * @param pvMap Map Testfallmappe
-     * @param pvId Test-ID
-     * @param pvInput Ungeparste Eingabe
-     * @param pvOutputExpectedSerialized Serialisierte Ausgabe
+     * @param {Map<string, TestCase>} pvMap Map Testfallmappe
+     * @param {string} pvId Test-ID
+     * @param {string} pvInput Ungeparste Eingabe
+     * @param {string} pvOutputExpectedSerialized Serialisierte Ausgabe
      * @param pvThrowableExpected Ausnahme/Fehler
      */
     static #addToMap(pvMap, pvId, pvInput, pvOutputExpectedSerialized, pvThrowableExpected = null) {
@@ -38,6 +37,7 @@ class PrimeFactoredIntegerTestSuite {
      * Erzeugt eine Testfallmappe.
      */
     static #createTestCasesMap() {
+        /** @type {Map<String, TestCase>} */
         const lcResult = new Map();
         this.#addToMap(lcResult, "Good: -1", "-1", "-[[1,1]]");
         this.#addToMap(lcResult, "Good: 0", "0", "0[[0,1]]");

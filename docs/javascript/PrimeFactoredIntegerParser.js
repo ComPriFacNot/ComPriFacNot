@@ -1,53 +1,55 @@
 /**
- * de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
  * en: Class PrimeFactoredIntegerParser: Parses a ComPriFacNot string.
+ * de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
  * 
  * @author See git history
- * @version 1.2, 2021-12-02
+ * @version 1.3, 2021-12-03
  * @since 1.0, 2021-11-29
  */
  class PrimeFactoredIntegerParser {
     
     /**
-     * 🇩🇪 Basisziffern.
-     * 🇪🇳 Basic digits.
+     * en: Basic digits.
+     * de: Basisziffern.
      */
     static #BASIC_DIGITS = "012357BDHJNdVbfrlS";
 
     /**
-     * 🇩🇪 Hochgestellte Zeichen.
-     * 🇪🇳 Super scripted chars.
+     * en: Super scripted chars.
+     * de: Hochgestellte Zeichen.
      */
     static #EXPONENT_SUPERS = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
     /**
-     * 🇩🇪 Zuordnungsreihe Basisziffern zu Zahlen.
-     * 🇪🇳 Array of numbers of basic digits.
+     * en: Array of numbers of basic digits.
+     * de: Zuordnungsreihe Basisziffern zu Zahlen.
      */
     static #BASIC_DIGITS_ARRAY = [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53];
 
     /**
-     * 🇩🇪 Konstruktor.
-     * 🇪🇳 Constructor.
+     * en: Constructor.
+     * de: Konstruktor.
      */
     constructor() {}
     
     /**
-     * 🇩🇪 Parst einen ComPriFacNot-formatierten String zu einem PrimeFactoredInteger.
-     * 🇪🇳 Parses a ComPriFacNot formatted string to a PrimeFactoredInteger.
+     * en: Parses a ComPriFacNot formatted string to a PrimeFactoredInteger.
+     * de: Parst einen ComPriFacNot-formatierten String zu einem PrimeFactoredInteger.
      * 
-     * @param string pvComPriFacNot 🇩🇪 ComPriFacNot-formatierte ganze Zahl 🇪🇳 ComPriFacNot formatted
-                        integer
-     * @returns PrimeFactoredInteger 🇩🇪 Geparste Primfaktorenzerlegung 🇪🇳 Parsed prime factors
+     * @param {string} pvComPriFacNot en: ComPriFacNot formatted integer;
+     *                                de: ComPriFacNot-formatierte ganze Zahl 
+     * @returns {PrimeFactoredInteger} en: Parsed prime factors; de: Geparste Primfaktorenzerlegung
      */
     static parseComPriFacNot(pvComPriFacNot) {
-        const lcPrimeFactors = new Map();
+        /** @type {Map<number, number>} */
+        const lcComponents = new Map();
         let lvSign = 1;
         if (pvComPriFacNot != null) {
             let lcTrimmed = pvComPriFacNot.trim();
             const lcInputLength = lcTrimmed.length;
             if (lcInputLength > 0) {
                 const lcFirstChar = lcTrimmed.substring(0, 1);
+                /** @type {string} */
                 let lvAbsolute;
                 if (lcFirstChar == "-") { // Sonderfall negative Zahlen
                     lvSign = -1;
@@ -56,7 +58,7 @@
                         throw "Parse error #1: The string \"-\" is no valid number";
                     } 
                     if (lvAbsolute == "1") { // Sonderfall -1
-                        lcPrimeFactors.set(1, 1);
+                        lcComponents.set(1, 1);
                         lvAbsolute = lvAbsolute.substring(1);
                     }
                 } else {
@@ -65,7 +67,7 @@
                 if ((lcFirstChar == "0") || (lcFirstChar == "1")) { // Sonderfall 0 und 1
                     const lcBase = (lcTrimmed == "0") ? 0 : 1;
                     lvSign = lcBase;
-                    lcPrimeFactors.set(lcBase, 1);
+                    lcComponents.set(lcBase, 1);
                     if (lcInputLength > 1) { // Bei 0 oder 1 darf kein weiteres Zeichen mehr kommen
                         throw "Parse error #2: If the first digit is \"" + lcFirstChar
                             + "\", this must be the one and only char.";
@@ -74,6 +76,7 @@
                     const lcAbsoluteLength = lvAbsolute.length;
                     for (let i = 0; i < lcAbsoluteLength; i++) {
                         const lcChar = lvAbsolute[i];
+                        /** @type {number} */
                         let lvBase;
                         switch (lcChar) {
                             case "0": // /* fall through */
@@ -118,7 +121,7 @@
                                 }
                                 break;
                         }
-                        if (lcPrimeFactors.has(lvBase)) { // Basisziffer wurde bereits verwendet
+                        if (lcComponents.has(lvBase)) { // Basisziffer wurde bereits verwendet
                             throw "Parse error #7: Base digit \"" + lvBase + "\" used 2 or more times";
                         }
                         let lvExponentNumber = 1;
@@ -171,7 +174,7 @@
                                     ? 1 : Number.parseInt(lcExponent);
                             }
                         }
-                        lcPrimeFactors.set(lvBase, lvExponentNumber);
+                        lcComponents.set(lvBase, lvExponentNumber);
                     }
                 }
             } else { // Leerstring
@@ -180,7 +183,7 @@
         } else { // null
             throw "Parse error #13: Input is null";
         }
-        const lcResult = new PrimeFactoredInteger(lcPrimeFactors, lvSign);
+        const lcResult = new PrimeFactoredInteger(lcComponents, lvSign);
 
         return lcResult;
     }

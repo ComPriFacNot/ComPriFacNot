@@ -1,13 +1,17 @@
 /**
- * 🇩🇪 JavaScript für Seite PrimeFactoredIntegerTest.htm.
  * 🇪🇳 JavaScript for page PrimeFactoredIntegerTest.htm.
+ * 🇩🇪 JavaScript für Seite PrimeFactoredIntegerTest.htm.
  * 
  * @author See git history
- * @version 1.3, 2021-12-02
+ * @version 1.3, 2021-12-03
  * @since 1.0, 2021-11-29
  */
+
+"use strict";
+
 const FORM_TEST_CASES_ID = "formTestCases";
-const FORM_TEST_CASES_ELEMENT = document.getElementById(FORM_TEST_CASES_ID);
+const FORMS = document.forms;
+const FORM_TEST_CASES_ELEMENT = FORMS.namedItem(FORM_TEST_CASES_ID);
 const INPUT_ID = "inputComPriFacNotInteger";
 const INPUT_ELEMENT = document.getElementById(INPUT_ID);
 const INPUT_UNPARSED_NAME = "Integer";
@@ -26,6 +30,7 @@ const TEST_CASES_MAP = PrimeFactoredIntegerTestSuite.TEST_CASES_MAP;
 const INVERSE_ID = "thInverse";
 const INVERSE_ELEMENT = document.getElementById(INVERSE_ID);
 INVERSE_ELEMENT.onclick = onInverseClick;
+const TEST_CASE_ID_NAME = "TEST_CASE_ID";
 
 for (let i = 0; i < 10; i++) {
     const lcSuperId = "spanSuper" + i;
@@ -35,6 +40,8 @@ for (let i = 0; i < 10; i++) {
 
 /**
  * Liefert den Text in die Statusleiste.
+ * 
+ * @returns {string} Text in die Statusleiste
  */
 function getStatus() {
     const lcStatus = STATUS_BAR_ELEMENT.innerText;
@@ -86,19 +93,24 @@ function onInverseClick() {
 
 /**
  * Ereignisbehandler, wenn auf eine Testfall-ID geklickt wird.
+ * 
+ * @param {MouseEvent} pvMouseEvent Mausereignis
+ * @listens MouseEvent
  */
-function onTestCaseIdClick() {
-    const lcInputElement = this.nextElementSibling;
-    const lcInput = lcInputElement.innerText;
+function onTestCaseIdClick(pvMouseEvent) {
+    /** @type {HTMLTableCellElement} */
+    const lcTarget = pvMouseEvent.target; // = this
+    const lcTestCaseId = lcTarget.innerText;
+    const lcTestCaseIdUriEncoded = encodeURIComponent(lcTestCaseId);
     const lcPathname = DOCUMENT_LOCATION.pathname;
-    const lcNewUrl = lcPathname + "?Integer=" + lcInput;
+    const lcNewUrl = lcPathname + "?" + TEST_CASE_ID_NAME + "=" + lcTestCaseIdUriEncoded;
     DOCUMENT_LOCATION.href = lcNewUrl;
 }
 
 /**
  * Schreibt einen Text in die Statusleiste.
  * 
- * @param String pvText 
+ * @param {string} pvText Text für die Statusleiste
  */
 function setStatus(pvText) {
     STATUS_BAR_ELEMENT.innerText = pvText;
@@ -135,7 +147,6 @@ try {
 const TEST_CASES_ENTRIES = TEST_CASES_MAP.entries();
 const TEST_CASES_ID = "tbodyTestCases";
 const TEST_CASES_ELEMENT = document.getElementById(TEST_CASES_ID);
-const TEST_CASE_ID_NAME = "TEST_CASE_ID";
 const QUERY_PARAM_TEST_CASE_ID = 
     (QUERY_PARAMS == null) ? null : QUERY_PARAMS.getAll(TEST_CASE_ID_NAME);
 const TEST_ALL = (QUERY_PARAM_TEST_CASE_ID == null) 
