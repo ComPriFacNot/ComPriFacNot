@@ -1,7 +1,7 @@
 ---
 name: Other issue
 about: Issue that matches no other issue template like bug/feature request
-title: "[CUSTOM]"
+title: "[OTHER ISSUE]"
 labels: ''
 assignees: ''
 
