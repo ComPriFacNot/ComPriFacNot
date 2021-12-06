@@ -1,6 +1,6 @@
 ---
 name: Other issue
-about: Issue that matches no other issue template like bug/feature request
+about: Issue that matches no other issue template like e. g. bug report/feature request
 title: "[OTHER ISSUE]"
 labels: other issue
 assignees: ''
