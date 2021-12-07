@@ -5,14 +5,12 @@ title: "[OTHER]"
 labels: other issue
 assignees: ''
 
----
+# @author see git history
+# @version 1.5, 2021-12-07
+# @since 1.0, 2021-12-06
 
-<!-- 
-@author see git history
-@version 1.4, 2021-12-07
-@since 1.0, 2021-12-06
--->
-<!-- Print margin: 100 columns                                                                   -->
+# Print margin: 100 columns                                                                        #
+---
 
 ## Motivation/Trigger ##
 
@@ -47,7 +45,8 @@ assignees: ''
   - ( ) Organization:
     - ( ) [Issue template(s)](/ComPriFacNot/ComPriFacNot/issues/templates/edit):
       - ( ) [Bug report](/ComPriFacNot/ComPriFacNot/blob/main/.github/ISSUE_TEMPLATE/bug_report.md)
-      - ( ) [Feature request](/ComPriFacNot/ComPriFacNot/blob/main/.github/ISSUE_TEMPLATE/feature_request.md)
+      - ( ) [Feature request](
+            /ComPriFacNot/ComPriFacNot/blob/main/.github/ISSUE_TEMPLATE/feature_request.md)
       - ( ) [Custom issue](/ComPriFacNot/ComPriFacNot/blob/main/.github/ISSUE_TEMPLATE/custom.md)
       - ( ) Other: [*describe*]
     - ( ) Project(s)/project board(s)/view(s): [*describe*]

@@ -5,14 +5,12 @@ title: "[FEATURE]"
 labels: enhancement
 assignees: ''
 
----
+# @author see git history
+# @version 1.2, 2021-12-07
+# @since 1.0, 2021-12-06
 
-<!-- 
-@author see git history
-@version 1.1, 2021-12-07
-@since 1.0, 2021-12-06
--->
-<!-- Print margin: 100 columns                                                                   -->
+# Print margin: 100 columns                                                                        #
+---
 
 ## Motivation/Trigger ##
 
