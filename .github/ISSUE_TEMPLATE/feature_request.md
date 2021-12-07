@@ -7,22 +7,37 @@ assignees: ''
 
 ---
 
-# Motivation/current state #
+<!-- 
+@author see git history
+@version 1.1, 2021-12-07
+@since 1.0, 2021-12-06
+-->
+<!-- Print margin: 100 columns                                                                   -->
 
-**Is your feature request related to a problem? Please describe.**
+## Motivation/Trigger ##
 
-*A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]*
+What triggered this issue?
 
-# Idea/desired state #
+- ( ) [Discussion about idea ...](../discussions/...)
+- ( ) Issue #...
+- ( ) Other: [*describe*]
 
-**Describe the solution you'd like**
+## Current state ##
+
+Is your feature request related to a problem? Please describe.
+
+*A clear and concise description of what the problem is. Ex. I'm always frustrated when ...*
+
+## Desired state ##
+
+Describe the solution you'd like.
 
 *A clear and concise description of what you want to happen.*
 
-**Describe alternatives you've considered**
+Describe alternatives you've considered.
 
 *A clear and concise description of any alternative solutions or features you've considered.*
 
-# Additional context #
+## Additional context ##
 
 *Add any other context or screenshots about the feature request here.*
