@@ -2,7 +2,7 @@
  * Testsuite für PrimeFactoredInteger.
  *
  * @author see git history
- * @version 1.2, 2021-12-03
+ * @version 1.3, 2021-12-10
  * @since 1.0, 2021-12-01
  */
 class PrimeFactoredIntegerTestSuite {
@@ -21,7 +21,8 @@ class PrimeFactoredIntegerTestSuite {
      * @param {string} pvOutputExpectedSerialized Serialisierte Ausgabe
      * @param pvThrowableExpected Ausnahme/Fehler
      */
-    static #addToMap(pvMap, pvId, pvInput, pvOutputExpectedSerialized, pvThrowableExpected = null) {
+    static #addToMap(pvMap: Map<string, TestCase>, pvId: string, pvInput: string, 
+        pvOutputExpectedSerialized: string, pvThrowableExpected = null) {
         const lcOutputExpected = PrimeFactoredInteger.forSerialized(pvOutputExpectedSerialized);
         TestCase.addToMap(pvMap, pvId, pvInput, lcOutputExpected, pvThrowableExpected);
     }
@@ -38,7 +39,7 @@ class PrimeFactoredIntegerTestSuite {
      */
     static #createTestCasesMap() {
         /** @type {Map<String, TestCase>} */
-        const lcResult = new Map();
+        const lcResult: Map<string, TestCase> = new Map();
         this.#addToMap(lcResult, "Good: -1", "-1", "-[[1,1]]");
         this.#addToMap(lcResult, "Good: 0", "0", "0[[0,1]]");
         this.#addToMap(lcResult, "Good: 1", "1", "[[1,1]]");

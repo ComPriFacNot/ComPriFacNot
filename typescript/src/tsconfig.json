@@ -1,0 +1,17 @@
+/**
+ * :en: Configuration file for TypeScript.
+ * :de: Konfigurationdatei für TypeScript.
+ *
+ * @author see git history
+ * @version 1.0, 2021-12-10
+ * @since 1.0, 2021-12-09
+ * @see https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html
+ */
+{
+    "compilerOptions": {
+      "outDir": "../../docs/javascript/generated",
+      "allowJs": true,
+      "target": "ES2016"
+    },
+    "include": ["./**/*"]
+}
