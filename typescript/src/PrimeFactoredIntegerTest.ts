@@ -1,9 +1,9 @@
 /**
- * 🇪🇳 JavaScript for page PrimeFactoredIntegerTest.htm.
- * 🇩🇪 JavaScript für Seite PrimeFactoredIntegerTest.htm.
+ * :en: JavaScript for page PrimeFactoredIntegerTest.htm.
+ * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  * 
  * @author See git history
- * @version 1.3, 2021-12-03
+ * @version 1.4, 2021-12-10
  * @since 1.0, 2021-11-29
  */
 
@@ -13,7 +13,7 @@ const FORM_TEST_CASES_ID = "formTestCases";
 const FORMS = document.forms;
 const FORM_TEST_CASES_ELEMENT = FORMS.namedItem(FORM_TEST_CASES_ID);
 const INPUT_ID = "inputComPriFacNotInteger";
-const INPUT_ELEMENT = document.getElementById(INPUT_ID);
+const INPUT_ELEMENT: HTMLInputElement = getInputElementById(INPUT_ID);
 const INPUT_UNPARSED_NAME = "Integer";
 const DOCUMENT_LOCATION = document.location;
 const QUERY_STRING = DOCUMENT_LOCATION.search;
@@ -39,11 +39,26 @@ for (let i = 0; i < 10; i++) {
 }
 
 /**
+ * :en: Returns a HTMLInputElement by ID.
+ * :de: Liefert ein HTMLInputElement anhand der ID.
+ * 
+ * @param {string} pvId
+ * @returns {HTMLInputElement}
+ * @since 1.4, 2021-12-10
+ */
+function getInputElementById(pvId: string): HTMLInputElement {
+    const lcElement = document.getElementById(pvId);
+    const lcResult = (lcElement instanceof HTMLInputElement) ? lcElement : null;
+
+    return lcResult;
+}
+
+/**
  * Liefert den Text in die Statusleiste.
  * 
  * @returns {string} Text in die Statusleiste
  */
-function getStatus() {
+function getStatus(): string {
     const lcStatus = STATUS_BAR_ELEMENT.innerText;
 
     return lcStatus;
@@ -71,8 +86,10 @@ function onCopySucceeded() {
 function onInverseClick() {
     const lcElements = FORM_TEST_CASES_ELEMENT.elements;
     for (const lcChild of lcElements) {
-        const lcChecked = lcChild.checked;
-        lcChild.checked = !lcChecked;
+        if (lcChild instanceof HTMLInputElement) {
+            const lcChecked = lcChild.checked;
+            lcChild.checked = !lcChecked;
+        }
     }
 }
 
@@ -97,14 +114,17 @@ function onInverseClick() {
  * @param {MouseEvent} pvMouseEvent Mausereignis
  * @listens MouseEvent
  */
-function onTestCaseIdClick(pvMouseEvent) {
-    /** @type {HTMLTableCellElement} */
-    const lcTarget = pvMouseEvent.target; // = this
-    const lcTestCaseId = lcTarget.innerText;
-    const lcTestCaseIdUriEncoded = encodeURIComponent(lcTestCaseId);
-    const lcPathname = DOCUMENT_LOCATION.pathname;
-    const lcNewUrl = lcPathname + "?" + TEST_CASE_ID_NAME + "=" + lcTestCaseIdUriEncoded;
-    DOCUMENT_LOCATION.href = lcNewUrl;
+function onTestCaseIdClick(pvMouseEvent: MouseEvent) {
+    const lcEventTarget = pvMouseEvent.target;
+    const lcTarget: HTMLTableCellElement = (lcEventTarget instanceof HTMLTableCellElement)
+        ? lcEventTarget : null; // = this
+    if (lcTarget != null) {
+        const lcTestCaseId = lcTarget.innerText;
+        const lcTestCaseIdUriEncoded = encodeURIComponent(lcTestCaseId);
+        const lcPathname = DOCUMENT_LOCATION.pathname;
+        const lcNewUrl = lcPathname + "?" + TEST_CASE_ID_NAME + "=" + lcTestCaseIdUriEncoded;
+        DOCUMENT_LOCATION.href = lcNewUrl;
+    }
 }
 
 /**
@@ -112,7 +132,7 @@ function onTestCaseIdClick(pvMouseEvent) {
  * 
  * @param {string} pvText Text für die Statusleiste
  */
-function setStatus(pvText) {
+function setStatus(pvText: string) {
     STATUS_BAR_ELEMENT.innerText = pvText;
 }
 
@@ -133,7 +153,8 @@ try {
         const NUMBER = PARSED.toNumber();
         const NUMBER_ID = "divPrimeFactoredInteger_toNumber";
         const NUMBER_ELEMENT = document.getElementById(NUMBER_ID);
-        NUMBER_ELEMENT.innerText = NUMBER;
+        const NUMBER_TEXT = "" + NUMBER;
+        NUMBER_ELEMENT.innerText = NUMBER_TEXT;
     } else {
         const OUTPUT_ELEMENT = document.getElementById(OUTPUT_ID);
         OUTPUT_ELEMENT.style.display = "none";
@@ -163,7 +184,7 @@ for (const lcEntry of TEST_CASES_ENTRIES) {
     lcInputElement.name = TEST_CASE_ID_NAME;
     lcInputElement.value = lcTestCaseId;
     if (lcChecked) {
-        lcInputElement.checked = "checked";
+        lcInputElement.checked = true;
     }
     lcTdSelectionElement.appendChild(lcInputElement);
     lcTrElement.appendChild(lcTdSelectionElement);
@@ -216,7 +237,16 @@ for (const lcEntry of TEST_CASES_ENTRIES) {
     lcTdThrowableExpectedElement.className = "monospace";
     lcTrElement.appendChild(lcTdThrowableExpectedElement);
     const lcTdThrowableActualElement = document.createElement("td");
-    lcTdThrowableActualElement.innerText = lvThrowableActual;
+    let lvThrowableActualText: string;
+    if (lvThrowableActual instanceof Error) {
+        const lcMessage = lvThrowableActual.message;
+        const lcStack = lvThrowableActual.stack;
+        lvThrowableActualText = "<ul><li>message: " + lcMessage + "</li><li>stack: <pre>" +
+            lcStack + "</pre></li></ul>";
+    } else {
+        lvThrowableActualText = lvThrowableActual;
+    }
+    lcTdThrowableActualElement.innerHTML = lvThrowableActualText;
     lcTdThrowableActualElement.className = "monospace" +
         (lcChecked ? (" background-color-" + (lvThrowableMatch ? "lime" : "red")) : "");
     lcTrElement.appendChild(lcTdThrowableActualElement);
