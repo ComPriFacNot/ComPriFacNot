@@ -3,7 +3,7 @@
  * :de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
  *
  * @author See git history
- * @version 1.5, 2021-12-10
+ * @version 1.6, 2021-12-11
  * @since 1.0, 2021-11-29
  */
 class PrimeFactoredIntegerParser {
@@ -93,9 +93,9 @@ class PrimeFactoredIntegerParser {
                                 i = lcIndexClosingBracket;
                                 break;
                             default:
-                                const lcBasicDigitIndex = PrimeFactoredIntegerParser.BASIC_DIGITS.indexOf(lcChar);
+                                const lcBasicDigitIndex = ComPriFacNotConcept.BASIC_DIGITS.indexOf(lcChar);
                                 if (lcBasicDigitIndex > -1) { // Basisziffer
-                                    lvBase = PrimeFactoredIntegerParser.BASIC_DIGITS_ARRAY[lcBasicDigitIndex];
+                                    lvBase = ComPriFacNotConcept.BASIC_DIGITS_VALUES[lcBasicDigitIndex];
                                 }
                                 else {
                                     throw "Parse error #6: Unknown char \"" + lcChar
@@ -174,17 +174,7 @@ class PrimeFactoredIntegerParser {
     }
 }
 /**
- * :en: Basic digits.
- * :de: Basisziffern.
- */
-PrimeFactoredIntegerParser.BASIC_DIGITS = "012357BDHJNdVbfrlS";
-/**
  * :en: Super scripted chars.
  * :de: Hochgestellte Zeichen.
  */
 PrimeFactoredIntegerParser.EXPONENT_SUPERS = "⁰¹²³⁴⁵⁶⁷⁸⁹";
-/**
- * :en: Array of numbers of basic digits.
- * :de: Zuordnungsreihe Basisziffern zu Zahlen.
- */
-PrimeFactoredIntegerParser.BASIC_DIGITS_ARRAY = [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53];
