@@ -2,35 +2,45 @@
  * Testlauf.
  *
  * @author see git history
- * @version 1.1, 2021-12-10
+ * @version 1.2, 2021-12-12
  * @since 1.0, 2021-12-01
  */
 
 class TestRun {
     
     /**
-     * Tatsächtliche Ausgabe.
+     * :en: Actual output.
+     * :de: Tatsächtliche Ausgabe.
      * 
+     * @see getOutputActual
+     * @see setOutputActual
      * @type {any}
      */
-    #ivOutputActual: any;
+    private ivOutputActual: any;
 
     /**
-     * Tatsächliche Ausnahme/Fehler.
+     * :en: Actual error/exception.
+     * :de: Tatsächliche Fehler/Ausnahme.
      * 
+     * @see getThrowableActual
+     * @see setThrowableActual
      * @type {any}
      */
-    #ivThrowableActual: any;
+    private ivThrowableActual: any;
     
     /**
-     * TestCase Testfall.
+     * :en: Test case.
+     * :de: Testfall.
      * 
+     * @see getTestCase
+     * @see setTestCase
      * @type {TestCase}
      */
-    #ivTestCase: TestCase;
+    private ivTestCase: TestCase;
 
     /**
-     * Konstruktor.
+     * :en: Constructor.
+     * :de: Konstruktor.
      * 
      * @param {TestCase} pvTestCase Testfall
      * @param {any} pvOutputActual Tatsächliche Ausgabe
@@ -43,30 +53,39 @@ class TestRun {
     }
 
     /**
-     * Getter für #ivOutputActual.
+     * :en: Getter for {@link ivOutputActual}.
+     * :de: Getter für {@link ivOutputActual}.
      *
-     * @returns any Tatsächliche Ausgabe
+     * @returns {any} {@link ivOutputActual}
+     * @see ivOutputActual
+     * @see setOutputActual
      */
-    getOutputActual() {
-        return this.#ivOutputActual;
+    public getOutputActual(): any {
+        return this.ivOutputActual;
     }
 
     /**
-     * Getter für #ivThrowableActual.
+     * :en: Getter for {@link #ivTestCase}.
+     * :de: Getter für {@link #ivTestCase}.
      *
-     * @returns any Tatsächliche Ausnahme/Fehler
+     * @returns {TestCase} Testfall
+     * @see ivTestCase
+     * @see setTestCase
      */
-    getThrowableActual() {
-        return this.#ivThrowableActual;
+     public getTestCase(): TestCase {
+        return this.ivTestCase;
     }
     
     /**
-     * Getter für #ivTestCase.
+     * :en: Getter for {@link ivThrowableActual}.
+     * :de: Getter für {@link ivThrowableActual}.
      *
-     * @returns {TestCase} Testfall
+     * @returns any Tatsächliche Ausnahme/Fehler
+     * @see ivThrowableActual
+     * @see setThrowableActual
      */
-    getTestCase(): TestCase {
-        return this.#ivTestCase;
+    public getThrowableActual() {
+        return this.ivThrowableActual;
     }
     
     /**
@@ -75,7 +94,7 @@ class TestRun {
      * @returns {boolean} Wahrheitswert, ob erwartete Ausgabe und Ausnahme/Fehler mit tatsächlicher
      *                    übereinstimmen
      */
-    matches(): boolean {
+    public matches(): boolean {
        const lcTestCase = this.getTestCase();
        const lcOutputActual = this.getOutputActual();
        const lcThrowableActual = this.getThrowableActual();
@@ -89,29 +108,39 @@ class TestRun {
     }
 
     /**
-     * Setter für #ivOutputActual.
+     * :en: Setter for {@link ivOutputActual}.
+     * :de: Setter für {@link ivOutputActual}.
      *
      * @param {any} pvOutputActual Tatsächliche Ausgabe
+     * @see ivOutputActual
+     * @see getOutputActual
      */
-    setOutputActual(pvOutputActual: any) {
-        this.#ivOutputActual = pvOutputActual;
+    public setOutputActual(pvOutputActual: any) {
+        this.ivOutputActual = pvOutputActual;
     }
  
     /**
-     * Setter für #ivThrowableActual.
+     * :en: Setter for {@link #ivTestCase}.
+     * :de: Setter für {@link #ivTestCase}.
+     *
+     * @param {TestCase} pvTestCase Testfall
+     * @see ivTestCase
+     * @see getTestCase
+     */
+     public setTestCase(pvTestCase: TestCase) {
+        this.ivTestCase = pvTestCase;
+    }
+
+    /**
+     * :en: Setter for {@link ivThrowableActual}.
+     * :de: Setter für {@link ivThrowableActual}.
      *
      * @param {any} pvThrowableActual Tatsächliche Ausnahme/Fehler
+     * @see ivThrowableActual
+     * @see getThrowableActual
      */
-    setThrowableActual(pvThrowableActual: any) {
-        this.#ivThrowableActual = pvThrowableActual;
+    public setThrowableActual(pvThrowableActual: any) {
+        this.ivThrowableActual = pvThrowableActual;
     }
     
-    /**
-     * Setter für #ivTestCase.
-     *
-     * @param {TestCase} pvTestCase any Testfall
-     */
-    setTestCase(pvTestCase: TestCase) {
-        this.#ivTestCase = pvTestCase;
-    }
 }
