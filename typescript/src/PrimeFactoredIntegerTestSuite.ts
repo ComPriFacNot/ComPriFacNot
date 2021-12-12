@@ -2,7 +2,7 @@
  * Testsuite für PrimeFactoredInteger.
  *
  * @author see git history
- * @version 1.3, 2021-12-10
+ * @version 1.3, 2021-12-11
  * @since 1.0, 2021-12-01
  */
 class PrimeFactoredIntegerTestSuite {
@@ -10,7 +10,7 @@ class PrimeFactoredIntegerTestSuite {
     /**
      * Testfallmappe. Keys: Testfall-IDs; Values: Testfälle.
      */
-    static TEST_CASES_MAP = this.#createTestCasesMap();
+    static TEST_CASES_MAP: Map<string, TestCase>;
     
     /**
      * Fügt einer Testfallmappe einen Testfall hinzu.
@@ -27,37 +27,22 @@ class PrimeFactoredIntegerTestSuite {
         TestCase.addToMap(pvMap, pvId, pvInput, lcOutputExpected, pvThrowableExpected);
     }
     
-    /*
-    Prime factors:
-2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
-103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
-211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271
-    */
-
     /**
      * Erzeugt eine Testfallmappe.
      */
     static #createTestCasesMap() {
-        /** @type {Map<String, TestCase>} */
-        const lcResult: Map<string, TestCase> = new Map();
+        /** @type {Map<string, TestCase>} */
+        const lcResult: Map<string, TestCase> = new Map<string, TestCase>();
         this.#addToMap(lcResult, "Good: -1", "-1", "-[[1,1]]");
         this.#addToMap(lcResult, "Good: 0", "0", "0[[0,1]]");
-        this.#addToMap(lcResult, "Good: 1", "1", "[[1,1]]");
-        this.#addToMap(lcResult, "Good: 2", "2", "[[2,1]]");
-        this.#addToMap(lcResult, "Good: 3", "3", "[[3,1]]");
-        this.#addToMap(lcResult, "Good: 5", "5", "[[5,1]]");
-        this.#addToMap(lcResult, "Good: B", "B", "[[11,1]]");
-        this.#addToMap(lcResult, "Good: D", "D", "[[13,1]]");
-        this.#addToMap(lcResult, "Good: H", "H", "[[17,1]]");
-        this.#addToMap(lcResult, "Good: J", "J", "[[19,1]]");
-        this.#addToMap(lcResult, "Good: N", "N", "[[23,1]]");
-        this.#addToMap(lcResult, "Good: d", "d", "[[29,1]]");
-        this.#addToMap(lcResult, "Good: V", "V", "[[31,1]]");
-        this.#addToMap(lcResult, "Good: b", "b", "[[37,1]]");
-        this.#addToMap(lcResult, "Good: f", "f", "[[41,1]]");
-        this.#addToMap(lcResult, "Good: r", "r", "[[43,1]]");
-        this.#addToMap(lcResult, "Good: l", "l", "[[47,1]]");
-        this.#addToMap(lcResult, "Good: S", "S", "[[53,1]]");
+        const lcBasicDigitsMap = ComPriFacNotConcept.BASIC_DIGITS_MAP;
+        for (const [lcBasicDigit, lcBasicDigitValue] of lcBasicDigitsMap) {
+            if (lcBasicDigit != "0") {
+                const lcTestName = "Good: " + lcBasicDigit;
+                const lcResultExpcected = "[[" + lcBasicDigitValue + ",1]]";
+                this.#addToMap(lcResult, lcTestName, lcBasicDigit, lcResultExpcected);        
+            }
+        }
         this.#addToMap(lcResult, "Bad #1: -", "-", null, 
             "Parse error #1: The string \"-\" is no valid number");
         this.#addToMap(lcResult, "Bad #2: 00", "00", null, 
@@ -95,6 +80,17 @@ class PrimeFactoredIntegerTestSuite {
             "Parse error #13: Input is null");
         
         return lcResult;
+    }
+
+    /**
+     * :en: Initializes this class.
+     * :de: Initialisiert diese Klasse.
+     * 
+     * @since 1.3, 2021-12-11
+     */
+    public static initialize() {
+        PrimeFactoredIntegerTestSuite.TEST_CASES_MAP 
+            = PrimeFactoredIntegerTestSuite.#createTestCasesMap();
     }
     
 }
