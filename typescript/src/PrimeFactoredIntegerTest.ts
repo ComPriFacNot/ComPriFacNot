@@ -3,7 +3,7 @@
  * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  * 
  * @author See git history
- * @version 1.5, 2021-12-11
+ * @version 1.6, 2021-12-12
  * @since 1.0, 2021-11-29
  */
 
@@ -184,113 +184,122 @@ const THROWABLE_ELEMENT = document.getElementById(THROWABLE_ID);
 ComPriFacNotConcept.initialize(onAfterConceptInitialized); // asynch
 
 function onAfterConceptInitialized() {
-    try {
-        if (QUERY_PARAM_UNPARSED != null) {
-            INPUT_UNPARSED_ELEMENT.value = QUERY_PARAM_UNPARSED;
-            const lcParsed = PrimeFactoredIntegerParser.parseComPriFacNot(QUERY_PARAM_UNPARSED);
-            const lcSerialized = lcParsed.toSerialized();
-            SERIALIZED_ELEMENT.innerText = lcSerialized;
-            const lcStringed = lcParsed.toString();
-            STRINGED_ELEMENT.innerText = lcStringed;
-            const lcNumber = lcParsed.toNumber();
-            const lcNumberString = "" + lcNumber;
-            NUMBER_ELEMENT.innerText = lcNumberString;
-        } else {
-            OUTPUT_ELEMENT.style.display = "none";
+    const lcConceptInitThrowable = ComPriFacNotConcept.INITIALIZATION_THROWABLE;
+    let lvThrowable = lcConceptInitThrowable;
+    if (lvThrowable == null) {
+        try {
+            if (QUERY_PARAM_UNPARSED != null) {
+                INPUT_UNPARSED_ELEMENT.value = QUERY_PARAM_UNPARSED;
+                const lcParsed = PrimeFactoredIntegerParser.parseComPriFacNot(QUERY_PARAM_UNPARSED);
+                const lcSerialized = lcParsed.toSerialized();
+                SERIALIZED_ELEMENT.innerText = lcSerialized;
+                const lcStringed = lcParsed.toString();
+                STRINGED_ELEMENT.innerText = lcStringed;
+                const lcNumber = lcParsed.toNumber();
+                const lcNumberString = "" + lcNumber;
+                NUMBER_ELEMENT.innerText = lcNumberString;
+            } else {
+                OUTPUT_ELEMENT.style.display = "none";
+            }
+        } catch (lcThrowable2) {
+            lvThrowable = lcThrowable2;
         }
-    } catch (lcThrowable) {
-        const lvThrowableText = formatThrowable(lcThrowable);
-        THROWABLE_ELEMENT.innerHTML = lvThrowableText;
     }
-    
-    PrimeFactoredIntegerTestSuite.initialize();
-    const lcTestCaseMap = PrimeFactoredIntegerTestSuite.TEST_CASES_MAP;
-    const lcTestCasesEntries = lcTestCaseMap.entries();
-    for (const lcEntry of lcTestCasesEntries) {
-        const lcTestCaseId = lcEntry[0];
-        const lcTestCase = lcEntry[1];
-        const lcChecked = (QUERY_PARAM_TEST_CASE_ID == null) 
-            ? false : (TEST_ALL || QUERY_PARAM_TEST_CASE_ID.includes(lcTestCaseId));
-        const lcTrElement = document.createElement("tr");
-        const lcTdSelectionElement = document.createElement("td");
-        const lcInputElement = document.createElement("input");
-        lcInputElement.type = "checkbox";
-        const lcInputElementId = "input" + TEST_CASE_ID_NAME + lcTestCaseId;
-        lcInputElement.id = lcInputElementId;
-        lcInputElement.name = TEST_CASE_ID_NAME;
-        lcInputElement.value = lcTestCaseId;
-        if (lcChecked) {
-            lcInputElement.checked = true;
-        }
-        lcTdSelectionElement.appendChild(lcInputElement);
-        lcTrElement.appendChild(lcTdSelectionElement);
-        const lcTdIdElement = document.createElement("td");
-        const lcLabelElement = document.createElement("label");
-        lcLabelElement.htmlFor = lcInputElementId;
-        lcLabelElement.innerText = lcTestCaseId;
-        lcTdIdElement.appendChild(lcLabelElement);
-        lcTdIdElement.className = "monospace";
-        lcTrElement.appendChild(lcTdIdElement);
-        const lcInput = lcTestCase.getInput();
-        const lcTdInputElement = document.createElement("td");
-        lcTdInputElement.onclick = onTestCaseInputClick;        
-        lcTdInputElement.innerText = lcInput;
-        lcTdInputElement.className = "cursor-pointer monospace";
-        lcTrElement.appendChild(lcTdInputElement);
-        const lcOutputExpected = lcTestCase.getOutputExpected();
-        const lcOutputExpectedSerialized 
-            = (lcOutputExpected == null) ? null : lcOutputExpected.toSerialized();
-        const lcTdOutputExpectedElement = document.createElement("td");
-        lcTdOutputExpectedElement.innerText = lcOutputExpectedSerialized;
-        lcTdOutputExpectedElement.className = "monospace";
-        lcTrElement.appendChild(lcTdOutputExpectedElement);
-        let lvOutputActual = null;
-        let lvOutputActualSerialized = null;
-        let lvThrowableActual = null;
-        let lvMatch = null;
-        let lvOutputMatch = null;
-        let lvThrowableMatch = null;
-        const lcThrowableExpected = lcTestCase.getThrowableExpected();
-        if (lcChecked) {
-            try {
-                lvOutputActual = PrimeFactoredIntegerParser.parseComPriFacNot(lcInput);
-            } catch (lcThrowable) {
-                lvThrowableActual = lcThrowable;
+    if (lvThrowable != null) { // Error/exception on concept-init or input parsing
+        const lcThrowableText = formatThrowable(lvThrowable);
+        THROWABLE_ELEMENT.innerHTML = lcThrowableText;
+    }
+
+    if (lcConceptInitThrowable == null) {
+        PrimeFactoredIntegerTestSuite.initialize(); // requires initialized ComPriFacNotConcept
+        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.TEST_CASES_MAP;
+        const lcTestCasesEntries = lcTestCaseMap.entries();
+        for (const lcEntry of lcTestCasesEntries) {
+            const lcTestCaseId = lcEntry[0];
+            const lcTestCase = lcEntry[1];
+            const lcChecked = (QUERY_PARAM_TEST_CASE_ID == null) 
+                ? false : (TEST_ALL || QUERY_PARAM_TEST_CASE_ID.includes(lcTestCaseId));
+            const lcTrElement = document.createElement("tr");
+            const lcTdSelectionElement = document.createElement("td");
+            const lcInputElement = document.createElement("input");
+            lcInputElement.type = "checkbox";
+            const lcInputElementId = "input" + TEST_CASE_ID_NAME + lcTestCaseId;
+            lcInputElement.id = lcInputElementId;
+            lcInputElement.name = TEST_CASE_ID_NAME;
+            lcInputElement.value = lcTestCaseId;
+            if (lcChecked) {
+                lcInputElement.checked = true;
             }
-            if (lvThrowableActual == null) {
-                lvOutputActualSerialized = lvOutputActual.toSerialized();
+            lcTdSelectionElement.appendChild(lcInputElement);
+            lcTrElement.appendChild(lcTdSelectionElement);
+            const lcTdIdElement = document.createElement("td");
+            const lcLabelElement = document.createElement("label");
+            lcLabelElement.htmlFor = lcInputElementId;
+            lcLabelElement.innerText = lcTestCaseId;
+            lcTdIdElement.appendChild(lcLabelElement);
+            lcTdIdElement.className = "monospace";
+            lcTrElement.appendChild(lcTdIdElement);
+            const lcInput = lcTestCase.getInput();
+            const lcTdInputElement = document.createElement("td");
+            lcTdInputElement.onclick = onTestCaseInputClick;        
+            lcTdInputElement.innerText = lcInput;
+            lcTdInputElement.className = "cursor-pointer monospace";
+            lcTrElement.appendChild(lcTdInputElement);
+            const lcOutputExpected = lcTestCase.getOutputExpected();
+            const lcOutputExpectedSerialized 
+                = (lcOutputExpected == null) ? null : lcOutputExpected.toSerialized();
+            const lcTdOutputExpectedElement = document.createElement("td");
+            lcTdOutputExpectedElement.innerText = lcOutputExpectedSerialized;
+            lcTdOutputExpectedElement.className = "monospace";
+            lcTrElement.appendChild(lcTdOutputExpectedElement);
+            let lvOutputActual = null;
+            let lvOutputActualSerialized = null;
+            let lvThrowableActual = null;
+            let lvMatch = null;
+            let lvOutputMatch = null;
+            let lvThrowableMatch = null;
+            const lcThrowableExpected = lcTestCase.getThrowableExpected();
+            if (lcChecked) {
+                try {
+                    lvOutputActual = PrimeFactoredIntegerParser.parseComPriFacNot(lcInput);
+                } catch (lcThrowable) {
+                    lvThrowableActual = lcThrowable;
+                }
+                if (lvThrowableActual == null) {
+                    lvOutputActualSerialized = lvOutputActual.toSerialized();
+                }
+                lvOutputMatch = lcOutputExpectedSerialized == lvOutputActualSerialized;
+                lvThrowableMatch = lcThrowableExpected == lvThrowableActual;
+                //const lcTestRun = new TestRun(lcTestCase, lvOutputActual, lvThrowableActual);
+                //lvMatch = lcTestRun.matches();
+                lvMatch = lvOutputMatch && lvThrowableMatch;
             }
-            lvOutputMatch = lcOutputExpectedSerialized == lvOutputActualSerialized;
-            lvThrowableMatch = lcThrowableExpected == lvThrowableActual;
-            //const lcTestRun = new TestRun(lcTestCase, lvOutputActual, lvThrowableActual);
-            //lvMatch = lcTestRun.matches();
-            lvMatch = lvOutputMatch && lvThrowableMatch;
+            const lcTdOutputActualElement = document.createElement("td");
+            lcTdOutputActualElement.innerText = lvOutputActualSerialized;
+            lcTdOutputActualElement.className = "monospace" +
+                (lcChecked ? (" background-color-" + (lvOutputMatch ? "lime" : "red")) : "");
+            lcTrElement.appendChild(lcTdOutputActualElement);
+            const lcTdThrowableExpectedElement = document.createElement("td");
+            lcTdThrowableExpectedElement.innerText = lcThrowableExpected;
+            lcTdThrowableExpectedElement.className = "monospace";
+            lcTrElement.appendChild(lcTdThrowableExpectedElement);
+            const lcTdThrowableActualElement = document.createElement("td");
+            let lvThrowableActualText: string;
+            if (lvThrowableActual instanceof Error) {
+                lvThrowableActualText = formatThrowable(lvThrowableActual);
+            } else {
+                lvThrowableActualText = lvThrowableActual;
+            }
+            lcTdThrowableActualElement.innerHTML = lvThrowableActualText;
+            lcTdThrowableActualElement.className = "monospace" +
+                (lcChecked ? (" background-color-" + (lvThrowableMatch ? "lime" : "red")) : "");
+            lcTrElement.appendChild(lcTdThrowableActualElement);
+            const lcTdMatchElement = document.createElement("td");
+            lcTdMatchElement.innerText = lvMatch;
+            lcTdMatchElement.className = "monospace" +
+                (lcChecked ? (" background-color-" + (lvMatch ? "lime" : "red")) : "");
+            lcTrElement.appendChild(lcTdMatchElement);
+            TEST_CASES_ELEMENT.appendChild(lcTrElement);
         }
-        const lcTdOutputActualElement = document.createElement("td");
-        lcTdOutputActualElement.innerText = lvOutputActualSerialized;
-        lcTdOutputActualElement.className = "monospace" +
-            (lcChecked ? (" background-color-" + (lvOutputMatch ? "lime" : "red")) : "");
-        lcTrElement.appendChild(lcTdOutputActualElement);
-        const lcTdThrowableExpectedElement = document.createElement("td");
-        lcTdThrowableExpectedElement.innerText = lcThrowableExpected;
-        lcTdThrowableExpectedElement.className = "monospace";
-        lcTrElement.appendChild(lcTdThrowableExpectedElement);
-        const lcTdThrowableActualElement = document.createElement("td");
-        let lvThrowableActualText: string;
-        if (lvThrowableActual instanceof Error) {
-            lvThrowableActualText = formatThrowable(lvThrowableActual);
-        } else {
-            lvThrowableActualText = lvThrowableActual;
-        }
-        lcTdThrowableActualElement.innerHTML = lvThrowableActualText;
-        lcTdThrowableActualElement.className = "monospace" +
-            (lcChecked ? (" background-color-" + (lvThrowableMatch ? "lime" : "red")) : "");
-        lcTrElement.appendChild(lcTdThrowableActualElement);
-        const lcTdMatchElement = document.createElement("td");
-        lcTdMatchElement.innerText = lvMatch;
-        lcTdMatchElement.className = "monospace" +
-            (lcChecked ? (" background-color-" + (lvMatch ? "lime" : "red")) : "");
-        lcTrElement.appendChild(lcTdMatchElement);
-        TEST_CASES_ELEMENT.appendChild(lcTrElement);
     }
 }

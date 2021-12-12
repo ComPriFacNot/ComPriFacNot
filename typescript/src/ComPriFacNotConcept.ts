@@ -3,7 +3,7 @@
  * :de: Klasse ComPriFacNotConcept: Zugrundeliegendes ComPriFacNot-Konzept.
  * 
  * @author See git history
- * @version 1.0, 2021-12-11
+ * @version 1.1, 2021-12-12
  * @since 1.0, 2021-12-10
  */
  class ComPriFacNotConcept {
@@ -36,47 +36,74 @@
     public static BASIC_DIGITS_MAP: Map<string, number>;
 
     /**
+     * :en: Error/exception in initialization. The call-back-function must evaluate this field
+     *      first.
+     * :de: Fehler/Ausnahme bei der Initialisierung. Die Rückruffunktion muss dieses Feld zuerst
+     *      auswerten.
+     * 
+     * @since 1.1, 2021-12-12
+     */
+    public static INITIALIZATION_THROWABLE: any = null;
+
+    /**
      * :en: Initializes this class and calls a call-back-function afterwards.
      * :de: Initialisiert diese Klasse und ruft anschließend eine Call-Back-Funktion auf.
      * 
      * @param {any} pvCallBack Call-back-function
      */
     public static initialize(pvCallBack: any) {
-        const lcRequest = new XMLHttpRequest();
-        lcRequest.onreadystatechange = function() {
-            const lcStatus = this.status;
-            if ((this.readyState == 4) && ((lcStatus == 200) || (lcStatus == 0))) {
-                const lcResponseText = this.responseText; // JSON with comments (.jsonc)
-                const lcFirstBracket = lcResponseText.indexOf("["); // Start of data
-                const lcJson = lcResponseText.substring(lcFirstBracket);
-                const lcBasicDigitsDupels: Array<Array<any>> = JSON.parse(lcJson);
-                const lcBasicDigitsMap: Map<string, number> = new Map<string, number>();
-                const lcBasicDigitsArray = new Array<string>();
-                const lcBasicDigitsValues = new Array<number>();
-                let i = -1;
-                for (const lcBasicDigitsDupel of lcBasicDigitsDupels) {
-                    i++;
-                    const lcBasicDigit: string = lcBasicDigitsDupel[0];
-                    const lcBasicDigitValue: number = lcBasicDigitsDupel[1];
-                    lcBasicDigitsMap.set(lcBasicDigit, lcBasicDigitValue);
-                    lcBasicDigitsArray[i] = lcBasicDigit;
-                    lcBasicDigitsValues[i] = lcBasicDigitValue;
+        try {
+            const lcRequest = new XMLHttpRequest();
+            lcRequest.onreadystatechange = function() {
+                try {
+                    const lcStatus = this.status;
+                    if (this.readyState == XMLHttpRequest.DONE) {
+                        if (lcStatus == 200) {
+                            const lcResponseText = this.responseText; // JSON with comments (.jsonc)
+                            const lcFirstBracket = lcResponseText.indexOf("["); // Start of data
+                            const lcJson = lcResponseText.substring(lcFirstBracket);
+                            const lcBasicDigitsDupels: Array<Array<any>> = JSON.parse(lcJson);
+                            const lcBasicDigitsMap: Map<string, number> = new Map<string, number>();
+                            const lcBasicDigitsArray = new Array<string>();
+                            const lcBasicDigitsValues = new Array<number>();
+                            let i = -1;
+                            for (const lcBasicDigitsDupel of lcBasicDigitsDupels) {
+                                i++;
+                                const lcBasicDigit: string = lcBasicDigitsDupel[0];
+                                const lcBasicDigitValue: number = lcBasicDigitsDupel[1];
+                                lcBasicDigitsMap.set(lcBasicDigit, lcBasicDigitValue);
+                                lcBasicDigitsArray[i] = lcBasicDigit;
+                                lcBasicDigitsValues[i] = lcBasicDigitValue;
+                            }
+                            const lcBasicDigitsString = lcBasicDigitsArray.join("");
+                            ComPriFacNotConcept.BASIC_DIGITS = lcBasicDigitsString;
+                            ComPriFacNotConcept.BASIC_DIGITS_VALUES = lcBasicDigitsValues;
+                            ComPriFacNotConcept.BASIC_DIGITS_MAP = lcBasicDigitsMap;
+                            // window.alert(lcBasicDigitsString);
+                        } else {
+                            const lcMessage = "Initialization error: HTTP-Status expected: 200; " +
+                                "HTTP-Status actual: " + lcStatus;
+                            const lcError = new Error(lcMessage);
+                            ComPriFacNotConcept.INITIALIZATION_THROWABLE = lcError;
+                        }
+                        pvCallBack();
+                    }
+                } catch (lcError: any) {
+                    ComPriFacNotConcept.INITIALIZATION_THROWABLE = lcError;
+                    pvCallBack();
                 }
-                const lcBasicDigitsString = lcBasicDigitsArray.join("");
-                ComPriFacNotConcept.BASIC_DIGITS = lcBasicDigitsString;
-                ComPriFacNotConcept.BASIC_DIGITS_VALUES = lcBasicDigitsValues;
-                ComPriFacNotConcept.BASIC_DIGITS_MAP = lcBasicDigitsMap;
-                pvCallBack();
-                // window.alert(lcBasicDigitsString);
+            };
+            const lcCurrentScript = document.currentScript;
+            if (lcCurrentScript instanceof HTMLScriptElement) {
+                const lcSrc = lcCurrentScript.src;
+                const lcUrl = lcSrc + "/../" + ComPriFacNotConcept.BASIC_DIGITS_JSON_URL;
+                lcRequest.open("GET", lcUrl, true);
+                lcRequest.send();
             }
-        };
-        const lcCurrentScript = document.currentScript;
-        if (lcCurrentScript instanceof HTMLScriptElement) {
-            const lcSrc = lcCurrentScript.src;
-            const lcUrl = lcSrc + "/../" + ComPriFacNotConcept.BASIC_DIGITS_JSON_URL;
-            lcRequest.open("GET", lcUrl, true);
-            lcRequest.send();
-        }        
+        } catch (lcError: any) {
+            ComPriFacNotConcept.INITIALIZATION_THROWABLE = lcError;
+            pvCallBack();
+        }
     }
 
     /**
