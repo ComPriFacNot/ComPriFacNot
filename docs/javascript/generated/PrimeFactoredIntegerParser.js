@@ -3,18 +3,28 @@
  * :de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
  *
  * @author See git history
- * @version 1.6, 2021-12-11
+ * @version 1.7, 2021-12-12
  * @since 1.0, 2021-11-29
  */
 class PrimeFactoredIntegerParser {
     /**
-     * en: Constructor.
-     * de: Konstruktor.
+     * :en: Constructor.
+     * :de: Konstruktor.
      */
     constructor() { }
     /**
-     * en: Parses a ComPriFacNot formatted string to a PrimeFactoredInteger.
-     * de: Parst einen ComPriFacNot-formatierten String zu einem PrimeFactoredInteger.
+     * :en: Getter for {@link cvExponentSupers}.
+     * :de: Getter für {@link cvExponentSupers}.
+     *
+     * @returns {string} {@link cvExponentSupers}
+     * @see cvExponentSupers
+     */
+    static getExponentSupers() {
+        return PrimeFactoredIntegerParser.cvExponentSupers;
+    }
+    /**
+     * :en: Parses a ComPriFacNot formatted string to a PrimeFactoredInteger.
+     * :de: Parst einen ComPriFacNot-formatierten String zu einem PrimeFactoredInteger.
      *
      * @param {string} pvComPriFacNot en: ComPriFacNot formatted integer;
      *                                de: ComPriFacNot-formatierte ganze Zahl
@@ -56,6 +66,9 @@ class PrimeFactoredIntegerParser {
                 }
                 else { // Zerlegung in Komponenten ...
                     const lcAbsoluteLength = lvAbsolute.length;
+                    const lcBasicDigits = ComPriFacNotConcept.getBasicDigits();
+                    const lcBasicDigitsValues = ComPriFacNotConcept.getBasicDigitsValues();
+                    const lcExponentSupers = PrimeFactoredIntegerParser.getExponentSupers();
                     for (let i = 0; i < lcAbsoluteLength; i++) {
                         const lcChar = lvAbsolute[i];
                         /** @type {number} */
@@ -93,9 +106,9 @@ class PrimeFactoredIntegerParser {
                                 i = lcIndexClosingBracket;
                                 break;
                             default:
-                                const lcBasicDigitIndex = ComPriFacNotConcept.BASIC_DIGITS.indexOf(lcChar);
+                                const lcBasicDigitIndex = lcBasicDigits.indexOf(lcChar);
                                 if (lcBasicDigitIndex > -1) { // Basisziffer
-                                    lvBase = ComPriFacNotConcept.BASIC_DIGITS_VALUES[lcBasicDigitIndex];
+                                    lvBase = lcBasicDigitsValues[lcBasicDigitIndex];
                                 }
                                 else {
                                     throw "Parse error #6: Unknown char \"" + lcChar
@@ -141,7 +154,7 @@ class PrimeFactoredIntegerParser {
                                 let lcExponent = "";
                                 for (let j = i + 1; j < lcAbsoluteLength; j++) {
                                     const lcExponentChar = lvAbsolute[j];
-                                    const lcSuperIndex = PrimeFactoredIntegerParser.EXPONENT_SUPERS.indexOf(lcExponentChar);
+                                    const lcSuperIndex = lcExponentSupers.indexOf(lcExponentChar);
                                     if (lcSuperIndex > -1) { // Exponentenzeichen
                                         lcExponent += lcSuperIndex;
                                     }
@@ -176,5 +189,7 @@ class PrimeFactoredIntegerParser {
 /**
  * :en: Super scripted chars.
  * :de: Hochgestellte Zeichen.
+ *
+ * @see getExponentSupers
  */
-PrimeFactoredIntegerParser.EXPONENT_SUPERS = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+PrimeFactoredIntegerParser.cvExponentSupers = "⁰¹²³⁴⁵⁶⁷⁸⁹";

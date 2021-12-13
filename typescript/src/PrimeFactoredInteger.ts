@@ -15,7 +15,7 @@ class PrimeFactoredInteger {
      * @param {PrimeFactoredInteger} pvSecond Zweite Instanz
      * @returns {boolean} Wahrheitswert, ob beide Instanzen gleich oder beide null sind
      */
-    static equals(pvFirst: PrimeFactoredInteger, pvSecond: PrimeFactoredInteger): boolean {
+    public static equals(pvFirst: PrimeFactoredInteger, pvSecond: PrimeFactoredInteger): boolean {
         /** @type {boolean} */
         let lvResult: boolean; // Rückgabewert
         if (pvFirst == null) {
@@ -37,7 +37,7 @@ class PrimeFactoredInteger {
      * @param {string} pvSerialized Serialisierung
      * @returns {PrimeFactoredInteger} Neue Instanz
      */
-    static forSerialized(pvSerialized: string): PrimeFactoredInteger {
+    public static forSerialized(pvSerialized: string): PrimeFactoredInteger {
         /** @type {PrimeFactoredInteger} */
         let lvResult: PrimeFactoredInteger;
         if (pvSerialized == null) {
@@ -81,18 +81,20 @@ class PrimeFactoredInteger {
      *      immer 1).
      * 
      * @see getComponentsMap
-     * @see #setComponentsMap
+     * @see setComponentsMap
      * @type {Map<number, number>}
      */
-    #ivComponentsMap: Map<number, number>;
+    private ivComponentsMap: Map<number, number>;
 
     /**
      * :en: Sign: -1 (negative value), 0 (value 0) or 1 (positive value).
      * :de: Vorzeichen: -1 (bei negativem Wert), 0 (bei 0) oder 1 (bei positivem Wert).
      * 
      * @type {number}
+     * @see getSign
+     * @see setSign
      */
-    #ivSign: number;
+    private ivSign: number;
 
     /**
      * :en: Constructor.
@@ -102,22 +104,23 @@ class PrimeFactoredInteger {
      * @param {number} pvSign en: Sign; de: Vorzeichen
      */
     constructor(pvComponentsMap: Map<number, number>, pvSign: number = 1) {
-        this.#setComponentsMap(pvComponentsMap);
+        this.setComponentsMap(pvComponentsMap);
         let lvSign = pvSign;
         if (pvComponentsMap != null) {
             if (pvComponentsMap.has(0)) {
                 lvSign = 0;
             }
         }
-        this.#setSign(lvSign);
+        this.setSign(lvSign);
     }
     
     /**
-     * Liefert die Komponenten als JSON.
+     * :en: Returns the components as JSON.
+     * :de: Liefert die Komponenten als JSON.
      * 
-     * @returns {string} Komponenten als JSON
+     * @returns {string} Components as JSON
      */
-    getComponentsJson(): string {
+    public getComponentsJson(): string {
         const lcComponentsMap = this.getComponentsMap();
         const lcComponentsEntries = lcComponentsMap.entries();
         const lcPrimeFactorsArray = Array.from(lcComponentsEntries);
@@ -127,47 +130,51 @@ class PrimeFactoredInteger {
     }
     
     /**
-     * Getter für #ivComponentsMap.
+     * :en: Setter for {@link ivComponentsMap}.
+     * :de: Getter für {@link ivComponentsMap}.
      * 
-     * @returns {Map<number, number>} Primfaktorenmappe
-     * @see #ivComponentsMap
-     * @see #setComponentsMap
+     * @returns {Map<number, number>} Map of components
+     * @see ivComponentsMap
+     * @see setComponentsMap
      */
-    getComponentsMap(): Map<number, number> {
-        return this.#ivComponentsMap;
+    public getComponentsMap(): Map<number, number> {
+        return this.ivComponentsMap;
     }
 
     /**
-     * Getter für #ivSign.
+     * :en: Setter for {@link ivSign}.
+     * :de: Getter für {@link ivSign}.
      * 
-     * @return {number}
-     * @see #ivSign
-     * @see #setSign
+     * @return {number} {@link ivSign}
+     * @see ivSign
+     * @see setSign
      */
-    getSign(): number {
-        return this.#ivSign;
+    public getSign(): number {
+        return this.ivSign;
     }
 
     /**
-     * Setter für #ivComponentsMap.
+     * :en: Setter for {@link ivComponentsMap}.
+     * :de: Setter für {@link ivComponentsMap}.
      * 
      * @param {Map<number, number>} pvMap Komponentenmappe
-     * @see #ivComponentsMap
+     * @see ivComponentsMap
      * @see getComponentsMap
      */
-    #setComponentsMap(pvMap: Map<number, number>) {
-        this.#ivComponentsMap = pvMap;
+    private setComponentsMap(pvMap: Map<number, number>) {
+        this.ivComponentsMap = pvMap;
     }
    
     /**
-     * Setter für #ivSign.
+     * :en: Setter for {@link ivSign}.
+     * :de: Setter für {@link ivSign}.
      * 
-     * @param {number} pvSign Vorzeichen
-     * @see #ivSign
+     * @param {number} pvSign {@link ivSign}
+     * @see ivSign
      * @see getSign
      */
-    #setSign(pvSign: number) {
-        this.#ivSign = pvSign;
+    private setSign(pvSign: number) {
+        this.ivSign = pvSign;
     }
     
     /**
@@ -176,7 +183,7 @@ class PrimeFactoredInteger {
      * 
      * @returns {number} en: Sum of all powers; de: Summe aller Potenzen.
      */
-    toNumber(): number {
+    public toNumber(): number {
         const lcComponentsMap = this.getComponentsMap();
         const lcMapSize = lcComponentsMap.size;
         let lvResult = 0;
@@ -197,13 +204,16 @@ class PrimeFactoredInteger {
     }
 
     /**
-     * Liefert eine Serialisierung im Aufbau &lt;Vorzeichen&gt;&lt;Components&gt;.
-     * &lt;Vorzeichen&gt;:  "-", "0" oder ""
-     * &gt;Components&gt;: JSON-Stringify des Components-Map-Entries-Arrays
+     * :en: Returns a serialization containing &lt;Sign&gt;&lt;Components&gt;.
+     * :de: Liefert eine Serialisierung im Aufbau &lt;Vorzeichen&gt;&lt;Komponenten&gt;.
      * 
-     * @returns {string} Serialisierung
+     * &lt;Sign&gt;:  "-", "0" oder ""
+     * 
+     * &lt;Components&gt;: JSON-Stringify of the components
+     * 
+     * @returns {string} Serialization
      */
-    toSerialized(): string {
+    public toSerialized(): string {
         const lcSign = this.getSign();
         const lcComponentsJson = this.getComponentsJson();
         const lcResult = ((lcSign == 0) ? "0" : (lcSign < 0) ? "-" : "") + lcComponentsJson;

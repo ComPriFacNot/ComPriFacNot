@@ -3,7 +3,7 @@
  * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  * 
  * @author See git history
- * @version 1.6, 2021-12-12
+ * @version 1.7, 2021-12-12
  * @since 1.0, 2021-11-29
  */
 
@@ -184,7 +184,7 @@ const THROWABLE_ELEMENT = document.getElementById(THROWABLE_ID);
 ComPriFacNotConcept.initialize(onAfterConceptInitialized); // asynch
 
 function onAfterConceptInitialized() {
-    const lcConceptInitThrowable = ComPriFacNotConcept.INITIALIZATION_THROWABLE;
+    const lcConceptInitThrowable = ComPriFacNotConcept.getInitializationThrowable();
     let lvThrowable = lcConceptInitThrowable;
     if (lvThrowable == null) {
         try {
@@ -212,7 +212,7 @@ function onAfterConceptInitialized() {
 
     if (lcConceptInitThrowable == null) {
         PrimeFactoredIntegerTestSuite.initialize(); // requires initialized ComPriFacNotConcept
-        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.TEST_CASES_MAP;
+        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.getTestCasesMap();
         const lcTestCasesEntries = lcTestCaseMap.entries();
         for (const lcEntry of lcTestCasesEntries) {
             const lcTestCaseId = lcEntry[0];
