@@ -3,7 +3,7 @@
  * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  *
  * @author See git history
- * @version 1.7, 2021-12-12
+ * @version 1.8, 2021-12-14
  * @since 1.0, 2021-11-29
  */
 "use strict";
@@ -163,12 +163,15 @@ const NUMBER_ELEMENT = document.getElementById(NUMBER_ID);
 const OUTPUT_ELEMENT = document.getElementById(OUTPUT_ID);
 const THROWABLE_ID = "divThrowable";
 const THROWABLE_ELEMENT = document.getElementById(THROWABLE_ID);
+const CSS_CLASS_MATCH = "lightgreen";
+const CSS_CLASS_NOMATCH = "pink";
 ComPriFacNotConcept.initialize(onAfterConceptInitialized); // asynch
 function onAfterConceptInitialized() {
     const lcConceptInitThrowable = ComPriFacNotConcept.getInitializationThrowable();
     let lvThrowable = lcConceptInitThrowable;
     if (lvThrowable == null) {
         try {
+            PrimeFactoredIntegerParser.initialize(); // requires initialized ComPriFacNotConcept
             if (QUERY_PARAM_UNPARSED != null) {
                 INPUT_UNPARSED_ELEMENT.value = QUERY_PARAM_UNPARSED;
                 const lcParsed = PrimeFactoredIntegerParser.parseComPriFacNot(QUERY_PARAM_UNPARSED);
@@ -259,7 +262,8 @@ function onAfterConceptInitialized() {
             const lcTdOutputActualElement = document.createElement("td");
             lcTdOutputActualElement.innerText = lvOutputActualSerialized;
             lcTdOutputActualElement.className = "monospace" +
-                (lcChecked ? (" background-color-" + (lvOutputMatch ? "lime" : "red")) : "");
+                (lcChecked ? (" background-color-" +
+                    (lvOutputMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdOutputActualElement);
             const lcTdThrowableExpectedElement = document.createElement("td");
             lcTdThrowableExpectedElement.innerText = lcThrowableExpected;
@@ -275,12 +279,14 @@ function onAfterConceptInitialized() {
             }
             lcTdThrowableActualElement.innerHTML = lvThrowableActualText;
             lcTdThrowableActualElement.className = "monospace" +
-                (lcChecked ? (" background-color-" + (lvThrowableMatch ? "lime" : "red")) : "");
+                (lcChecked ? (" background-color-" +
+                    (lvThrowableMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdThrowableActualElement);
             const lcTdMatchElement = document.createElement("td");
             lcTdMatchElement.innerText = lvMatch;
             lcTdMatchElement.className = "monospace" +
-                (lcChecked ? (" background-color-" + (lvMatch ? "lime" : "red")) : "");
+                (lcChecked ? (" background-color-" +
+                    (lvMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdMatchElement);
             TEST_CASES_ELEMENT.appendChild(lcTrElement);
         }

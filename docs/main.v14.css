@@ -4,7 +4,7 @@
  * Haupt-Stylesheets.
  * 
  * @author see git history
- * @version 1.3, 2021-12-12
+ * @version 1.4, 2021-12-14
  * @since 1.0, 2021-11-30
  */
 
@@ -39,8 +39,16 @@ tr {
     vertical-align: baseline;
 }
 
+.background-color-lightgreen {
+	background-color: lightgreen;
+}
+
 .background-color-lime {
 	background-color: lime;
+}
+
+.background-color-pink {
+    background-color: pink;
 }
 
 .background-color-red {
@@ -53,6 +61,10 @@ tr {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.font-family-emoji {
+    font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Cambria Math", fantasy;
 }
 
 .footer {
