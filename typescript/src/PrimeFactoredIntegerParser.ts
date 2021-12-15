@@ -3,11 +3,21 @@
  * :de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
  * 
  * @author See git history
- * @version 1.7, 2021-12-12
+ * @version 1.8, 2021-12-14
  * @since 1.0, 2021-11-29
  */
  class PrimeFactoredIntegerParser {
     
+    /**
+     * :en: Array of parsed alias digits.
+     * :de: Reihe von geparsten Aliasziffern.
+     * 
+     * @see getAliasDigitsParsed
+     * @see setAliasDigitsParsed
+     * @since 1.8, 2021-12-14
+     */
+    private static cvAliasDigitsParsed: PrimeFactoredInteger[];
+
     /**
      * :en: Super scripted chars.
      * :de: Hochgestellte Zeichen.
@@ -15,6 +25,19 @@
      * @see getExponentSupers
      */
     private static cvExponentSupers = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+
+    /**
+     * :en: Getter for {@link cvAliasDigitsParsed}.
+     * :de: Getter für {@link cvAliasDigitsParsed}.
+     * 
+     * @returns {PrimeFactoredInteger[]} {@link cvAliasDigitsParsed}
+     * @see cvAliasDigitsParsed
+     * @see setAliasDigitsParsed
+     * @since 1.8, 2021-12-14
+     */
+    public static getAliasDigitsParsed(): PrimeFactoredInteger[] {
+        return PrimeFactoredIntegerParser.cvAliasDigitsParsed;
+    }
 
     /**
      * :en: Getter for {@link cvExponentSupers}.
@@ -28,16 +51,36 @@
     }
 
     /**
+     * :en: Initializes this class.
+     * :de: Initialisiert diese Klasse.
+     * 
+     * @since 1.8, 2021-12-14
+     */
+    public static initialize() {
+        const lcAliasDigits = ComPriFacNotConcept.getAliasDigits();
+        const lcAliasDigitsValues = ComPriFacNotConcept.getAliasDigitsValues();
+        const lcAliasDigitsCount = lcAliasDigits.length;
+        const lcAliasDigitsParsed = new Array<PrimeFactoredInteger>();
+        for (let i = 0; i < lcAliasDigitsCount; i++) {
+            const lcAliasDigitValue = lcAliasDigitsValues[i];
+            const lcAliasDigitParsed = PrimeFactoredIntegerParser.parseComPriFacNot(
+                lcAliasDigitValue);
+            lcAliasDigitsParsed[i] = lcAliasDigitParsed;
+        }
+        PrimeFactoredIntegerParser.setAliasDigitsParsed(lcAliasDigitsParsed);
+    }
+
+    /**
      * :en: Parses a ComPriFacNot formatted string to a PrimeFactoredInteger.
      * :de: Parst einen ComPriFacNot-formatierten String zu einem PrimeFactoredInteger.
      * 
-     * @param {string} pvComPriFacNot en: ComPriFacNot formatted integer;
-     *                                de: ComPriFacNot-formatierte ganze Zahl 
-     * @returns {PrimeFactoredInteger} en: Parsed prime factors; de: Geparste Primfaktorenzerlegung
+     * @param {string} pvComPriFacNot :en: ComPriFacNot formatted integer;
+     *                                :de: ComPriFacNot-formatierte ganze Zahl 
+     * @returns {PrimeFactoredInteger} :en: Parsed prime factors;
+     *                                 :de: Geparste Primfaktorenzerlegung
      */
     public static parseComPriFacNot(pvComPriFacNot: string): PrimeFactoredInteger {
-        /** @type {Map<number, number>} */
-        const lcComponents: Map<number, number> = new Map();
+        const lcComponents = new Map<number, number>();
         let lvSign = 1;
         if (pvComPriFacNot != null) {
             let lcTrimmed = pvComPriFacNot.trim();
@@ -46,36 +89,38 @@
                 const lcFirstChar = lcTrimmed.substring(0, 1);
                 /** @type {string} */
                 let lvAbsolute: string;
-                if (lcFirstChar == "-") { // Sonderfall negative Zahlen
+                if (lcFirstChar == "-") { // Special case negative numbers
                     lvSign = -1;
                     lvAbsolute = lcTrimmed.substring(1);
                     if (lvAbsolute == "") {
                         throw "Parse error #1: The string \"-\" is no valid number";
                     } 
-                    if (lvAbsolute == "1") { // Sonderfall -1
+                    if (lvAbsolute == "1") { // Special case -1
                         lcComponents.set(1, 1);
                         lvAbsolute = lvAbsolute.substring(1);
                     }
                 } else {
                     lvAbsolute = lcTrimmed;
                 }
-                if ((lcFirstChar == "0") || (lcFirstChar == "1")) { // Sonderfall 0 und 1
+                if ((lcFirstChar == "0") || (lcFirstChar == "1")) { // Special cases 0 and 1
                     const lcBase = (lcTrimmed == "0") ? 0 : 1;
                     lvSign = lcBase;
                     lcComponents.set(lcBase, 1);
-                    if (lcInputLength > 1) { // Bei 0 oder 1 darf kein weiteres Zeichen mehr kommen
+                    if (lcInputLength > 1) { // On 0 or 1 no other char is allowed to not follow
                         throw "Parse error #2: If the first digit is \"" + lcFirstChar
                             + "\", this must be the one and only char.";
                     }
                 } else { // Zerlegung in Komponenten ...
+                    const lcBases = new Set<number | PrimeFactoredInteger>();
                     const lcAbsoluteLength = lvAbsolute.length;
                     const lcBasicDigits = ComPriFacNotConcept.getBasicDigits();
                     const lcBasicDigitsValues = ComPriFacNotConcept.getBasicDigitsValues();
+                    const lcAliasDigits = ComPriFacNotConcept.getAliasDigits();
+                    const lcAliasDigitsParsed = PrimeFactoredIntegerParser.getAliasDigitsParsed();
                     const lcExponentSupers = PrimeFactoredIntegerParser.getExponentSupers();
                     for (let i = 0; i < lcAbsoluteLength; i++) {
                         const lcChar = lvAbsolute[i];
-                        /** @type {number} */
-                        let lvBase: number;
+                        let lvBase: number | PrimeFactoredInteger;
                         switch (lcChar) {
                             case "0": // /* fall through */
                             case "1": // 0 oder 1 dürfen nur allein angegeben werden
@@ -106,33 +151,40 @@
                                         throw "Parse error #5: After \"(\" must follow" +
                                          " \"#\", \"$\" or \"0\"";
                                 }
-                                // TODO Prüfen, ob lvBase eine Primzahl ist
+                                // TODO Check, if lvBase is a prime number
                                 i = lcIndexClosingBracket;
                                 break;
                             default:
                                 const lcBasicDigitIndex = lcBasicDigits.indexOf(lcChar);
-                                if (lcBasicDigitIndex > -1) { // Basisziffer
+                                if (lcBasicDigitIndex > -1) { // Basic digit ...
                                     lvBase = lcBasicDigitsValues[lcBasicDigitIndex];
-                                } else {
-                                    throw "Parse error #6: Unknown char \"" + lcChar 
-                                        + "\" at offset " + i;
+                                } else { // no basic digit ...
+                                    const lcAliasDigitIndex = lcAliasDigits.indexOf(lcChar);
+                                    if (lcAliasDigitIndex > -1) { // Alias digit ...
+                                        lvBase = lcAliasDigitsParsed[lcAliasDigitIndex];
+                                    } else { // neither basic nor alias digit ...
+                                        throw "Parse error #6: Unknown char \"" + lcChar 
+                                            + "\" at offset " + i;
+                                    }
                                 }
                                 break;
                         }
-                        if (lcComponents.has(lvBase)) { // Basisziffer wurde bereits verwendet
-                            throw "Parse error #7: Base digit \"" + lvBase +
+                        if (lcBases.has(lvBase)) {
+                            // Basis wurde bereits verwendet
+                            throw "Parse error #7: Base \"" + lvBase +
                                 "\" used 2 or more times";
                         }
+                        lcBases.add(lvBase);
                         let lvExponentNumber = 1;
-                        if (i + 1 < lcAbsoluteLength) { // es könnte ein Exponent folgen
+                        if (i + 1 < lcAbsoluteLength) { // an exponent might follow ...
                             const lcNextChar = lvAbsolute[i + 1];
-                            if (lcNextChar == "^") { // Sonderfall Exponent in ComPriFacNot
+                            if (lcNextChar == "^") { // special case exponent in ComPriFacNot ...
                                 if (i + 2 < lcAbsoluteLength) {
                                     const lcAfterNextChar = lvAbsolute[i + 2];
                                     if (lcAfterNextChar == "(") {
                                         const lcIndexClosingBracket = lvAbsolute.indexOf(")", i 
                                             + 3);
-                                        if (lcIndexClosingBracket == -1) { // kein ")"
+                                        if (lcIndexClosingBracket == -1) { // no ")"
                                             throw "Parse error #8: Missing \")\" after \"^(\"";
                                         }
                                         const lcExponentUnparsed = lvAbsolute.substring(i + 3, 
@@ -172,7 +224,20 @@
                                     ? 1 : Number.parseInt(lcExponent);
                             }
                         }
-                        lcComponents.set(lvBase, lvExponentNumber);
+                        if (typeof lvBase === "number") { // Basic digit ...
+                            const lcNewExponent = ((lcComponents.has(lvBase)) 
+                                ? lcComponents.get(lvBase) : 0) + lvExponentNumber;
+                            lcComponents.set(lvBase, lcNewExponent);
+                        } else { // Alias digit ...
+                            const lcAliasDigitParsedComponents = lvBase.getComponentsMap();
+                            for (const [lcAliasBase, lcAliasExponent] 
+                                    of lcAliasDigitParsedComponents) {
+                                const lcNewExponent = ((lcComponents.has(lcAliasBase)) 
+                                    ? lcComponents.get(lcAliasBase) : 0) + 
+                                    lcAliasExponent * lvExponentNumber;
+                                lcComponents.set(lcAliasBase, lcNewExponent);                                    
+                            }
+                        }
                     }
                 }
             } else { // Leerstring
@@ -186,6 +251,19 @@
         return lcResult;
     }
 
+    /**
+     * :en: Setter for {@link cvAliasDigitsParsed}.
+     * :de: Setter für {@link cvAliasDigitsParsed}.
+     * 
+     * @params {PrimeFactoredInteger[]} pvAliasDigitsParsed {@link cvAliasDigitsParsed}
+     * @see cvAliasDigitsParsed
+     * @see getAliasDigitsParsed
+     * @since 1.8, 2021-12-14
+     */
+    private static setAliasDigitsParsed(pvAliasDigitsParsed: PrimeFactoredInteger[]) {
+        PrimeFactoredIntegerParser.cvAliasDigitsParsed = pvAliasDigitsParsed;
+    }   
+    
     /**
      * :en: Constructor.
      * :de: Konstruktor.

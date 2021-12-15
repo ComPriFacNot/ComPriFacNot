@@ -3,7 +3,7 @@
  * :de: Klasse ComPriFacNotConcept: Zugrundeliegendes ComPriFacNot-Konzept.
  *
  * @author See git history
- * @version 1.2, 2021-12-12
+ * @version 1.3, 2021-12-13
  * @since 1.0, 2021-12-10
  */
 class ComPriFacNotConcept {
@@ -12,6 +12,53 @@ class ComPriFacNotConcept {
      * de: Konstruktor.
      */
     constructor() { }
+    /**
+     * :en: Getter for {@link cvAliasDigits}.
+     * :de: Getter für {@link cvAliasDigits}.
+     *
+     * @returns {string} {@link cvAliasDigits}
+     * @see cvAliasDigits
+     * @see setAliasDigits
+     * @since 1.3, 2021-12-13
+     */
+    static getAliasDigits() {
+        return ComPriFacNotConcept.cvAliasDigits;
+    }
+    /**
+     * :en: Getter for {@link cvAliasDigitsJsonUrl}.
+     * :de: Getter für {@link cvAliasDigitsJsonUrl}.
+     *
+     * @returns {string} {@link cvAliasDigitsJsonUrl}
+     * @see cvAliasDigitsJsonUrl
+     * @since 1.3, 2021-12-13
+     */
+    static getAliasDigitsJsonUrl() {
+        return ComPriFacNotConcept.cvAliasDigitsJsonUrl;
+    }
+    /**
+     * :en: Getter for {@link cvAliasDigitsMap}.
+     * :de: Getter für {@link cvAliasDigitsMap}.
+     *
+     * @returns {Map<string, string>} {@link cvAliasDigitsMap}
+     * @see cvAliasDigitsMap
+     * @see setAliasDigitsMap
+     * @since 1.3, 2021-12-13
+     */
+    static getAliasDigitsMap() {
+        return ComPriFacNotConcept.cvAliasDigitsMap;
+    }
+    /**
+     * :en: Getter for {@link cvAliasDigitsValues}.
+     * :de: Getter für {@link cvAliasDigitsValues}.
+     *
+     * @returns {Array<string>} {@link cvAliasDigitsValues}
+     * @see cvAliasDigitsValues
+     * @see setAliasDigitsValues
+     * @since 1.3, 2021-12-13
+     */
+    static getAliasDigitsValues() {
+        return ComPriFacNotConcept.cvAliasDigitsValues;
+    }
     /**
      * :en: Getter for {@link cvBasicDigits}.
      * :de: Getter für {@link cvBasicDigits}.
@@ -72,68 +119,167 @@ class ComPriFacNotConcept {
         return ComPriFacNotConcept.cvInitializationThrowable;
     }
     /**
+     * :en: Getter for {@link cvCurrentScriptSrc}.
+     * :de: Getter für {@link cvCurrentScriptSrc}.
+     *
+     * @returns {string} {@link cvCurrentScriptSrc}
+     * @see cvCurrentScriptSrc
+     * @see setCurrentScriptSrc
+     * @since 1.3, 2021-12-13
+     */
+    static getCurrentScriptSrc() {
+        return ComPriFacNotConcept.cvCurrentScriptSrc;
+    }
+    /**
      * :en: Initializes this class and calls a call-back-function afterwards.
      * :de: Initialisiert diese Klasse und ruft anschließend eine Call-Back-Funktion auf.
      *
-     * @param {any} pvCallBack Call-back-function
+     * @param {() => any} pvCallBack Call-back-function
      */
     static initialize(pvCallBack) {
-        try {
-            const lcRequest = new XMLHttpRequest();
-            lcRequest.onreadystatechange = function () {
-                try {
-                    const lcStatus = this.status;
-                    if (this.readyState == XMLHttpRequest.DONE) {
-                        if (lcStatus == 200) {
-                            const lcResponseText = this.responseText; // JSON with comments (.jsonc)
-                            const lcFirstBracket = lcResponseText.indexOf("["); // Start of data
-                            const lcJson = lcResponseText.substring(lcFirstBracket);
-                            const lcBasicDigitsDupels = JSON.parse(lcJson);
-                            const lcBasicDigitsMap = new Map();
-                            const lcBasicDigitsArray = new Array();
-                            const lcBasicDigitsValues = new Array();
-                            let i = -1;
-                            for (const lcBasicDigitsDupel of lcBasicDigitsDupels) {
-                                i++;
-                                const lcBasicDigit = lcBasicDigitsDupel[0];
-                                const lcBasicDigitValue = lcBasicDigitsDupel[1];
-                                lcBasicDigitsMap.set(lcBasicDigit, lcBasicDigitValue);
-                                lcBasicDigitsArray[i] = lcBasicDigit;
-                                lcBasicDigitsValues[i] = lcBasicDigitValue;
-                            }
-                            const lcBasicDigitsString = lcBasicDigitsArray.join("");
-                            ComPriFacNotConcept.setBasicDigits(lcBasicDigitsString);
-                            ComPriFacNotConcept.setBasicDigitsValues(lcBasicDigitsValues);
-                            ComPriFacNotConcept.setBasicDigitsMap(lcBasicDigitsMap);
-                            // window.alert(lcBasicDigitsString);
-                        }
-                        else {
-                            const lcMessage = "Initialization error: HTTP-Status expected: 200; " +
-                                "HTTP-Status actual: " + lcStatus;
-                            const lcError = new Error(lcMessage);
-                            ComPriFacNotConcept.setInitializationThrowable(lcError);
-                        }
-                        pvCallBack();
-                    }
-                }
-                catch (lcError) {
-                    ComPriFacNotConcept.setInitializationThrowable(lcError);
-                    pvCallBack();
-                }
-            };
-            const lcCurrentScript = document.currentScript;
-            if (lcCurrentScript instanceof HTMLScriptElement) {
-                const lcSrc = lcCurrentScript.src;
-                const lcBasicDigitsJsonUrl = ComPriFacNotConcept.getBasicDigitsJsonUrl();
-                const lcUrl = lcSrc + "/../" + lcBasicDigitsJsonUrl;
-                lcRequest.open("GET", lcUrl, true);
-                lcRequest.send();
-            }
-        }
-        catch (lcError) {
+        const lcCurrentScript = document.currentScript;
+        if (!(lcCurrentScript instanceof HTMLScriptElement)) {
+            const lcMessage = "Initialization error: currentScript not instanceof HTMLScriptElement!";
+            const lcError = new Error(lcMessage);
             ComPriFacNotConcept.setInitializationThrowable(lcError);
             pvCallBack();
         }
+        else {
+            const lcSrc = lcCurrentScript.src;
+            ComPriFacNotConcept.setCurrentScriptSrc(lcSrc); // must be saved before asynch call
+            const lcBasicDigitsJsonUrl = ComPriFacNotConcept.getBasicDigitsJsonUrl();
+            ComPriFacNotConcept.loadJson(lcBasicDigitsJsonUrl, function (pvBasicJsonContent) {
+                // Basic digits JSON could be loaded successfully
+                const lcBasicDigitsDupels = JSON.parse(pvBasicJsonContent);
+                const lcBasicDigitsMap = new Map();
+                const lcBasicDigitsArray = new Array();
+                const lcBasicDigitsValues = new Array();
+                let i = -1;
+                for (const lcBasicDigitsDupel of lcBasicDigitsDupels) {
+                    i++;
+                    const lcBasicDigit = lcBasicDigitsDupel[0];
+                    const lcBasicDigitValue = lcBasicDigitsDupel[1];
+                    lcBasicDigitsMap.set(lcBasicDigit, lcBasicDigitValue);
+                    lcBasicDigitsArray[i] = lcBasicDigit;
+                    lcBasicDigitsValues[i] = lcBasicDigitValue;
+                }
+                const lcBasicDigitsString = lcBasicDigitsArray.join("");
+                ComPriFacNotConcept.setBasicDigits(lcBasicDigitsString);
+                ComPriFacNotConcept.setBasicDigitsValues(lcBasicDigitsValues);
+                ComPriFacNotConcept.setBasicDigitsMap(lcBasicDigitsMap);
+                const lcAliasDigitsJsonUrl = ComPriFacNotConcept.getAliasDigitsJsonUrl();
+                ComPriFacNotConcept.loadJson(lcAliasDigitsJsonUrl, function (pvAliasJsonContent) {
+                    // Alias digits JSON could be loaded successfully
+                    const lcAliasDigitsDupels = JSON.parse(pvAliasJsonContent);
+                    const lcAliasDigitsMap = new Map();
+                    const lcAliasDigitsArray = new Array();
+                    const lcAliasDigitsValues = new Array();
+                    let i = -1;
+                    for (const lcAliasDigitsDupel of lcAliasDigitsDupels) {
+                        i++;
+                        const lcAliasDigit = lcAliasDigitsDupel[0];
+                        const lcAliasDigitValue = lcAliasDigitsDupel[1];
+                        lcAliasDigitsMap.set(lcAliasDigit, lcAliasDigitValue);
+                        lcAliasDigitsArray[i] = lcAliasDigit;
+                        lcAliasDigitsValues[i] = lcAliasDigitValue;
+                    }
+                    const lcAliasDigitsString = lcAliasDigitsArray.join("");
+                    ComPriFacNotConcept.setAliasDigits(lcAliasDigitsString);
+                    ComPriFacNotConcept.setAliasDigitsValues(lcAliasDigitsValues);
+                    ComPriFacNotConcept.setAliasDigitsMap(lcAliasDigitsMap);
+                    pvCallBack();
+                }, function () {
+                    // Alias digits JSON could not be loaded successfully
+                    pvCallBack();
+                });
+            }, function () {
+                // Basic digits JSON could not be loaded successfully
+                pvCallBack();
+            });
+        }
+    }
+    /**
+     * :en: Loads JSON (asynch) and calls call-back-function.
+     * :de: Lädt JSON (asynchron) und ruft Call-Back-Funktion.
+     *
+     * @param {string} pvJsonUrl URL for JSON
+     * @param {(pvJsonContent: string) => any} pvOnSuccess Call-back-function on success
+     * @param {() => any} pvOnError Call-back-function on error
+     * @since 1.3, 2021-12-13
+     */
+    static loadJson(pvJsonUrl, pvOnSuccess, pvOnError) {
+        const lcRequest = new XMLHttpRequest();
+        lcRequest.onreadystatechange = function () {
+            try {
+                const lcStatus = this.status;
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (lcStatus == 200) {
+                        const lcResponseText = this.responseText; // JSON with comments (.jsonc)
+                        const lcFirstBracket = lcResponseText.indexOf("["); // Start of data
+                        const lcJson = lcResponseText.substring(lcFirstBracket);
+                        pvOnSuccess(lcJson);
+                    }
+                    else {
+                        const lcMessage = "Initialization error: Load of JSON " + pvJsonUrl +
+                            " failed: HTTP-Status expected: 200; " +
+                            "HTTP-Status actual: " + lcStatus;
+                        const lcError = new Error(lcMessage);
+                        ComPriFacNotConcept.setInitializationThrowable(lcError);
+                        pvOnError();
+                    }
+                }
+            }
+            catch (lcError) {
+                ComPriFacNotConcept.setInitializationThrowable(lcError);
+                pvOnError();
+            }
+        };
+        const lcCurrentScriptSrc = ComPriFacNotConcept.getCurrentScriptSrc();
+        const lcUrl = lcCurrentScriptSrc + "/../" + pvJsonUrl;
+        try {
+            lcRequest.open("GET", lcUrl, true);
+            lcRequest.send();
+        }
+        catch (lcError) {
+            ComPriFacNotConcept.setInitializationThrowable(lcError);
+            pvOnError();
+        }
+    }
+    /**
+     * :en: Setter for {@link #cvAliasDigits}.
+     * :de: Setter für {@link #cvAliasDigits}.
+     *
+     * @param {string} pvAliasDigits {@link #cvAliasDigits}
+     * @see cvAliasDigits
+     * @see getAliasDigits
+     * @since 1.3, 2021-12-13
+     */
+    static setAliasDigits(pvAliasDigits) {
+        ComPriFacNotConcept.cvAliasDigits = pvAliasDigits;
+    }
+    /**
+     * :en: Getter for {@link cvAliasDigitsMap}.
+     * :de: Getter für {@link cvAliasDigitsMap}.
+     *
+     * @param {Map<string, string>} pvAliasDigitsMap {@link cvAliasDigitsMap}
+     * @see cvAliasDigitsMap
+     * @see getAliasDigitsMap
+     * @since 1.3, 2021-12-13
+     */
+    static setAliasDigitsMap(pvAliasDigitsMap) {
+        ComPriFacNotConcept.cvAliasDigitsMap = pvAliasDigitsMap;
+    }
+    /**
+     * :en: Setter for {@link cvAliasDigitsValues}.
+     * :de: Setter für {@link cvAliasDigitsValues}.
+     *
+     * @param {Array<string>} pvAliasDigitsValues {@link cvAliasDigitsValues}
+     * @see cvAliasDigitsValues
+     * @see getAliasDigitsValues
+     * @since 1.3, 2021-12-13
+     */
+    static setAliasDigitsValues(pvAliasDigitsValues) {
+        ComPriFacNotConcept.cvAliasDigitsValues = pvAliasDigitsValues;
     }
     /**
      * :en: Setter for {@link #cvBasicDigits}.
@@ -160,16 +306,28 @@ class ComPriFacNotConcept {
         ComPriFacNotConcept.cvBasicDigitsMap = pvBasicDigitsMap;
     }
     /**
-     * :en: Setter for {@link cvBasicDigitsValues}.
-     * :de: Setter für {@link cvBasicDigitsValues}.
-     *
-     * @param {Array<number>} pvBasicDigitsValues {@link cvBasicDigitsValues}
-     * @see cvBasicDigitsValues
-     * @see getBasicDigitsValues
-     * @since 1.2, 2021-12-12
-     */
+    * :en: Setter for {@link cvBasicDigitsValues}.
+    * :de: Setter für {@link cvBasicDigitsValues}.
+    *
+    * @param {Array<number>} pvBasicDigitsValues {@link cvBasicDigitsValues}
+    * @see cvBasicDigitsValues
+    * @see getBasicDigitsValues
+    * @since 1.2, 2021-12-12
+    */
     static setBasicDigitsValues(pvBasicDigitsValues) {
         ComPriFacNotConcept.cvBasicDigitsValues = pvBasicDigitsValues;
+    }
+    /**
+     * :en: Setter for {@link cvCurrentScriptSrc}.
+     * :de: Setter für {@link cvCurrentScriptSrc}.
+     *
+     * @param {string} pvCurrentScriptSrc {@link cvCurrentScriptSrc}
+     * @see cvCurrentScriptSrc
+     * @see getCurrentScriptSrc
+     * @since 1.3, 2021-12-13
+     */
+    static setCurrentScriptSrc(pvCurrentScriptSrc) {
+        ComPriFacNotConcept.cvCurrentScriptSrc = pvCurrentScriptSrc;
     }
     /**
      * :en: Setter for {@link cvInitializationThrowable}.
@@ -184,6 +342,14 @@ class ComPriFacNotConcept {
         ComPriFacNotConcept.cvInitializationThrowable = pvInitializationThrowable;
     }
 }
+/**
+ * :en: URL to JSON file for alis digits.
+ * :de: URL zur JSON-Datei mit den Aliasziffern.
+ *
+ * @see getAliasDigitsJsonUrl
+ * @since 1.3, 2021-12-13
+ */
+ComPriFacNotConcept.cvAliasDigitsJsonUrl = "../../alias-digits.jsonc";
 /**
  * :en: URL to JSON file for basic digits.
  * :de: URL zur JSON-Datei mit den Grundziffern.
