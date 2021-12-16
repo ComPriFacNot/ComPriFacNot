@@ -3,7 +3,7 @@
  * :de: Klasse ComPriFacNotConcept: Zugrundeliegendes ComPriFacNot-Konzept.
  * 
  * @author See git history
- * @version 1.3, 2021-12-13
+ * @version 1.4, 2021-12-16
  * @since 1.0, 2021-12-10
  */
  class ComPriFacNotConcept {
@@ -324,39 +324,37 @@
      */
     private static loadJson(pvJsonUrl: string, pvOnSuccess: (pvJsonContent: string) => any, 
             pvOnError: () => any) {
-        const lcRequest = new XMLHttpRequest();
-        lcRequest.onreadystatechange = function() {
+        const lcCurrentScriptSrc = ComPriFacNotConcept.getCurrentScriptSrc();
+        const lcUrl = lcCurrentScriptSrc + "/../" + pvJsonUrl;
+        const lcRequest = new Request(lcUrl);
+        const lcFetchPromise = fetch(lcRequest);
+        lcFetchPromise.then(pvResponse => {
             try {
-                const lcStatus = this.status;
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (lcStatus == 200) {
-                        const lcResponseText = this.responseText; // JSON with comments (.jsonc)
-                        const lcFirstBracket = lcResponseText.indexOf("["); // Start of data
-                        const lcJson = lcResponseText.substring(lcFirstBracket);
+                const lcResponseOk = pvResponse.ok;
+                if (lcResponseOk) {
+                    const lcResponseTextPromise = pvResponse.text(); // JSON with comments (.jsonc)
+                    lcResponseTextPromise.then(pvResponseText => {
+                        const lcFirstBracket = pvResponseText.indexOf("["); // Start of data
+                        const lcJson = pvResponseText.substring(lcFirstBracket);
                         pvOnSuccess(lcJson);
-                    } else {
-                        const lcMessage = "Initialization error: Load of JSON " + pvJsonUrl +
-                            " failed: HTTP-Status expected: 200; " +
-                            "HTTP-Status actual: " + lcStatus;
-                        const lcError = new Error(lcMessage);
-                        ComPriFacNotConcept.setInitializationThrowable(lcError);
-                        pvOnError();
-                    }
+                    });
+                } else {
+                    const lcStatus = pvResponse.status;
+                    const lcMessage = "Initialization error: Load of JSON " + pvJsonUrl +
+                        " failed: HTTP-Status expected: 200; " +
+                        "HTTP-Status actual: " + lcStatus;
+                    const lcError = new Error(lcMessage);
+                    ComPriFacNotConcept.setInitializationThrowable(lcError);
+                    pvOnError();
                 }
             } catch (lcError: any) {
                 ComPriFacNotConcept.setInitializationThrowable(lcError);
                 pvOnError();
             }
-        }
-        const lcCurrentScriptSrc = ComPriFacNotConcept.getCurrentScriptSrc();
-        const lcUrl = lcCurrentScriptSrc + "/../" + pvJsonUrl;
-        try {
-            lcRequest.open("GET", lcUrl, true);
-            lcRequest.send();
-        } catch (lcError: any) {
-            ComPriFacNotConcept.setInitializationThrowable(lcError);
+        }, (pvReason) => {
+            ComPriFacNotConcept.setInitializationThrowable(pvReason);
             pvOnError();
-        }
+        });
     }
 
     /**

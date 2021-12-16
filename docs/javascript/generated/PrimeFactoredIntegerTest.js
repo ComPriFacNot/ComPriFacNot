@@ -165,6 +165,8 @@ const THROWABLE_ID = "divThrowable";
 const THROWABLE_ELEMENT = document.getElementById(THROWABLE_ID);
 const CSS_CLASS_MATCH = "lightgreen";
 const CSS_CLASS_NOMATCH = "pink";
+const COMPRIFACNOT_ID = "divPrimeFactoredIntegerFormatter_toComPriFacNot";
+const COMPRIFACNOT_ELEMENT = document.getElementById(COMPRIFACNOT_ID);
 ComPriFacNotConcept.initialize(onAfterConceptInitialized); // asynch
 function onAfterConceptInitialized() {
     const lcConceptInitThrowable = ComPriFacNotConcept.getInitializationThrowable();
@@ -182,6 +184,8 @@ function onAfterConceptInitialized() {
                 const lcNumber = lcParsed.toNumber();
                 const lcNumberString = "" + lcNumber;
                 NUMBER_ELEMENT.innerText = lcNumberString;
+                const lcComPriFacNot = PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed);
+                COMPRIFACNOT_ELEMENT.innerText = lcComPriFacNot;
             }
             else {
                 OUTPUT_ELEMENT.style.display = "none";
