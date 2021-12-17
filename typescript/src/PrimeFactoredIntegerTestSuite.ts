@@ -2,7 +2,7 @@
  * Testsuite für PrimeFactoredInteger.
  *
  * @author see git history
- * @version 1.5, 2021-12-14
+ * @version 1.6, 2021-12-17
  * @since 1.0, 2021-12-01
  */
 class PrimeFactoredIntegerTestSuite {
@@ -11,8 +11,7 @@ class PrimeFactoredIntegerTestSuite {
      * :en: Test cases map. Keys: Test case IDs; Values: Test cases.
      * :de: Testfallmappe. Schlüssel: Testfall-IDs; Werte: Testfälle.
      * 
-     * @see getTestCasesMap
-     * @see setTestCasesMap
+     * @see testCasesMap
      */
     private static cvTestCasesMap: Map<string, TestCase>;
     
@@ -40,7 +39,7 @@ class PrimeFactoredIntegerTestSuite {
         const lcResult = new Map<string, TestCase>();
         PrimeFactoredIntegerTestSuite.addToMap(lcResult, "Good: -1", "-1", "-[[1,1]]");
         PrimeFactoredIntegerTestSuite.addToMap(lcResult, "Good: 0", "0", "0[[0,1]]");
-        const lcBasicDigitsMap = ComPriFacNotConcept.getBasicDigitsMap();
+        const lcBasicDigitsMap = ComPriFacNotConcept.basicDigitsMap;
         for (const [lcBasicDigit, lcBasicDigitValue] of lcBasicDigitsMap) {
             if (lcBasicDigit != "0") {
                 const lcTestName = "Good: Basic digit " + lcBasicDigit;
@@ -49,8 +48,8 @@ class PrimeFactoredIntegerTestSuite {
                     lcResultExpcected);        
             }
         }
-        const lcAliasDigitsMap = ComPriFacNotConcept.getAliasDigitsMap();
-        const lcAliasDigitsParsed = PrimeFactoredIntegerParser.getAliasDigitsParsed();
+        const lcAliasDigitsMap = ComPriFacNotConcept.aliasDigitsMap;
+        const lcAliasDigitsParsed = PrimeFactoredIntegerParser.aliasDigitsParsed;
         let i = -1;
         for (const [lcAliasDigit] of lcAliasDigitsMap) {
             i++;
@@ -105,10 +104,10 @@ class PrimeFactoredIntegerTestSuite {
      * 
      * @returns {Map<string, TestCase>} {@link cvTestCasesMap}
      * @see cvTestCasesMap
-     * @see setTestCasesMap
+     * @see testCasesMap
      * @since 1.4, 2021-12-12
      */
-    public static getTestCasesMap(): Map<string, TestCase> {
+    public static get testCasesMap(): Map<string, TestCase> {
         return PrimeFactoredIntegerTestSuite.cvTestCasesMap;
     }
 
@@ -120,7 +119,7 @@ class PrimeFactoredIntegerTestSuite {
      */
     public static initialize() {
         const lcTestCasesMap = PrimeFactoredIntegerTestSuite.createTestCasesMap();
-        PrimeFactoredIntegerTestSuite.setTestCasesMap(lcTestCasesMap);
+        PrimeFactoredIntegerTestSuite.testCasesMap = lcTestCasesMap;
     }
  
     /**
@@ -129,10 +128,10 @@ class PrimeFactoredIntegerTestSuite {
      * 
      * @param {Map<string, TestCase>} pvTestCasesMap {@link cvTestCasesMap}
      * @see cvTestCasesMap
-     * @see getTestCasesMap
+     * @see testCasesMap
      * @since 1.4, 2021-12-12
      */
-    public static setTestCasesMap(pvTestCasesMap: Map<string, TestCase>) {
+    public static set testCasesMap(pvTestCasesMap: Map<string, TestCase>) {
         PrimeFactoredIntegerTestSuite.cvTestCasesMap = pvTestCasesMap;
     }    
     

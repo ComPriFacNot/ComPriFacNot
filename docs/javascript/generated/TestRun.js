@@ -2,7 +2,7 @@
  * Testlauf.
  *
  * @author see git history
- * @version 1.2, 2021-12-12
+ * @version 1.3, 2021-12-17
  * @since 1.0, 2021-12-01
  */
 class TestRun {
@@ -15,9 +15,9 @@ class TestRun {
      * @param {any} pvThrowableActual Tatsächliche Ausnahme/Fehler
      */
     constructor(pvTestCase, pvOutputActual, pvThrowableActual) {
-        this.setTestCase(pvTestCase);
-        this.setOutputActual(pvOutputActual);
-        this.setThrowableActual(pvThrowableActual);
+        this.testCase = pvTestCase;
+        this.outputActual = pvOutputActual;
+        this.throwableActual = pvThrowableActual;
     }
     /**
      * :en: Getter for {@link ivOutputActual}.
@@ -25,9 +25,9 @@ class TestRun {
      *
      * @returns {any} {@link ivOutputActual}
      * @see ivOutputActual
-     * @see setOutputActual
+     * @see outputActual
      */
-    getOutputActual() {
+    get outputActual() {
         return this.ivOutputActual;
     }
     /**
@@ -36,9 +36,9 @@ class TestRun {
      *
      * @returns {TestCase} Testfall
      * @see ivTestCase
-     * @see setTestCase
+     * @see testCase
      */
-    getTestCase() {
+    get testCase() {
         return this.ivTestCase;
     }
     /**
@@ -47,9 +47,9 @@ class TestRun {
      *
      * @returns any Tatsächliche Ausnahme/Fehler
      * @see ivThrowableActual
-     * @see setThrowableActual
+     * @see throwableActual
      */
-    getThrowableActual() {
+    get throwableActual() {
         return this.ivThrowableActual;
     }
     /**
@@ -59,11 +59,11 @@ class TestRun {
      *                    übereinstimmen
      */
     matches() {
-        const lcTestCase = this.getTestCase();
-        const lcOutputActual = this.getOutputActual();
-        const lcThrowableActual = this.getThrowableActual();
-        const lcOutputExpected = lcTestCase.getOutputExpected();
-        const lcThrowableExpected = lcTestCase.getThrowableExpected();
+        const lcTestCase = this.testCase;
+        const lcOutputActual = this.outputActual;
+        const lcThrowableActual = this.throwableActual;
+        const lcOutputExpected = lcTestCase.outputExpected;
+        const lcThrowableExpected = lcTestCase.throwableExpected;
         const lcOutputEquals = PrimeFactoredInteger.equals(lcOutputActual, lcOutputExpected);
         const lcThrowableEquals = lcThrowableActual == lcThrowableExpected;
         const lcResult = lcOutputEquals && lcThrowableEquals;
@@ -75,9 +75,9 @@ class TestRun {
      *
      * @param {any} pvOutputActual Tatsächliche Ausgabe
      * @see ivOutputActual
-     * @see getOutputActual
+     * @see outputActual
      */
-    setOutputActual(pvOutputActual) {
+    set outputActual(pvOutputActual) {
         this.ivOutputActual = pvOutputActual;
     }
     /**
@@ -86,9 +86,9 @@ class TestRun {
      *
      * @param {TestCase} pvTestCase Testfall
      * @see ivTestCase
-     * @see getTestCase
+     * @see testCase
      */
-    setTestCase(pvTestCase) {
+    set testCase(pvTestCase) {
         this.ivTestCase = pvTestCase;
     }
     /**
@@ -97,9 +97,9 @@ class TestRun {
      *
      * @param {any} pvThrowableActual Tatsächliche Ausnahme/Fehler
      * @see ivThrowableActual
-     * @see getThrowableActual
+     * @see throwableActual
      */
-    setThrowableActual(pvThrowableActual) {
+    set throwableActual(pvThrowableActual) {
         this.ivThrowableActual = pvThrowableActual;
     }
 }

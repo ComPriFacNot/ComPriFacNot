@@ -1,123 +1,163 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-<meta charset="UTF-8"/>
-<!--
+    <meta charset="UTF-8" />
+    <!--
     Testseite für JavaScript-Klassen PrimeFactoredIntegerTest, PrimeFactoredIntegerTestParser und
     PrimeFactoredIntegerFormatter
 
     @author see git history
-    @version 2.0, 2021-12-16
+    @version 2.1, 2021-12-16
     @since 1.0, 2021-11-29
 -->
-<script id="scriptBasicDigits" type="application/ld+json" src="basic-digits.jsonc"></script>
-<script id="scriptAliasDigits" type="application/ld+json" src="alias-digits.jsonc"></script>
-<script src="generated/ComPriFacNotConcept.js"></script>
-<script src="generated/PrimeFactoredInteger.js"></script>
-<script src="generated/PrimeFactoredIntegerParser.js"></script>
-<script src="generated/PrimeFactoredIntegerFormatter.js"></script>
-<script src="generated/TestCase.js"></script>
-<script src="generated/TestRun.js"></script>
-<script src="generated/PrimeFactoredIntegerTestSuite.js"></script>
-<script src="generated/PrimeFactoredIntegerTest.js" defer></script>
-<link rel="stylesheet" type="text/css" href="main.v14.css">
+    <script id="scriptBasicDigits" type="application/ld+json" src="basic-digits.jsonc"></script>
+    <script id="scriptAliasDigits" type="application/ld+json" src="alias-digits.jsonc"></script>
+    <script src="generated/ComPriFacNotConcept.js"></script>
+    <script src="generated/PrimeFactoredInteger.js"></script>
+    <script src="generated/PrimeFactoredIntegerParser.js"></script>
+    <script src="generated/PrimeFactoredIntegerFormatter.js"></script>
+    <script src="generated/TestCase.js"></script>
+    <script src="generated/TestRun.js"></script>
+    <script src="generated/PrimeFactoredIntegerTestSuite.js"></script>
+    <script src="generated/PrimeFactoredIntegerTest.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="main.v14.css">
 </head>
+
 <body>
-<h1>PrimeFactoredIntegerTest</h1>
-<h2>Input</h2>
-<form action="PrimeFactoredIntegerTest.htm">
-<table border="1">
-<tbody>
-<tr>
-<td><label for="inputComPriFacNotInteger">ComPriFacNot integer:</label></td>
-<td><input id="inputComPriFacNotInteger" type="text" name="Integer" class="monospace"
-    size="30"/> <span class="cursor-help font-family-emoji"
-    title="Currently basic digits up to prime factor index 100 are supported as well as alias digits"
-    >&#x2139;&#xFE0F;</span>
-<br/>
-<span class="monospace">
-<span id="spanMakron" class="cursor-pointer">¯</span>
-<span id="spanSuper0" class="cursor-pointer">⁰</span>
-<span id="spanSuper1" class="cursor-pointer">¹</span>
-<span id="spanSuper2" class="cursor-pointer">²</span>
-<span id="spanSuper3" class="cursor-pointer">³</span>
-<span id="spanSuper4" class="cursor-pointer">⁴</span>
-<span id="spanSuper5" class="cursor-pointer">⁵</span>
-<span id="spanSuper6" class="cursor-pointer">⁶</span>
-<span id="spanSuper7" class="cursor-pointer">⁷</span>
-<span id="spanSuper8" class="cursor-pointer">⁸</span>
-<span id="spanSuper9" class="cursor-pointer">⁹</span>
-</span>
-</td>
-</tr>
-<tr>
-<td><label for="inputSubmit">Action:</label></td>
-<td><input id="inputSubmit" type="submit"/></td>
-</tr>
-</tbody>
-</table>
-</form>
-<div id="divOutput">
-<h2>Output</h2>
-<table border="1">
-<tbody>
-<tr>
-<td><label for="divPrimeFactoredInteger_toSerialized" 
-    class="monospace">PrimeFactoredInteger.toSerialized:</label></td>
-<td><div id="divPrimeFactoredInteger_toSerialized" class="monospace"></div></td>
-</tr>
-<tr>
-<td><label for="divPrimeFactoredInteger_toString" 
-    class="monospace">PrimeFactoredInteger.toString:</label></td>
-<td><div id="divPrimeFactoredInteger_toString" class="monospace"></div></td>
-</tr>
-<tr>
-<td><label for="divPrimeFactoredInteger_toNumber" 
-    class="monospace">PrimeFactoredInteger.toNumber:</label></td>
-<td><div id="divPrimeFactoredInteger_toNumber" class="monospace"></div></td>
-</tr>
-<tr>
-<td><label for="divPrimeFactoredIntegerFormatter_toComPriFacNot" 
-    class="monospace">PrimeFactoredIntegerFormatter.toComPriFacNot:</label></td>
-<td><div id="divPrimeFactoredIntegerFormatter_toComPriFacNot" class="monospace"></div></td>
-</tr>
-<tr>
-<td><label for="divThrowable">Exception/error:</label></td>
-<td><div id="divThrowable" class="monospace"></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2>Test cases</h2>
-<form id="formTestCases" action="PrimeFactoredIntegerTest.htm">
-<table border="1">
-<thead>
-<tr>
-<th id="thInverse" class="cursor-pointer">◪</th>
-<th>ID</th>
-<th>Input</th>
-<th>Expected output (serialized)</th>
-<th>Actual output (serialized)</th>
-<th>Expected exception/error</th>
-<th>Actual exception/error</th>
-<th>Match</th>
-</tr>
-</thead>
-<tbody id="tbodyTestCases">
-</tbody>
-</table>
-<p>
-<input type="submit" value="Run selected test case(s)"></input>
-&nbsp;<a href="PrimeFactoredIntegerTest.htm?TEST_CASE_ID=ALL">Run all test cases</a>
-</p>
-</form>
-<p>
-<a href="../index.htm">🔙 Back/Zurück</a>&nbsp; 
-<a href="../togithub.htm?to=/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" 
-    target="_blank">&lt; &gt; Source code</a>
-<br/><!-- To ensure the visibility of the previous paragraph because of the divStatusBar -->
-&nbsp;
-</p>
-<div id="divStatusBar" class="footer monospace">&nbsp;</div>
+    <h1>PrimeFactoredIntegerTest</h1>
+    <h2>Input</h2>
+    <form action="PrimeFactoredIntegerTest.htm">
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><label for="inputComPriFacNotInteger">ComPriFacNot integer:</label></td>
+                    <td><input id="inputComPriFacNotInteger" type="text" name="Integer" class="monospace" size="30" />
+                        <span class="cursor-help font-family-emoji"
+                            title="Currently basic digits up to prime factor index 100 are supported as well as alias digits">&#x2139;&#xFE0F;</span>
+                        <br />
+                        <span class="monospace">
+                            <span id="spanMakron" class="cursor-pointer">¯</span>
+                            <span id="spanSuper0" class="cursor-pointer">⁰</span>
+                            <span id="spanSuper1" class="cursor-pointer">¹</span>
+                            <span id="spanSuper2" class="cursor-pointer">²</span>
+                            <span id="spanSuper3" class="cursor-pointer">³</span>
+                            <span id="spanSuper4" class="cursor-pointer">⁴</span>
+                            <span id="spanSuper5" class="cursor-pointer">⁵</span>
+                            <span id="spanSuper6" class="cursor-pointer">⁶</span>
+                            <span id="spanSuper7" class="cursor-pointer">⁷</span>
+                            <span id="spanSuper8" class="cursor-pointer">⁸</span>
+                            <span id="spanSuper9" class="cursor-pointer">⁹</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="inputSubmit">Action:</label></td>
+                    <td><input id="inputSubmit" type="submit" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <div id="divOutput">
+        <h2>Output</h2>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><label for="divPrimeFactoredInteger_toSerialized"
+                            class="monospace">PrimeFactoredInteger.toSerialized:</label></td>
+                    <td>
+                        <div id="divPrimeFactoredInteger_toSerialized" class="monospace"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divPrimeFactoredInteger_toString"
+                            class="monospace">PrimeFactoredInteger.toString:</label></td>
+                    <td>
+                        <div id="divPrimeFactoredInteger_toString" class="monospace"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divPrimeFactoredInteger_toNumber"
+                            class="monospace">PrimeFactoredInteger.toNumber:</label></td>
+                    <td>
+                        <div id="divPrimeFactoredInteger_toNumber" class="monospace"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divPrimeFactoredIntegerFormatter_toComPriFacNot"
+                            class="monospace">PrimeFactoredIntegerFormatter.toComPriFacNot:</label>
+                    </td>
+                    <td>
+                        <div id="divPrimeFactoredIntegerFormatter_toComPriFacNot" class="monospace"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divPrimeFactoredIntegerFormatter_toComPriFacNot_HexBasicDigitsOnly"
+                            class="monospace">PrimeFactoredIntegerFormatter.toComPriFacNot(HEX_BASIC_DIGITS_ONLY):</label>
+                    </td>
+                    <td>
+                        <div id="divPrimeFactoredIntegerFormatter_toComPriFacNot_HexBasicDigitsOnly" class="monospace">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divPrimeFactoredIntegerFormatter_toComPriFacNot_DecBasicDigitsOnly"
+                            class="monospace">PrimeFactoredIntegerFormatter.toComPriFacNot(DEC_BASIC_DIGITS_ONLY):</label>
+                    </td>
+                    <td>
+                        <div id="divPrimeFactoredIntegerFormatter_toComPriFacNot_DecBasicDigitsOnly" class="monospace">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divPrimeFactoredIntegerFormatter_toComPriFacNot_OctBasicDigitsOnly"
+                            class="monospace">PrimeFactoredIntegerFormatter.toComPriFacNot(OCT_BASIC_DIGITS_ONLY):</label>
+                    </td>
+                    <td>
+                        <div id="divPrimeFactoredIntegerFormatter_toComPriFacNot_OctBasicDigitsOnly" class="monospace">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="divThrowable">Exception/error:</label></td>
+                    <td>
+                        <div id="divThrowable" class="monospace"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2>Test cases</h2>
+    <form id="formTestCases" action="PrimeFactoredIntegerTest.htm">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th id="thInverse" class="cursor-pointer">◪</th>
+                    <th>ID</th>
+                    <th>Input</th>
+                    <th>Expected output (serialized)</th>
+                    <th>Actual output (serialized)</th>
+                    <th>Expected exception/error</th>
+                    <th>Actual exception/error</th>
+                    <th>Match</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyTestCases">
+            </tbody>
+        </table>
+        <p>
+            <input type="submit" value="Run selected test case(s)"></input>
+            &nbsp;<a href="PrimeFactoredIntegerTest.htm?TEST_CASE_ID=ALL">Run all test cases</a>
+        </p>
+    </form>
+    <p>
+        <a href="../index.htm">🔙 Back/Zurück</a>&nbsp;
+        <a href="../togithub.htm?to=/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" target="_blank">&lt; &gt;
+            Source code</a>
+        <br /><!-- To ensure the visibility of the previous paragraph because of the divStatusBar -->
+        &nbsp;
+    </p>
+    <div id="divStatusBar" class="footer monospace">&nbsp;</div>
 </body>
+
 </html>

@@ -3,7 +3,7 @@
  * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  * 
  * @author See git history
- * @version 1.8, 2021-12-14
+ * @version 1.9, 2021-12-17
  * @since 1.0, 2021-11-29
  */
 
@@ -17,7 +17,7 @@ const INPUT_ELEMENT: HTMLInputElement = getInputElementById(INPUT_ID);
 const INPUT_UNPARSED_NAME = "Integer";
 const DOCUMENT_LOCATION = document.location;
 const QUERY_STRING = DOCUMENT_LOCATION.search;
-const QUERY_PARAMS = (QUERY_STRING == null) 
+const QUERY_PARAMS = (QUERY_STRING == null)
     ? null : new URLSearchParams(QUERY_STRING.substring(1)); // "?" abschneiden
 const QUERY_PARAM_UNPARSED = (QUERY_PARAMS == null) ? null : QUERY_PARAMS.get(INPUT_UNPARSED_NAME);
 const OUTPUT_ID = "divOutput";
@@ -89,7 +89,7 @@ function getStatus(): string {
 /**
  * Ereignisbehandler, wenn die Kopie in die Zwischenablage fehlgeschlagen war.
  */
- function onCopyFailed() {
+function onCopyFailed() {
     setStatus("Copy to clipboard failed.");
 }
 
@@ -118,7 +118,7 @@ function onInverseClick() {
 /**
  * Ereignisbehandler, wenn auf eine Kopiervorlage geklickt wurde.
  */
- function onTemplateClick() {
+function onTemplateClick() {
     const lcInnerText = this.innerText;
     const lcTemplateChar = lcInnerText[0];
     const lcInputOldValue = INPUT_ELEMENT.value;
@@ -165,9 +165,9 @@ function setStatus(pvText: string) {
 
 const TEST_CASES_ID = "tbodyTestCases";
 const TEST_CASES_ELEMENT = document.getElementById(TEST_CASES_ID);
-const QUERY_PARAM_TEST_CASE_ID = 
+const QUERY_PARAM_TEST_CASE_ID =
     (QUERY_PARAMS == null) ? null : QUERY_PARAMS.getAll(TEST_CASE_ID_NAME);
-const TEST_ALL = (QUERY_PARAM_TEST_CASE_ID == null) 
+const TEST_ALL = (QUERY_PARAM_TEST_CASE_ID == null)
     ? false : QUERY_PARAM_TEST_CASE_ID.includes("ALL");
 const FORM = document.forms[0];
 const INPUT_UNPARSED_ELEMENT = FORM[INPUT_UNPARSED_NAME];
@@ -184,11 +184,23 @@ const CSS_CLASS_MATCH = "lightgreen";
 const CSS_CLASS_NOMATCH = "pink";
 const COMPRIFACNOT_ID = "divPrimeFactoredIntegerFormatter_toComPriFacNot";
 const COMPRIFACNOT_ELEMENT = document.getElementById(COMPRIFACNOT_ID);
+const COMPRIFACNOT_OCT_BASIC_DIGITS_ID =
+    "divPrimeFactoredIntegerFormatter_toComPriFacNot_OctBasicDigitsOnly";
+const COMPRIFACNOT_OCT_BASIC_DIGITS_ELEMENT = document.getElementById(
+    COMPRIFACNOT_OCT_BASIC_DIGITS_ID);
+const COMPRIFACNOT_DEC_BASIC_DIGITS_ID =
+    "divPrimeFactoredIntegerFormatter_toComPriFacNot_DecBasicDigitsOnly";
+const COMPRIFACNOT_DEC_BASIC_DIGITS_ELEMENT = document.getElementById(
+    COMPRIFACNOT_DEC_BASIC_DIGITS_ID);
+const COMPRIFACNOT_HEX_BASIC_DIGITS_ID =
+    "divPrimeFactoredIntegerFormatter_toComPriFacNot_HexBasicDigitsOnly";
+const COMPRIFACNOT_HEX_BASIC_DIGITS_ELEMENT = document.getElementById(
+    COMPRIFACNOT_HEX_BASIC_DIGITS_ID);
 
 ComPriFacNotConcept.initialize(onAfterConceptInitialized); // asynch
 
 function onAfterConceptInitialized() {
-    const lcConceptInitThrowable = ComPriFacNotConcept.getInitializationThrowable();
+    const lcConceptInitThrowable = ComPriFacNotConcept.initializationThrowable;
     let lvThrowable = lcConceptInitThrowable;
     if (lvThrowable == null) {
         try {
@@ -205,6 +217,18 @@ function onAfterConceptInitialized() {
                 NUMBER_ELEMENT.innerText = lcNumberString;
                 const lcComPriFacNot = PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed);
                 COMPRIFACNOT_ELEMENT.innerText = lcComPriFacNot;
+                const lcComPriFacNotHexBasicDigits =
+                    PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed,
+                        PrimeFactoredIntegerFormatter.FORMAT_BASIC_DIGITS_3_HEXADECIMALS_ONLY);
+                COMPRIFACNOT_HEX_BASIC_DIGITS_ELEMENT.innerText = lcComPriFacNotHexBasicDigits;
+                const lcComPriFacNotDecBasicDigits =
+                    PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed,
+                        PrimeFactoredIntegerFormatter.FORMAT_BASIC_DIGITS_2_DECIMALS_ONLY);
+                COMPRIFACNOT_DEC_BASIC_DIGITS_ELEMENT.innerText = lcComPriFacNotDecBasicDigits;
+                const lcComPriFacNotOctBasicDigits =
+                    PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed,
+                        PrimeFactoredIntegerFormatter.FORMAT_BASIC_DIGITS_1_OCTALS_ONLY);
+                COMPRIFACNOT_OCT_BASIC_DIGITS_ELEMENT.innerText = lcComPriFacNotOctBasicDigits;
             } else {
                 OUTPUT_ELEMENT.style.display = "none";
             }
@@ -219,12 +243,12 @@ function onAfterConceptInitialized() {
 
     if (lcConceptInitThrowable == null) {
         PrimeFactoredIntegerTestSuite.initialize(); // requires initialized ComPriFacNotConcept
-        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.getTestCasesMap();
+        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.testCasesMap;
         const lcTestCasesEntries = lcTestCaseMap.entries();
         for (const lcEntry of lcTestCasesEntries) {
             const lcTestCaseId = lcEntry[0];
             const lcTestCase = lcEntry[1];
-            const lcChecked = (QUERY_PARAM_TEST_CASE_ID == null) 
+            const lcChecked = (QUERY_PARAM_TEST_CASE_ID == null)
                 ? false : (TEST_ALL || QUERY_PARAM_TEST_CASE_ID.includes(lcTestCaseId));
             const lcTrElement = document.createElement("tr");
             const lcTdSelectionElement = document.createElement("td");
@@ -246,14 +270,14 @@ function onAfterConceptInitialized() {
             lcTdIdElement.appendChild(lcLabelElement);
             lcTdIdElement.className = "monospace";
             lcTrElement.appendChild(lcTdIdElement);
-            const lcInput = lcTestCase.getInput();
+            const lcInput = lcTestCase.input;
             const lcTdInputElement = document.createElement("td");
-            lcTdInputElement.onclick = onTestCaseInputClick;        
+            lcTdInputElement.onclick = onTestCaseInputClick;
             lcTdInputElement.innerText = lcInput;
             lcTdInputElement.className = "cursor-pointer monospace";
             lcTrElement.appendChild(lcTdInputElement);
-            const lcOutputExpected = lcTestCase.getOutputExpected();
-            const lcOutputExpectedSerialized 
+            const lcOutputExpected = lcTestCase.outputExpected;
+            const lcOutputExpectedSerialized
                 = (lcOutputExpected == null) ? null : lcOutputExpected.toSerialized();
             const lcTdOutputExpectedElement = document.createElement("td");
             lcTdOutputExpectedElement.innerText = lcOutputExpectedSerialized;
@@ -265,7 +289,7 @@ function onAfterConceptInitialized() {
             let lvMatch = null;
             let lvOutputMatch = null;
             let lvThrowableMatch = null;
-            const lcThrowableExpected = lcTestCase.getThrowableExpected();
+            const lcThrowableExpected = lcTestCase.throwableExpected;
             if (lcChecked) {
                 try {
                     lvOutputActual = PrimeFactoredIntegerParser.parseComPriFacNot(lcInput);
@@ -285,7 +309,7 @@ function onAfterConceptInitialized() {
             lcTdOutputActualElement.innerText = lvOutputActualSerialized;
             lcTdOutputActualElement.className = "monospace" +
                 (lcChecked ? (" background-color-" +
-                (lvOutputMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
+                    (lvOutputMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdOutputActualElement);
             const lcTdThrowableExpectedElement = document.createElement("td");
             lcTdThrowableExpectedElement.innerText = lcThrowableExpected;
@@ -301,13 +325,13 @@ function onAfterConceptInitialized() {
             lcTdThrowableActualElement.innerHTML = lvThrowableActualText;
             lcTdThrowableActualElement.className = "monospace" +
                 (lcChecked ? (" background-color-" +
-                (lvThrowableMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
+                    (lvThrowableMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdThrowableActualElement);
             const lcTdMatchElement = document.createElement("td");
             lcTdMatchElement.innerText = lvMatch;
             lcTdMatchElement.className = "monospace" +
                 (lcChecked ? (" background-color-" +
-                (lvMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
+                    (lvMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdMatchElement);
             TEST_CASES_ELEMENT.appendChild(lcTrElement);
         }

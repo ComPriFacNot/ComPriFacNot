@@ -3,7 +3,7 @@
  * :de: Klasse PrimeFactoredIntegerParser: Parst einen ComPriFacNot-String.
  * 
  * @author See git history
- * @version 1.8, 2021-12-14
+ * @version 1.9, 2021-12-16
  * @since 1.0, 2021-11-29
  */
  class PrimeFactoredIntegerParser {
@@ -13,18 +13,10 @@
      * :de: Reihe von geparsten Aliasziffern.
      * 
      * @see getAliasDigitsParsed
-     * @see setAliasDigitsParsed
+     * @see aliasDigitsParsed
      * @since 1.8, 2021-12-14
      */
     private static cvAliasDigitsParsed: PrimeFactoredInteger[];
-
-    /**
-     * :en: Super scripted chars.
-     * :de: Hochgestellte Zeichen.
-     * 
-     * @see getExponentSupers
-     */
-    private static cvExponentSupers = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
     /**
      * :en: Getter for {@link cvAliasDigitsParsed}.
@@ -32,22 +24,11 @@
      * 
      * @returns {PrimeFactoredInteger[]} {@link cvAliasDigitsParsed}
      * @see cvAliasDigitsParsed
-     * @see setAliasDigitsParsed
+     * @see aliasDigitsParsed
      * @since 1.8, 2021-12-14
      */
-    public static getAliasDigitsParsed(): PrimeFactoredInteger[] {
+    public static get aliasDigitsParsed(): PrimeFactoredInteger[] {
         return PrimeFactoredIntegerParser.cvAliasDigitsParsed;
-    }
-
-    /**
-     * :en: Getter for {@link cvExponentSupers}.
-     * :de: Getter für {@link cvExponentSupers}.
-     * 
-     * @returns {string} {@link cvExponentSupers}
-     * @see cvExponentSupers
-     */
-    private static getExponentSupers(): string {
-        return PrimeFactoredIntegerParser.cvExponentSupers;
     }
 
     /**
@@ -57,8 +38,8 @@
      * @since 1.8, 2021-12-14
      */
     public static initialize() {
-        const lcAliasDigits = ComPriFacNotConcept.getAliasDigits();
-        const lcAliasDigitsValues = ComPriFacNotConcept.getAliasDigitsValues();
+        const lcAliasDigits = ComPriFacNotConcept.aliasDigits;
+        const lcAliasDigitsValues = ComPriFacNotConcept.aliasDigitsValues;
         const lcAliasDigitsCount = lcAliasDigits.length;
         const lcAliasDigitsParsed = new Array<PrimeFactoredInteger>();
         for (let i = 0; i < lcAliasDigitsCount; i++) {
@@ -67,7 +48,7 @@
                 lcAliasDigitValue);
             lcAliasDigitsParsed[i] = lcAliasDigitParsed;
         }
-        PrimeFactoredIntegerParser.setAliasDigitsParsed(lcAliasDigitsParsed);
+        PrimeFactoredIntegerParser.aliasDigitsParsed = lcAliasDigitsParsed;
     }
 
     /**
@@ -113,11 +94,11 @@
                 } else { // Zerlegung in Komponenten ...
                     const lcBases = new Set<number | PrimeFactoredInteger>();
                     const lcAbsoluteLength = lvAbsolute.length;
-                    const lcBasicDigits = ComPriFacNotConcept.getBasicDigits();
-                    const lcBasicDigitsValues = ComPriFacNotConcept.getBasicDigitsValues();
-                    const lcAliasDigits = ComPriFacNotConcept.getAliasDigits();
-                    const lcAliasDigitsParsed = PrimeFactoredIntegerParser.getAliasDigitsParsed();
-                    const lcExponentSupers = PrimeFactoredIntegerParser.getExponentSupers();
+                    const lcBasicDigits = ComPriFacNotConcept.basicDigits;
+                    const lcBasicDigitsValues = ComPriFacNotConcept.basicDigitsValues;
+                    const lcAliasDigits = ComPriFacNotConcept.aliasDigits;
+                    const lcAliasDigitsParsed = PrimeFactoredIntegerParser.aliasDigitsParsed;
+                    const lcExponentSupers = ComPriFacNotConcept.exponentSupers;
                     for (let i = 0; i < lcAbsoluteLength; i++) {
                         const lcChar = lvAbsolute[i];
                         let lvBase: number | PrimeFactoredInteger;
@@ -192,7 +173,7 @@
                                         const lcExponentParsed 
                                             = PrimeFactoredIntegerParser.parseComPriFacNot(
                                                 lcExponentUnparsed);
-                                        const lcExponentSign = lcExponentParsed.getSign();
+                                        const lcExponentSign = lcExponentParsed.sign;
                                         if (lcExponentSign != 1) {
                                             throw "Parse error #9: Exponent must be positive, " +
                                                 "neither negative nor 0";
@@ -229,7 +210,7 @@
                                 ? lcComponents.get(lvBase) : 0) + lvExponentNumber;
                             lcComponents.set(lvBase, lcNewExponent);
                         } else { // Alias digit ...
-                            const lcAliasDigitParsedComponents = lvBase.getComponentsMap();
+                            const lcAliasDigitParsedComponents = lvBase.componentsMap;
                             for (const [lcAliasBase, lcAliasExponent] 
                                     of lcAliasDigitParsedComponents) {
                                 const lcNewExponent = ((lcComponents.has(lcAliasBase)) 
@@ -260,7 +241,7 @@
      * @see getAliasDigitsParsed
      * @since 1.8, 2021-12-14
      */
-    private static setAliasDigitsParsed(pvAliasDigitsParsed: PrimeFactoredInteger[]) {
+    private static set aliasDigitsParsed(pvAliasDigitsParsed: PrimeFactoredInteger[]) {
         PrimeFactoredIntegerParser.cvAliasDigitsParsed = pvAliasDigitsParsed;
     }   
     

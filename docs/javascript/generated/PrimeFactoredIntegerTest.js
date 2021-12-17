@@ -3,7 +3,7 @@
  * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  *
  * @author See git history
- * @version 1.8, 2021-12-14
+ * @version 1.9, 2021-12-17
  * @since 1.0, 2021-11-29
  */
 "use strict";
@@ -167,9 +167,15 @@ const CSS_CLASS_MATCH = "lightgreen";
 const CSS_CLASS_NOMATCH = "pink";
 const COMPRIFACNOT_ID = "divPrimeFactoredIntegerFormatter_toComPriFacNot";
 const COMPRIFACNOT_ELEMENT = document.getElementById(COMPRIFACNOT_ID);
+const COMPRIFACNOT_OCT_BASIC_DIGITS_ID = "divPrimeFactoredIntegerFormatter_toComPriFacNot_OctBasicDigitsOnly";
+const COMPRIFACNOT_OCT_BASIC_DIGITS_ELEMENT = document.getElementById(COMPRIFACNOT_OCT_BASIC_DIGITS_ID);
+const COMPRIFACNOT_DEC_BASIC_DIGITS_ID = "divPrimeFactoredIntegerFormatter_toComPriFacNot_DecBasicDigitsOnly";
+const COMPRIFACNOT_DEC_BASIC_DIGITS_ELEMENT = document.getElementById(COMPRIFACNOT_DEC_BASIC_DIGITS_ID);
+const COMPRIFACNOT_HEX_BASIC_DIGITS_ID = "divPrimeFactoredIntegerFormatter_toComPriFacNot_HexBasicDigitsOnly";
+const COMPRIFACNOT_HEX_BASIC_DIGITS_ELEMENT = document.getElementById(COMPRIFACNOT_HEX_BASIC_DIGITS_ID);
 ComPriFacNotConcept.initialize(onAfterConceptInitialized); // asynch
 function onAfterConceptInitialized() {
-    const lcConceptInitThrowable = ComPriFacNotConcept.getInitializationThrowable();
+    const lcConceptInitThrowable = ComPriFacNotConcept.initializationThrowable;
     let lvThrowable = lcConceptInitThrowable;
     if (lvThrowable == null) {
         try {
@@ -186,6 +192,12 @@ function onAfterConceptInitialized() {
                 NUMBER_ELEMENT.innerText = lcNumberString;
                 const lcComPriFacNot = PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed);
                 COMPRIFACNOT_ELEMENT.innerText = lcComPriFacNot;
+                const lcComPriFacNotHexBasicDigits = PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed, PrimeFactoredIntegerFormatter.FORMAT_BASIC_DIGITS_3_HEXADECIMALS_ONLY);
+                COMPRIFACNOT_HEX_BASIC_DIGITS_ELEMENT.innerText = lcComPriFacNotHexBasicDigits;
+                const lcComPriFacNotDecBasicDigits = PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed, PrimeFactoredIntegerFormatter.FORMAT_BASIC_DIGITS_2_DECIMALS_ONLY);
+                COMPRIFACNOT_DEC_BASIC_DIGITS_ELEMENT.innerText = lcComPriFacNotDecBasicDigits;
+                const lcComPriFacNotOctBasicDigits = PrimeFactoredIntegerFormatter.formatComPriFacNot(lcParsed, PrimeFactoredIntegerFormatter.FORMAT_BASIC_DIGITS_1_OCTALS_ONLY);
+                COMPRIFACNOT_OCT_BASIC_DIGITS_ELEMENT.innerText = lcComPriFacNotOctBasicDigits;
             }
             else {
                 OUTPUT_ELEMENT.style.display = "none";
@@ -201,7 +213,7 @@ function onAfterConceptInitialized() {
     }
     if (lcConceptInitThrowable == null) {
         PrimeFactoredIntegerTestSuite.initialize(); // requires initialized ComPriFacNotConcept
-        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.getTestCasesMap();
+        const lcTestCaseMap = PrimeFactoredIntegerTestSuite.testCasesMap;
         const lcTestCasesEntries = lcTestCaseMap.entries();
         for (const lcEntry of lcTestCasesEntries) {
             const lcTestCaseId = lcEntry[0];
@@ -228,13 +240,13 @@ function onAfterConceptInitialized() {
             lcTdIdElement.appendChild(lcLabelElement);
             lcTdIdElement.className = "monospace";
             lcTrElement.appendChild(lcTdIdElement);
-            const lcInput = lcTestCase.getInput();
+            const lcInput = lcTestCase.input;
             const lcTdInputElement = document.createElement("td");
             lcTdInputElement.onclick = onTestCaseInputClick;
             lcTdInputElement.innerText = lcInput;
             lcTdInputElement.className = "cursor-pointer monospace";
             lcTrElement.appendChild(lcTdInputElement);
-            const lcOutputExpected = lcTestCase.getOutputExpected();
+            const lcOutputExpected = lcTestCase.outputExpected;
             const lcOutputExpectedSerialized = (lcOutputExpected == null) ? null : lcOutputExpected.toSerialized();
             const lcTdOutputExpectedElement = document.createElement("td");
             lcTdOutputExpectedElement.innerText = lcOutputExpectedSerialized;
@@ -246,7 +258,7 @@ function onAfterConceptInitialized() {
             let lvMatch = null;
             let lvOutputMatch = null;
             let lvThrowableMatch = null;
-            const lcThrowableExpected = lcTestCase.getThrowableExpected();
+            const lcThrowableExpected = lcTestCase.throwableExpected;
             if (lcChecked) {
                 try {
                     lvOutputActual = PrimeFactoredIntegerParser.parseComPriFacNot(lcInput);
