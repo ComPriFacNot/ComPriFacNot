@@ -4,9 +4,22 @@
  * Haupt-Stylesheets.
  * 
  * @author see git history
- * @version 1.4, 2021-12-14
+ * @version 1.5, 2021-12-18
  * @since 1.0, 2021-11-30
  */
+
+@media screen {
+
+    footer {
+        background-color: white;
+        border-top: thin solid lightgray;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }    
+
+}
 
 a {
     text-decoration: none;
@@ -20,12 +33,12 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Arial Black";
 }
     
-html {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 summary {
 	cursor: pointer;
+}
+
+tbody {
+    break-inside: avoid !important;
 }
 
 th {
@@ -55,6 +68,10 @@ tr {
     background-color: red;
 }
 
+.background-color-whitesmoke {
+    background-color: whitesmoke;
+}
+
 .cursor-help {
     cursor: help;
 }
@@ -67,12 +84,12 @@ tr {
     font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Cambria Math", fantasy;
 }
 
-.footer {
-    background-color: whitesmoke;
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
+.font-sans-seif, html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-weight-normal {
+    font-weight: normal;
 }
 
 .monospace {

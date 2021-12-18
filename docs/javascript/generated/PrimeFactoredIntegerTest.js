@@ -3,7 +3,7 @@
  * :de: JavaScript für Seite PrimeFactoredIntegerTest.htm.
  *
  * @author See git history
- * @version 1.9, 2021-12-17
+ * @version 2.0, 2021-12-18
  * @since 1.0, 2021-11-29
  */
 "use strict";
@@ -147,7 +147,7 @@ function onTestCaseInputClick(pvMouseEvent) {
 function setStatus(pvText) {
     STATUS_BAR_ELEMENT.innerText = pvText;
 }
-const TEST_CASES_ID = "tbodyTestCases";
+const TEST_CASES_ID = "tableTestCases";
 const TEST_CASES_ELEMENT = document.getElementById(TEST_CASES_ID);
 const QUERY_PARAM_TEST_CASE_ID = (QUERY_PARAMS == null) ? null : QUERY_PARAMS.getAll(TEST_CASE_ID_NAME);
 const TEST_ALL = (QUERY_PARAM_TEST_CASE_ID == null)
@@ -220,6 +220,7 @@ function onAfterConceptInitialized() {
             const lcTestCase = lcEntry[1];
             const lcChecked = (QUERY_PARAM_TEST_CASE_ID == null)
                 ? false : (TEST_ALL || QUERY_PARAM_TEST_CASE_ID.includes(lcTestCaseId));
+            const lcTbodyElement = document.createElement("tbody");
             const lcTrElement = document.createElement("tr");
             const lcTdSelectionElement = document.createElement("td");
             const lcInputElement = document.createElement("input");
@@ -304,7 +305,8 @@ function onAfterConceptInitialized() {
                 (lcChecked ? (" background-color-" +
                     (lvMatch ? CSS_CLASS_MATCH : CSS_CLASS_NOMATCH)) : "");
             lcTrElement.appendChild(lcTdMatchElement);
-            TEST_CASES_ELEMENT.appendChild(lcTrElement);
+            lcTbodyElement.appendChild(lcTrElement);
+            TEST_CASES_ELEMENT.appendChild(lcTbodyElement);
         }
     }
 }
