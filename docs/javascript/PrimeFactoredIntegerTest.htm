@@ -8,7 +8,7 @@
     PrimeFactoredIntegerFormatter
 
     @author see git history
-    @version 2.1, 2021-12-16
+    @version 2.2, 2021-12-18
     @since 1.0, 2021-11-29
 -->
     <script id="scriptBasicDigits" type="application/ld+json" src="basic-digits.jsonc"></script>
@@ -21,7 +21,7 @@
     <script src="generated/TestRun.js"></script>
     <script src="generated/PrimeFactoredIntegerTestSuite.js"></script>
     <script src="generated/PrimeFactoredIntegerTest.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="main.v14.css">
+    <link rel="stylesheet" type="text/css" href="main.v15.css">
 </head>
 
 <body>
@@ -129,7 +129,7 @@
     </div>
     <h2>Test cases</h2>
     <form id="formTestCases" action="PrimeFactoredIntegerTest.htm">
-        <table border="1">
+        <table id="tableTestCases" border="1">
             <thead>
                 <tr>
                     <th id="thInverse" class="cursor-pointer">◪</th>
@@ -142,8 +142,6 @@
                     <th>Match</th>
                 </tr>
             </thead>
-            <tbody id="tbodyTestCases">
-            </tbody>
         </table>
         <p>
             <input type="submit" value="Run selected test case(s)"></input>
@@ -151,13 +149,21 @@
         </p>
     </form>
     <p>
-        <a href="../index.htm">🔙 Back/Zurück</a>&nbsp;
-        <a href="../togithub.htm?to=/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" target="_blank">&lt; &gt;
-            Source code</a>
         <br /><!-- To ensure the visibility of the previous paragraph because of the divStatusBar -->
         &nbsp;
+        <br />
+        &nbsp;
     </p>
-    <div id="divStatusBar" class="footer monospace">&nbsp;</div>
+    <footer>
+        <br />
+        <a href="../index.htm">🔙 Back/Zurück</a>
+        &nbsp;<a href="../togithub.htm?to=/blob/main/docs/javascript/PrimeFactoredIntegerTest.htm" target="_blank">&lt;
+            &gt; Source code</a>
+        &nbsp;<a href="../about.html">📝 About/Contact/Impressum</a>
+        <br />
+        &nbsp;
+        <div id="divStatusBar" class="background-color-whitesmoke monospace">&nbsp;</div>
+    </footer>
 </body>
 
 </html>
