@@ -2,7 +2,7 @@
  * Testlauf.
  *
  * @author see git history
- * @version 1.2, 2021-12-12
+ * @version 1.3, 2021-12-17
  * @since 1.0, 2021-12-01
  */
 
@@ -12,8 +12,7 @@ class TestRun {
      * :en: Actual output.
      * :de: Tatsächtliche Ausgabe.
      * 
-     * @see getOutputActual
-     * @see setOutputActual
+     * @see outputActual
      * @type {any}
      */
     private ivOutputActual: any;
@@ -22,8 +21,7 @@ class TestRun {
      * :en: Actual error/exception.
      * :de: Tatsächliche Fehler/Ausnahme.
      * 
-     * @see getThrowableActual
-     * @see setThrowableActual
+     * @see throwableActual
      * @type {any}
      */
     private ivThrowableActual: any;
@@ -32,8 +30,7 @@ class TestRun {
      * :en: Test case.
      * :de: Testfall.
      * 
-     * @see getTestCase
-     * @see setTestCase
+     * @see testCase
      * @type {TestCase}
      */
     private ivTestCase: TestCase;
@@ -47,9 +44,9 @@ class TestRun {
      * @param {any} pvThrowableActual Tatsächliche Ausnahme/Fehler
      */
     constructor(pvTestCase: TestCase, pvOutputActual: any, pvThrowableActual: any) {
-       this.setTestCase(pvTestCase);
-       this.setOutputActual(pvOutputActual);
-       this.setThrowableActual(pvThrowableActual);
+       this.testCase = pvTestCase;
+       this.outputActual = pvOutputActual;
+       this.throwableActual = pvThrowableActual;
     }
 
     /**
@@ -58,9 +55,9 @@ class TestRun {
      *
      * @returns {any} {@link ivOutputActual}
      * @see ivOutputActual
-     * @see setOutputActual
+     * @see outputActual
      */
-    public getOutputActual(): any {
+    public get outputActual(): any {
         return this.ivOutputActual;
     }
 
@@ -70,9 +67,9 @@ class TestRun {
      *
      * @returns {TestCase} Testfall
      * @see ivTestCase
-     * @see setTestCase
+     * @see testCase
      */
-     public getTestCase(): TestCase {
+     public get testCase(): TestCase {
         return this.ivTestCase;
     }
     
@@ -82,9 +79,9 @@ class TestRun {
      *
      * @returns any Tatsächliche Ausnahme/Fehler
      * @see ivThrowableActual
-     * @see setThrowableActual
+     * @see throwableActual
      */
-    public getThrowableActual() {
+    public get throwableActual() {
         return this.ivThrowableActual;
     }
     
@@ -95,11 +92,11 @@ class TestRun {
      *                    übereinstimmen
      */
     public matches(): boolean {
-       const lcTestCase = this.getTestCase();
-       const lcOutputActual = this.getOutputActual();
-       const lcThrowableActual = this.getThrowableActual();
-       const lcOutputExpected = lcTestCase.getOutputExpected();
-       const lcThrowableExpected = lcTestCase.getThrowableExpected();
+       const lcTestCase = this.testCase;
+       const lcOutputActual = this.outputActual;
+       const lcThrowableActual = this.throwableActual;
+       const lcOutputExpected = lcTestCase.outputExpected;
+       const lcThrowableExpected = lcTestCase.throwableExpected;
        const lcOutputEquals = PrimeFactoredInteger.equals(lcOutputActual, lcOutputExpected);
        const lcThrowableEquals = lcThrowableActual == lcThrowableExpected;
        const lcResult = lcOutputEquals && lcThrowableEquals;
@@ -113,9 +110,9 @@ class TestRun {
      *
      * @param {any} pvOutputActual Tatsächliche Ausgabe
      * @see ivOutputActual
-     * @see getOutputActual
+     * @see outputActual
      */
-    public setOutputActual(pvOutputActual: any) {
+    public set outputActual(pvOutputActual: any) {
         this.ivOutputActual = pvOutputActual;
     }
  
@@ -125,9 +122,9 @@ class TestRun {
      *
      * @param {TestCase} pvTestCase Testfall
      * @see ivTestCase
-     * @see getTestCase
+     * @see testCase
      */
-     public setTestCase(pvTestCase: TestCase) {
+     public set testCase(pvTestCase: TestCase) {
         this.ivTestCase = pvTestCase;
     }
 
@@ -137,9 +134,9 @@ class TestRun {
      *
      * @param {any} pvThrowableActual Tatsächliche Ausnahme/Fehler
      * @see ivThrowableActual
-     * @see getThrowableActual
+     * @see throwableActual
      */
-    public setThrowableActual(pvThrowableActual: any) {
+    public set throwableActual(pvThrowableActual: any) {
         this.ivThrowableActual = pvThrowableActual;
     }
     

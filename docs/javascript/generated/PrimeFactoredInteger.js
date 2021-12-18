@@ -3,7 +3,7 @@
  * de: Klasse PrimeFactoredInteger: In Primfaktoren zerlegte ganze Zahl.
  *
  * @author See git history
- * @version 1.4, 2021-12-10
+ * @version 1.5, 2021-12-17
  * @since 1.0, 2021-11-29
  */
 class PrimeFactoredInteger {
@@ -15,14 +15,14 @@ class PrimeFactoredInteger {
      * @param {number} pvSign en: Sign; de: Vorzeichen
      */
     constructor(pvComponentsMap, pvSign = 1) {
-        this.setComponentsMap(pvComponentsMap);
+        this.componentsMap = pvComponentsMap;
         let lvSign = pvSign;
         if (pvComponentsMap != null) {
             if (pvComponentsMap.has(0)) {
                 lvSign = 0;
             }
         }
-        this.setSign(lvSign);
+        this.sign = lvSign;
     }
     /**
      * Vergleicht zwei Instanzen.
@@ -96,8 +96,8 @@ class PrimeFactoredInteger {
      *
      * @returns {string} Components as JSON
      */
-    getComponentsJson() {
-        const lcComponentsMap = this.getComponentsMap();
+    get componentsJson() {
+        const lcComponentsMap = this.componentsMap;
         const lcComponentsEntries = lcComponentsMap.entries();
         const lcPrimeFactorsArray = Array.from(lcComponentsEntries);
         const lcResult = JSON.stringify(lcPrimeFactorsArray);
@@ -108,10 +108,9 @@ class PrimeFactoredInteger {
      * :de: Getter für {@link ivComponentsMap}.
      *
      * @returns {Map<number, number>} Map of components
-     * @see ivComponentsMap
-     * @see setComponentsMap
+     * @see componentsMap
      */
-    getComponentsMap() {
+    get componentsMap() {
         return this.ivComponentsMap;
     }
     /**
@@ -119,10 +118,9 @@ class PrimeFactoredInteger {
      * :de: Getter für {@link ivSign}.
      *
      * @return {number} {@link ivSign}
-     * @see ivSign
-     * @see setSign
+     * @see sign
      */
-    getSign() {
+    get sign() {
         return this.ivSign;
     }
     /**
@@ -131,9 +129,9 @@ class PrimeFactoredInteger {
      *
      * @param {Map<number, number>} pvMap Komponentenmappe
      * @see ivComponentsMap
-     * @see getComponentsMap
+     * @see componentsMap
      */
-    setComponentsMap(pvMap) {
+    set componentsMap(pvMap) {
         this.ivComponentsMap = pvMap;
     }
     /**
@@ -142,9 +140,9 @@ class PrimeFactoredInteger {
      *
      * @param {number} pvSign {@link ivSign}
      * @see ivSign
-     * @see getSign
+     * @see sign
      */
-    setSign(pvSign) {
+    set sign(pvSign) {
         this.ivSign = pvSign;
     }
     /**
@@ -154,7 +152,7 @@ class PrimeFactoredInteger {
      * @returns {number} en: Sum of all powers; de: Summe aller Potenzen.
      */
     toNumber() {
-        const lcComponentsMap = this.getComponentsMap();
+        const lcComponentsMap = this.componentsMap;
         const lcMapSize = lcComponentsMap.size;
         let lvResult = 0;
         if (lcMapSize > 0) {
@@ -167,7 +165,7 @@ class PrimeFactoredInteger {
                 }
             }
         }
-        const lcSign = this.getSign();
+        const lcSign = this.sign;
         lvResult *= lcSign;
         return lvResult;
     }
@@ -182,8 +180,8 @@ class PrimeFactoredInteger {
      * @returns {string} Serialization
      */
     toSerialized() {
-        const lcSign = this.getSign();
-        const lcComponentsJson = this.getComponentsJson();
+        const lcSign = this.sign;
+        const lcComponentsJson = this.componentsJson;
         const lcResult = ((lcSign == 0) ? "0" : (lcSign < 0) ? "-" : "") + lcComponentsJson;
         return lcResult;
     }
@@ -195,8 +193,8 @@ class PrimeFactoredInteger {
      *                   de: Selbstbeschreibung dieser Instanz
      */
     toString() {
-        const lcSign = this.getSign();
-        const lcComponentsJson = this.getComponentsJson();
+        const lcSign = this.sign;
+        const lcComponentsJson = this.componentsJson;
         const lcResult = "PrimeFactoredInteger["
             + "sign=" + lcSign
             + "; components=" + lcComponentsJson + "]";

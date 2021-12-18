@@ -3,7 +3,7 @@
  * :de: Klasse ComPriFacNotConcept: Zugrundeliegendes ComPriFacNot-Konzept.
  * 
  * @author See git history
- * @version 1.3, 2021-12-13
+ * @version 1.5, 2021-12-16
  * @since 1.0, 2021-12-10
  */
  class ComPriFacNotConcept {
@@ -12,58 +12,19 @@
      * :en: Alias digits.
      * :de: Aliasziffern.
      * 
-     * @see getAliasDigits
-     * @see setAliasDigits
+     * @see aliasDigits
      * @since 1.3, 2021-12-13
      */
     private static cvAliasDigits: string; // = "4689AĀȀCEFGghKkMmPpQTtWXxYyZz@ØⅬÐↁↂↇↈ";
 
     /**
-     * :en: Basic digits.
-     * :de: Basisziffern.
-     * 
-     * @see getBasicDigits
-     * @see setBasicDigits
-     */
-    private static cvBasicDigits: string; // = "012357BDHJNdVbfrlS...";
-
-    /**
      * :en: URL to JSON file for alis digits.
      * :de: URL zur JSON-Datei mit den Aliasziffern.
      * 
-     * @see getAliasDigitsJsonUrl
+     * @see aliasDigitsJsonUrl
      * @since 1.3, 2021-12-13
      */
-    private static cvAliasDigitsJsonUrl = "../../alias-digits.jsonc"; 
-
-    /**
-     * :en: URL to JSON file for basic digits.
-     * :de: URL zur JSON-Datei mit den Grundziffern.
-     * 
-     * @see getBasicDigitsJsonUrl
-     */
-    private static cvBasicDigitsJsonUrl = "../../basic-digits.jsonc"; 
-
-    /**
-     * :en: Array of underlying basic integer of alias digits.
-     * :de: Reihe der zugrundeliegenden Basisganzzahlen von Aliasziffern.
-     * 
-     * @see getAliasDigitsValues
-     * @see setAliasDigitsValues
-     * @since 1.3, 2021-12-13
-     */
-    private static cvAliasDigitsValues: Array<string>; /*
-        = ["2²", "32", "2³", "3²", "52", "2⁸", "2⁹", "32²", "72", "53", "2³⁰", "5⁹2⁹", "5²2²", ...]
- 
-    /**
-     * :en: Array of numbers of basic digits.
-     * :de: Reihe der Werte der Basisziffern.
-     * 
-     * @see getBasicDigitsValues
-     * @see setBasicDigitsValues
-     */
-    private static cvBasicDigitsValues: Array<number>; /*
-        = [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, ...]; */
+     private static cvAliasDigitsJsonUrl = "../../alias-digits.jsonc"; 
 
     /**
      * :en: Content from alias-digits.jsonc; keys: chars; values: underlying basic integers.
@@ -71,31 +32,83 @@
      *      Basisganzzahl.
      * 
      * @type Map<string, string>
-     * @see getAliasDigitsMap
-     * @see setAliasDigitsMap
+     * @see aliasDigitsMap
      * @since 1.3, 2021-12-13
      */
-    private static cvAliasDigitsMap: Map<string, string>;
+     private static cvAliasDigitsMap: Map<string, string>;
 
     /**
-     * :en: Content from basic-digits.jsonc; keys: chars; values: numbers.
-     * :de: Inhalt von basic-digits.jsonc; Schlüssel: Zeichen; Werte: Zahlen.
+     * :en: Array of underlying basic integer of alias digits.
+     * :de: Reihe der zugrundeliegenden Basisganzzahlen von Aliasziffern.
+     * 
+     * @see aliasDigitsValues
+     * @since 1.3, 2021-12-13
+     */
+     private static cvAliasDigitsValues: Array<string>; /*
+     = ["2²", "32", "2³", "3²", "52", "2⁸", "2⁹", "32²", "72", "53", "2³⁰", "5⁹2⁹", "5²2²", ...]
+
+     /**
+     * :en: Basic digits.
+     * :de: Basisziffern.
+     * 
+     * @see basicDigits
+     */
+    private static cvBasicDigits: string; /* = "012357BDHJNdVbfrlS..."; */
+
+    /**
+     * :en: URL to JSON file for basic digits.
+     * :de: URL zur JSON-Datei mit den Grundziffern.
+     * 
+     * @see basicDigitsJsonUrl
+     */
+    private static cvBasicDigitsJsonUrl = "../../basic-digits.jsonc"; 
+
+    /**
+     * :en: Content from basic-digits.jsonc; keys: chars; values: numbers; reverse map of
+     *      {@link cvBasicDigitsValuesMap}.
+     * :de: Inhalt von basic-digits.jsonc; Schlüssel: Zeichen; Werte: Zahlen. Umkehrmappe zu
+     *      {@link cvBasicDigitsValuesMap}.
      * 
      * @type Map<string, number>
-     * @see getBasicDigitsMap
-     * @see setBasicDigitsMap
+     * @see basicDigitsMap
      */
-    private static cvBasicDigitsMap: Map<string, number>;
+     private static cvBasicDigitsMap: Map<string, number>;
+
+    /**
+     * :en: Array of numbers of basic digits.
+     * :de: Reihe der Werte der Basisziffern.
+     * 
+     * @see basicDigitsValues
+     */
+    private static cvBasicDigitsValues: Array<number>; /*
+        = [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, ...]; */
+
+    /**
+     * :en: Map from primary number to basic digit; reverse map of {@link cvBasicDigitsMap}.
+     * :de: Mappe von Primfaktor zu Grundziffer. Umkehrmappe zu {@link cvBasicDigitsMap}.
+     * 
+     * @see basicDigitsValuesMap
+     * @since 1.5, 2021-12-16
+     */
+    private static cvBasicDigitsValuesMap: Map<number, string>;
 
     /**
      * :en: Source (URL) of the current script.
      * :de: Quelle (URL) dieses Skripts.
      * 
-     * @see getCurrentScriptSrc
-     * @see setCurrentScriptSrc
+     * @see currentScriptSrc
      * @since 1.3, 2021-12-13
      */
     private static cvCurrentScriptSrc: string;
+
+    /**
+     * :en: Super scripted chars for exponents.
+     * :de: Hochgestellte Zeichen für Exponenten.
+     * 
+     * @see exponentSupers
+     * @since 1.5, 2021-12-16
+     */
+    private static cvExponentSupers = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
     /**
      * :en: Error/exception in initialization. The call-back-function must evaluate this field
@@ -103,8 +116,7 @@
      * :de: Fehler/Ausnahme bei der Initialisierung. Die Rückruffunktion muss dieses Feld zuerst
      *      auswerten.
      * 
-     * @see getInitializationThrowable
-     * @see setInitializationThrowable
+     * @see initializationThrowable
      * @since 1.1, 2021-12-12
      */
     private static cvInitializationThrowable: any = null;
@@ -115,10 +127,10 @@
      * 
      * @returns {string} {@link cvAliasDigits}
      * @see cvAliasDigits
-     * @see setAliasDigits
+     * @see aliasDigits
      * @since 1.3, 2021-12-13
      */
-    public static getAliasDigits(): string {
+    public static get aliasDigits(): string {
         return ComPriFacNotConcept.cvAliasDigits;
     } 
     
@@ -130,7 +142,7 @@
      * @see cvAliasDigitsJsonUrl
      * @since 1.3, 2021-12-13
      */
-    private static getAliasDigitsJsonUrl(): string {
+    private static get aliasDigitsJsonUrl(): string {
         return ComPriFacNotConcept.cvAliasDigitsJsonUrl;
     }
     
@@ -140,10 +152,10 @@
      * 
      * @returns {Map<string, string>} {@link cvAliasDigitsMap}
      * @see cvAliasDigitsMap
-     * @see setAliasDigitsMap
+     * @see aliasDigitsMap
      * @since 1.3, 2021-12-13
      */
-    public static getAliasDigitsMap(): Map<string, string> {
+    public static get aliasDigitsMap(): Map<string, string> {
         return ComPriFacNotConcept.cvAliasDigitsMap;
     }
     
@@ -153,10 +165,10 @@
      * 
      * @returns {Array<string>} {@link cvAliasDigitsValues}
      * @see cvAliasDigitsValues
-     * @see setAliasDigitsValues
+     * @see aliasDigitsValues
      * @since 1.3, 2021-12-13
      */
-    public static getAliasDigitsValues(): Array<string> {
+    public static get aliasDigitsValues(): Array<string> {
         return ComPriFacNotConcept.cvAliasDigitsValues;
     }
     
@@ -166,10 +178,10 @@
      * 
      * @returns {string} {@link cvBasicDigits}
      * @see cvBasicDigits
-     * @see setBasicDigits
+     * @see basicDigits
      * @since 1.2, 2021-12-12
      */
-    public static getBasicDigits(): string {
+    public static get basicDigits(): string {
         return ComPriFacNotConcept.cvBasicDigits;
     } 
 
@@ -181,7 +193,7 @@
      * @see cvBasicDigitsJsonUrl
      * @since 1.2, 2021-12-12
      */
-    private static getBasicDigitsJsonUrl(): string {
+    private static get basicDigitsJsonUrl(): string {
         return ComPriFacNotConcept.cvBasicDigitsJsonUrl;
     }
 
@@ -191,10 +203,10 @@
      * 
      * @returns {Map<string, number>} {@link cvBasicDigitsMap}
      * @see cvBasicDigitsMap
-     * @see setBasicDigitsMap
+     * @see basicDigitsMap
      * @since 1.2, 2021-12-12
      */
-    public static getBasicDigitsMap(): Map<string, number> {
+    public static get basicDigitsMap(): Map<string, number> {
         return ComPriFacNotConcept.cvBasicDigitsMap;
     }
 
@@ -204,23 +216,48 @@
      * 
      * @returns {Array<number>} {@link cvBasicDigitsValues}
      * @see cvBasicDigitsValues
-     * @see setBasicDigitsValues
+     * @see basicDigitsValues
      * @since 1.2, 2021-12-12
      */
-    public static getBasicDigitsValues(): Array<number> {
+    public static get basicDigitsValues(): Array<number> {
         return ComPriFacNotConcept.cvBasicDigitsValues;
     }
 
+    /**
+     * :en: Getter for {@link cvBasicDigitsValuesMap}.
+     * :de: Getter für {@link cvBasicDigitsValuesMap}.
+     * 
+     * @returns {Map<number, string>} {@link cvBasicDigitsValuesMap}
+     * @see cvBasicDigitsValuesMap
+     * @see basicDigitsValuesMap
+     * @since 1.5, 2021-12-16
+     */
+    public static get basicDigitsValuesMap(): Map<number, string> {
+        return ComPriFacNotConcept.cvBasicDigitsValuesMap;
+    }
+    
+    /**
+     * :en: Getter for {@link cvExponentSupers}.
+     * :de: Getter für {@link cvExponentSupers}.
+     * 
+     * @returns {string} {@link cvExponentSupers}
+     * @see cvExponentSupers
+     * @since 1.5, 2021-12-16
+     */
+    public static get exponentSupers(): string {
+        return ComPriFacNotConcept.cvExponentSupers;
+    }   
+    
     /**
      * :en: Getter for {@link cvInitializationThrowable}.
      * :de: Getter für {@link cvInitializationThrowable}.
      * 
      * @returns {any} {@link cvInitializationThrowable}
      * @see cvInitializationThrowable
-     * @see setInitializationThrowable
+     * @see initializationThrowable
      * @since 1.2, 2021-12-12
      */
-    public static getInitializationThrowable(): any {
+    public static get initializationThrowable(): any {
         return ComPriFacNotConcept.cvInitializationThrowable;
     }
 
@@ -230,10 +267,10 @@
      * 
      * @returns {string} {@link cvCurrentScriptSrc}
      * @see cvCurrentScriptSrc
-     * @see setCurrentScriptSrc
+     * @see currentScriptSrc
      * @since 1.3, 2021-12-13
      */
-    private static getCurrentScriptSrc(): string {
+    private static get currentScriptSrc(): string {
         return ComPriFacNotConcept.cvCurrentScriptSrc;
     }
 
@@ -249,12 +286,12 @@
             const lcMessage =
                 "Initialization error: currentScript not instanceof HTMLScriptElement!";
             const lcError = new Error(lcMessage);
-            ComPriFacNotConcept.setInitializationThrowable(lcError);
+            ComPriFacNotConcept.initializationThrowable = lcError;
             pvCallBack();
         } else {
             const lcSrc = lcCurrentScript.src;
-            ComPriFacNotConcept.setCurrentScriptSrc(lcSrc); // must be saved before asynch call
-            const lcBasicDigitsJsonUrl = ComPriFacNotConcept.getBasicDigitsJsonUrl();
+            ComPriFacNotConcept.currentScriptSrc = lcSrc; // must be saved before asynch call
+            const lcBasicDigitsJsonUrl = ComPriFacNotConcept.basicDigitsJsonUrl;
             ComPriFacNotConcept.loadJson(lcBasicDigitsJsonUrl, 
                 function(pvBasicJsonContent: string) {
                     // Basic digits JSON could be loaded successfully
@@ -262,21 +299,24 @@
                     const lcBasicDigitsMap: Map<string, number> = new Map<string, number>();
                     const lcBasicDigitsArray = new Array<string>();
                     const lcBasicDigitsValues = new Array<number>();
+                    const lcBasicDigitsValuesMap: Map<number, string> = new Map<number, string>();
                     let i = -1;
                     for (const lcBasicDigitsDupel of lcBasicDigitsDupels) {
                         i++;
                         const lcBasicDigit: string = lcBasicDigitsDupel[0];
                         const lcBasicDigitValue: number = lcBasicDigitsDupel[1];
                         lcBasicDigitsMap.set(lcBasicDigit, lcBasicDigitValue);
+                        lcBasicDigitsValuesMap.set(lcBasicDigitValue, lcBasicDigit);
                         lcBasicDigitsArray[i] = lcBasicDigit;
                         lcBasicDigitsValues[i] = lcBasicDigitValue;
                     }
                     const lcBasicDigitsString = lcBasicDigitsArray.join("");
-                    ComPriFacNotConcept.setBasicDigits(lcBasicDigitsString);
-                    ComPriFacNotConcept.setBasicDigitsValues(lcBasicDigitsValues);
-                    ComPriFacNotConcept.setBasicDigitsMap(lcBasicDigitsMap);
+                    ComPriFacNotConcept.basicDigits = lcBasicDigitsString;
+                    ComPriFacNotConcept.basicDigitsValues = lcBasicDigitsValues;
+                    ComPriFacNotConcept.basicDigitsMap = lcBasicDigitsMap;
+                    ComPriFacNotConcept.basicDigitsValuesMap = lcBasicDigitsValuesMap;
 
-                    const lcAliasDigitsJsonUrl = ComPriFacNotConcept.getAliasDigitsJsonUrl();
+                    const lcAliasDigitsJsonUrl = ComPriFacNotConcept.aliasDigitsJsonUrl;
                     ComPriFacNotConcept.loadJson(lcAliasDigitsJsonUrl,
                         function(pvAliasJsonContent: string) {
                             // Alias digits JSON could be loaded successfully
@@ -285,19 +325,23 @@
                             const lcAliasDigitsMap: Map<string, string> = new Map<string, string>();
                             const lcAliasDigitsArray = new Array<string>();
                             const lcAliasDigitsValues = new Array<string>();
+                            const lcAliasDigitsValuesMap: Map<string, string> = new Map<string, string>();
                             let i = -1;
                             for (const lcAliasDigitsDupel of lcAliasDigitsDupels) {
                                 i++;
                                 const lcAliasDigit: string = lcAliasDigitsDupel[0];
                                 const lcAliasDigitValue: string = lcAliasDigitsDupel[1];
                                 lcAliasDigitsMap.set(lcAliasDigit, lcAliasDigitValue);
+                                lcAliasDigitsValuesMap.set(lcAliasDigitValue, lcAliasDigit);
                                 lcAliasDigitsArray[i] = lcAliasDigit;
                                 lcAliasDigitsValues[i] = lcAliasDigitValue;
                             }
                             const lcAliasDigitsString = lcAliasDigitsArray.join("");
-                            ComPriFacNotConcept.setAliasDigits(lcAliasDigitsString);
-                            ComPriFacNotConcept.setAliasDigitsValues(lcAliasDigitsValues);
-                            ComPriFacNotConcept.setAliasDigitsMap(lcAliasDigitsMap);
+                            ComPriFacNotConcept.aliasDigits = lcAliasDigitsString;
+                            ComPriFacNotConcept.aliasDigitsValues = lcAliasDigitsValues;
+                            ComPriFacNotConcept.aliasDigitsMap = lcAliasDigitsMap;
+                            /* ComPriFacNotConcept.aliasDigitsValuesMap = lcAliasDigitsValuesMap;
+                                // TODO for future use (?) */
                             pvCallBack();
                         }, 
                         function() {
@@ -324,39 +368,37 @@
      */
     private static loadJson(pvJsonUrl: string, pvOnSuccess: (pvJsonContent: string) => any, 
             pvOnError: () => any) {
-        const lcRequest = new XMLHttpRequest();
-        lcRequest.onreadystatechange = function() {
+        const lcCurrentScriptSrc = ComPriFacNotConcept.currentScriptSrc;
+        const lcUrl = lcCurrentScriptSrc + "/../" + pvJsonUrl;
+        const lcRequest = new Request(lcUrl);
+        const lcFetchPromise = fetch(lcRequest);
+        lcFetchPromise.then(pvResponse => {
             try {
-                const lcStatus = this.status;
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (lcStatus == 200) {
-                        const lcResponseText = this.responseText; // JSON with comments (.jsonc)
-                        const lcFirstBracket = lcResponseText.indexOf("["); // Start of data
-                        const lcJson = lcResponseText.substring(lcFirstBracket);
+                const lcResponseOk = pvResponse.ok;
+                if (lcResponseOk) {
+                    const lcResponseTextPromise = pvResponse.text(); // JSON with comments (.jsonc)
+                    lcResponseTextPromise.then(pvResponseText => {
+                        const lcFirstBracket = pvResponseText.indexOf("["); // Start of data
+                        const lcJson = pvResponseText.substring(lcFirstBracket);
                         pvOnSuccess(lcJson);
-                    } else {
-                        const lcMessage = "Initialization error: Load of JSON " + pvJsonUrl +
-                            " failed: HTTP-Status expected: 200; " +
-                            "HTTP-Status actual: " + lcStatus;
-                        const lcError = new Error(lcMessage);
-                        ComPriFacNotConcept.setInitializationThrowable(lcError);
-                        pvOnError();
-                    }
+                    });
+                } else {
+                    const lcStatus = pvResponse.status;
+                    const lcMessage = "Initialization error: Load of JSON " + pvJsonUrl +
+                        " failed: HTTP-Status expected: 200; " +
+                        "HTTP-Status actual: " + lcStatus;
+                    const lcError = new Error(lcMessage);
+                    ComPriFacNotConcept.initializationThrowable = lcError;
+                    pvOnError();
                 }
             } catch (lcError: any) {
-                ComPriFacNotConcept.setInitializationThrowable(lcError);
+                ComPriFacNotConcept.initializationThrowable = lcError;
                 pvOnError();
             }
-        }
-        const lcCurrentScriptSrc = ComPriFacNotConcept.getCurrentScriptSrc();
-        const lcUrl = lcCurrentScriptSrc + "/../" + pvJsonUrl;
-        try {
-            lcRequest.open("GET", lcUrl, true);
-            lcRequest.send();
-        } catch (lcError: any) {
-            ComPriFacNotConcept.setInitializationThrowable(lcError);
+        }, (pvReason) => {
+            ComPriFacNotConcept.initializationThrowable = pvReason;
             pvOnError();
-        }
+        });
     }
 
     /**
@@ -365,10 +407,10 @@
      * 
      * @param {string} pvAliasDigits {@link #cvAliasDigits}
      * @see cvAliasDigits
-     * @see getAliasDigits
+     * @see aliasDigits
      * @since 1.3, 2021-12-13
      */
-     private static setAliasDigits(pvAliasDigits: string) {
+     private static set aliasDigits(pvAliasDigits: string) {
         ComPriFacNotConcept.cvAliasDigits = pvAliasDigits;
     }        
 
@@ -378,10 +420,10 @@
      * 
      * @param {Map<string, string>} pvAliasDigitsMap {@link cvAliasDigitsMap}
      * @see cvAliasDigitsMap
-     * @see getAliasDigitsMap
+     * @see aliasDigitsMap
      * @since 1.3, 2021-12-13
      */
-     private static setAliasDigitsMap(pvAliasDigitsMap: Map<string, string>) {
+     private static set aliasDigitsMap(pvAliasDigitsMap: Map<string, string>) {
         ComPriFacNotConcept.cvAliasDigitsMap = pvAliasDigitsMap;
     }    
     
@@ -391,10 +433,10 @@
      * 
      * @param {Array<string>} pvAliasDigitsValues {@link cvAliasDigitsValues}
      * @see cvAliasDigitsValues
-     * @see getAliasDigitsValues
+     * @see aliasDigitsValues
      * @since 1.3, 2021-12-13
      */
-     private static setAliasDigitsValues(pvAliasDigitsValues: Array<string>) {
+     private static set aliasDigitsValues(pvAliasDigitsValues: Array<string>) {
         ComPriFacNotConcept.cvAliasDigitsValues = pvAliasDigitsValues;
      }   
  
@@ -404,10 +446,10 @@
      * 
      * @param {string} pvBasicDigits {@link #cvBasicDigits}
      * @see cvBasicDigits
-     * @see getBasicDigits
+     * @see basicDigits
      * @since 1.2, 2021-12-12
      */
-    private static setBasicDigits(pvBasicDigits: string) {
+    private static set basicDigits(pvBasicDigits: string) {
         ComPriFacNotConcept.cvBasicDigits = pvBasicDigits;
     }        
 
@@ -417,10 +459,10 @@
      * 
      * @param {Map<string, number>} pvBasicDigitsMap {@link cvBasicDigitsMap}
      * @see cvBasicDigitsMap
-     * @see getBasicDigitsMap
+     * @see basicDigitsMap
      * @since 1.2, 2021-12-12
      */
-    private static setBasicDigitsMap(pvBasicDigitsMap: Map<string, number>) {
+    private static set basicDigitsMap(pvBasicDigitsMap: Map<string, number>) {
         ComPriFacNotConcept.cvBasicDigitsMap = pvBasicDigitsMap;
     }    
     
@@ -430,23 +472,37 @@
      * 
      * @param {Array<number>} pvBasicDigitsValues {@link cvBasicDigitsValues}
      * @see cvBasicDigitsValues
-     * @see getBasicDigitsValues
+     * @see basicDigitsValues
      * @since 1.2, 2021-12-12
      */
-    private static setBasicDigitsValues(pvBasicDigitsValues: Array<number>) {
+    private static set basicDigitsValues(pvBasicDigitsValues: Array<number>) {
        ComPriFacNotConcept.cvBasicDigitsValues = pvBasicDigitsValues;
     }   
 
+
+    /**
+     * :en: Setter for {@link cvBasicDigitsValuesMap}.
+     * :de: Setter für {@link cvBasicDigitsValuesMap}.
+     * 
+     * @param {Map<number, string>} pvBasicDigitsValuesMap {@link cvBasicDigitsValuesMap}
+     * @see cvBasicDigitsValuesMap
+     * @see basicDigitsValuesMap
+     * @since 1.5, 2021-12-16
+     */
+    public static set basicDigitsValuesMap(pvBasicDigitsValuesMap: Map<number, string>) {
+        ComPriFacNotConcept.cvBasicDigitsValuesMap = pvBasicDigitsValuesMap;
+    }       
+    
     /**
      * :en: Setter for {@link cvCurrentScriptSrc}.
      * :de: Setter für {@link cvCurrentScriptSrc}.
      * 
      * @param {string} pvCurrentScriptSrc {@link cvCurrentScriptSrc}
      * @see cvCurrentScriptSrc
-     * @see getCurrentScriptSrc
+     * @see currentScriptSrc
      * @since 1.3, 2021-12-13
      */
-    private static setCurrentScriptSrc(pvCurrentScriptSrc: string) {
+    private static set currentScriptSrc(pvCurrentScriptSrc: string) {
         ComPriFacNotConcept.cvCurrentScriptSrc = pvCurrentScriptSrc;
     }    
     
@@ -456,10 +512,10 @@
      * 
      * @param {any} pvInitializationThrowable {@link cvInitializationThrowable}
      * @see cvInitializationThrowable
-     * @see getInitializationThrowable
+     * @see initializationThrowable
      * @since 1.2, 2021-12-12
      */
-    private static setInitializationThrowable(pvInitializationThrowable: any) {
+    private static set initializationThrowable(pvInitializationThrowable: any) {
         ComPriFacNotConcept.cvInitializationThrowable = pvInitializationThrowable;
     }
     

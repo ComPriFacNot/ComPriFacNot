@@ -3,7 +3,7 @@
  * :de: Testfall.
  *
  * @author see git history
- * @version 1.3, 2021-12-12
+ * @version 1.4, 2021-12-17
  * @since 1.0, 2021-12-01
  */
 class TestCase {
@@ -27,138 +27,147 @@ class TestCase {
     /**
      * Identifier.
      *
-     * @see getId
-     * @see setId
+     * @see id
      * @type {string}
      */
     private ivId: string;
     
     /**
-     * Eingabe.
+     * :en: Input.
+     * :de: Eingabe.
      *
      * @type {string}
-     * @see getInput
-     * @see setInput
+     * @see input
      */
     private ivInput: string;
 
     /**
-     * Erwartete Ausgabe.
+     * :en: Expected output.
+     * :de: Erwartete Ausgabe.
      *
-     * @see getOutputExpected
-     * @see setOutputExpected
+     * @see outputExpected
      * @type {any}
      */
     private ivOutputExpected: any;
     
     /**
-     * Erwartete Ausnahme oder Fehler.
+     * :en: Expected error or exception.
+     * :de: Erwarteter Fehler oder Ausnahme.
      *
-     * @see getThrowableExpected
-     * @see setThrowableExpected
+     * @see throwableExpected
      * @type {any}
      */
     private ivThrowableExpected: any;
 
     /**
-     * Konstruktor.
+     * :en: Constructor.
+     * :de: Konstruktor.
      *
      * @param {string} pvId Identifyer
-     * @param {string} pvInput Eingabe
-     * @param {any} pvOutputExpected Erwartete Ausgabe
-     * @param {any} pvThrowableExpected Erwartete Ausnahme/Fehler
+     * @param {string} pvInput :en: Input :de: Eingabe
+     * @param {any} pvOutputExpected :en: Expected output :de: Erwartete Ausgabe
+     * @param {any} pvThrowableExpected :en: Expected error/exception
+     *                                  :de: Erwarteter Fehler/Ausnahme
      */
     constructor(pvId: string, pvInput: string, pvOutputExpected: any, pvThrowableExpected: any) {
-        this.setId(pvId);
-        this.setInput(pvInput);
-        this.setOutputExpected(pvOutputExpected);
-        this.setThrowableExpected(pvThrowableExpected);
+        this.id = pvId;
+        this.input = pvInput;
+        this.outputExpected = pvOutputExpected;
+        this.throwableExpected = pvThrowableExpected;
     }
 
     /**
-     * Getter für {@link ivId}.
+     * :en: Getter for {@link ivId}.
+     * :de: Getter für {@link ivId}.
      * 
      * @see ivId
-     * @see setId
+     * @see id
      */
-    public getId() {
+    public get id() {
         return this.ivId;
     }
 
     /**
-     * Getter für {@link ivInput}.
+     * :en: Getter for {@link ivInput}.
+     * :de: Getter für {@link ivInput}.
      *
      * @returns {string} {@link ivInput}
      * @see ivInput
-     * @see setInput
+     * @see input
      */
-    public getInput(): string {
+    public get input(): string {
         return this.ivInput;
     }
     
     /**
-     * Getter für {@link ivOutputExpected}.
+     * :en: Getter for {@link ivOutputExpected}.
+     * :de: Getter für {@link ivOutputExpected}.
      *
-     * @returns Erwartete Ausgabe
+     * @returns :en: Expected output :de: Erwartete Ausgabe
      * @see ivOutputExpected
-     * @see setOutputExpected
+     * @see outputExpected
      */
-    public getOutputExpected() {
+    public get outputExpected() {
         return this.ivOutputExpected;
     }
     
     /**
-     * Getter für {@link ivThrowableExpected}.
+     * :en: Getter for {@link ivThrowableExpected}.
+     * :de: Getter für {@link ivThrowableExpected}.
      *
      * @returns Erwartete Ausnahme/Fehler
      * @see ivThrowableExpected
-     * @see setThrowableExpected
+     * @see throwableExpected
      */
-    public getThrowableExpected() {
+    public get throwableExpected() {
         return this.ivThrowableExpected;
     }
     
     /**
-     * Setter für {@link ivId}.
+     * :en: Setter for {@link ivId}.
+     * :de: Setter für {@link ivId}.
      *
-     * @param {string} pvId
+     * @param {string} pvId {@link ivId}
      * @see ivId
-     * @see getId
+     * @see id
      */
-    private setId(pvId: string) {
+    private set id(pvId: string) {
         this.ivId = pvId;
     }
     
     /**
-     * Setter für {@link ivInput}.
+     * :en: Setter for {@link ivInput}.
+     * :de: Setter für {@link ivInput}.
      *
-     * @param {string} pvInput Eingabe
+     * @param {string} pvInput :en: Input :de: Eingabe
      * @see ivInput
-     * @see getInput
+     * @see input
      */
-    private setInput(pvInput: string) {
+    private set input(pvInput: string) {
         this.ivInput = pvInput;
     }
     
     /**
-     * Setter für {@link ivOutputExpected}.
+     * :en: Setter for {@link ivOutputExpected}.
+     * :de: Setter für {@link ivOutputExpected}.
      *
-     * @param {any} pvOutputExpected Erwartete Ausgabe
+     * @param {any} pvOutputExpected :en: Expected output :de: Erwartete Ausgabe
      * @see ivOutputExpected
-     * @see getOutputExpected
+     * @see outputExpected
      */
-    private setOutputExpected(pvOutputExpected: any) {
+    private set outputExpected(pvOutputExpected: any) {
         this.ivOutputExpected = pvOutputExpected;
     }
     
     /**
-     * Setter für {@link ivThrowableExpected}.
+     * :en: Setter for {@link ivThrowableExpected}.
+     * :de: Setter für {@link ivThrowableExpected}.
      *
-     * @param {any} pvThrowable Erwartete Ausnahme/Fehler
+     * @param {any} pvThrowable :en: Expected error/exception :de: Erwarteter Fehler/Ausnahme
      * @see ivThrowableExpected
-     * @see getThrowableExpected
+     * @see throwableExpected
      */
-    private setThrowableExpected(pvThrowable: any) {
+    private set throwableExpected(pvThrowable: any) {
         this.ivThrowableExpected = pvThrowable;
     }
 }
